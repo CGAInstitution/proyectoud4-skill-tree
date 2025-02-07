@@ -19,8 +19,8 @@ public class ManagerUserSession {
         session.setAttribute("idUsuarioLogeado", idUsuario);
     }
 
-    public int usuarioLogeado() {
-        return (int) session.getAttribute("idUsuarioLogeado");
+    public Long usuarioLogeado() {
+        return (Long) session.getAttribute("idUsuarioLogeado");
     }
 
     public void logout() {

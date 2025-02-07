@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 public class Preferencia {
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -29,11 +29,11 @@ public class Preferencia {
     @Column(name = "idioma", nullable = false, length = 2)
     private String idioma;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

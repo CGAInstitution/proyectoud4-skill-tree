@@ -12,25 +12,25 @@ public class UsuariosNotaId implements java.io.Serializable {
     private static final long serialVersionUID = -1587667124465091289L;
     @NotNull
     @Column(name = "idUsuario", nullable = false)
-    private Integer idUsuario;
+    private Long idUsuario;
 
     @NotNull
     @Column(name = "idNota", nullable = false)
-    private Integer idNota;
+    private Long idNota;
 
-    public Integer getIdUsuario() {
+    public Long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(Integer idUsuario) {
+    public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public Integer getIdNota() {
+    public Long getIdNota() {
         return idNota;
     }
 
-    public void setIdNota(Integer idNota) {
+    public void setIdNota(Long idNota) {
         this.idNota = idNota;
     }
 

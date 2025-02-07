@@ -28,14 +28,14 @@ public class TareaController {
     @Autowired
     ManagerUserSession managerUserSession;
 
-    private void comprobarUsuarioLogeado(Integer idUsuario) {
-        int idUsuarioLogeado = managerUserSession.usuarioLogeado();
+    private void comprobarUsuarioLogeado(Long idUsuario) {
+        Long idUsuarioLogeado = managerUserSession.usuarioLogeado();
         if (!idUsuario.equals(idUsuarioLogeado))
             throw new UsuarioNoLogeadoException();
     }
 
     @GetMapping("/usuarios/{id}/tareas")
-    public String a(@PathVariable(value="id") int idUsuario,
+    public String a(@PathVariable(value="id") Long idUsuario,
                                  @ModelAttribute TareaData tareaData, Model model) {
 
         comprobarUsuarioLogeado(idUsuario);

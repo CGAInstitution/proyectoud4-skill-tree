@@ -16,7 +16,7 @@ public class Nota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Size(max = 30)
     @NotNull
@@ -53,11 +53,11 @@ public class Nota {
             inverseJoinColumns = @JoinColumn(name = "idUsuario"))
     private Set<Usuario> usuarios = new LinkedHashSet<>();
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

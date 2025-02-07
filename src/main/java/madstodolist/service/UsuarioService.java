@@ -65,7 +65,7 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public UsuarioData findById(int usuarioId) {
+    public UsuarioData findById(Long usuarioId) {
         Usuario usuario = usuarioRepository.findById(usuarioId).orElse(null);
         if (usuario == null) return null;
         else {
