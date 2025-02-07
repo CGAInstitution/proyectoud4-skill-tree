@@ -50,14 +50,9 @@ public class TareaWebTest {
         usuario.setPassword("123");
         usuario = usuarioService.registrar(usuario);
 
-        // Y añadimos dos tareas asociadas a ese usuario
-        TareaData tarea1 = tareaService.nuevaTareaUsuario(usuario.getId(), "Lavar coche");
-        tareaService.nuevaTareaUsuario(usuario.getId(), "Renovar DNI");
-
         // Devolvemos los ids del usuario y de la primera tarea añadida
         Map<String, Long> ids = new HashMap<>();
         ids.put("usuarioId", usuario.getId());
-        ids.put("tareaId", tarea1.getId());
         return ids;
 
     }

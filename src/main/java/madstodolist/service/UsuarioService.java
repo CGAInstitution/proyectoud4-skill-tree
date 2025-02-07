@@ -29,7 +29,7 @@ public class UsuarioService {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(eMail);
         if (!usuario.isPresent()) {
             return LoginStatus.USER_NOT_FOUND;
-        } else if (!usuario.get().getPassword().equals(password)) {
+        } else if (!usuario.get().getContraseña().equals(password)) {
             return LoginStatus.ERROR_PASSWORD;
         } else {
             return LoginStatus.LOGIN_OK;
@@ -65,7 +65,7 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public UsuarioData findById(Long usuarioId) {
+    public UsuarioData findById(int usuarioId) {
         Usuario usuario = usuarioRepository.findById(usuarioId).orElse(null);
         if (usuario == null) return null;
         else {

@@ -66,7 +66,6 @@ public class Tarea implements Serializable {
         if(this.usuario != usuario) {
             this.usuario = usuario;
             // Añade la tarea a la lista de tareas del usuario
-            usuario.addTarea(this);
         }
     }
 
