@@ -33,7 +33,7 @@
 <div class="note-container">
   <div th:each="nota : ${notas}">
     <!-- Cada div con la clase nota tendrá un fondo dinámico según el color de la base de datos -->
-    <div class="note" th:style="'background-color: ' + ${nota.color}">
+    <div class="note" th:style="'background-color: #' + ${nota.color}">
       <!-- Título de la nota -->
       <p th:text="${nota.titulo}">Título de la nota</p>
 
