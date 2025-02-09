@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Notas Estilo Post-it</title>
+  <link rel="stylesheet" href="/css/Escritorio.css"> <!-- Enlace al archivo CSS -->
+</head>
+<body>
+<div class="note-container">
+  <div th:each="nota : ${notas}">
+    <div class="note" th:style="'background-color: #' + ${nota.color}">
+      <p th:text="${nota.titulo}">Título de la nota</p>
+      <p th:text="${nota.descripcion}">Descripción de la nota</p>
+    </div>
+    <br/>
+  </div>
+</div>
+
+<script src="/js/script.js"></script> <!-- Enlace al archivo JS -->
+</body>
+</html>

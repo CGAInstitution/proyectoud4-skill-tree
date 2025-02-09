@@ -4,6 +4,7 @@ import madstodolist.authentication.ManagerUserSession;
 import madstodolist.dto.LoginData;
 import madstodolist.dto.RegistroData;
 import madstodolist.dto.UsuarioData;
+import madstodolist.model.Escritorio;
 import madstodolist.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,10 +45,11 @@ public class LoginController {
 
         if (loginStatus == UsuarioService.LoginStatus.LOGIN_OK) {
             UsuarioData usuario = usuarioService.findByEmail(loginData.geteMail());
-
             managerUserSession.logearUsuario(usuario.getId());
 
-            return "redirect:/usuarios/" + usuario.getId() + "/tareas";
+            Escritorio primerEscritorio = usuarioService.obtenerPrimerEscritorio(usuario.getId());
+            return "redirect:/usuarios/" + usuario.getId() + "/escritorios/" + primerEscritorio.getId();
+
         } else if (loginStatus == UsuarioService.LoginStatus.USER_NOT_FOUND) {
             model.addAttribute("error", "No existe usuario");
             return "formLogin";

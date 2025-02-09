@@ -14,9 +14,9 @@ create table Usuarios(
 create table Escritorios(
 	id BIGINT primary key auto_increment,
     nombre varchar(20) not null,
-    idUsuario BIGINT not null,
+    id_Usuario BIGINT not null,
     
-    foreign key Escritorios(idUsuario) references Usuarios(id)
+    foreign key Escritorios(id_Usuario) references Usuarios(id)
 );
 
 
@@ -33,12 +33,12 @@ create table Notas(
 	titulo varchar(30) not null,
     descripcion mediumtext,
     color varchar(6) not null,
-    idCreador BIGINT not null,
-    idEscritorio BIGINT not null,
+    id_Creador BIGINT not null,
+    id_Escritorio BIGINT not null,
     idCategoria BIGINT not null,
-    foreign key (idCreador) references Usuarios(id),
+    foreign key (id_Creador) references Usuarios(id),
      foreign key (idCategoria) references Categorias(id),
-    foreign key (idEscritorio) references Escritorios(id)
+    foreign key (id_Escritorio) references Escritorios(id)
 );
 
 create table Preferencias(
@@ -61,3 +61,13 @@ create table Usuarios_Notas(
 );
 
 insert into Usuarios(email, nombre, apellidos, contraseña) values ("admin@gmail.com","Administrador","Admin","123");
+
+
+insert into Escritorios(nombre, id_Usuario) values ("Escritorio1",1);
+
+insert into Escritorios(nombre, id_Usuario) values ("Escritorio2",1);
+insert into Categorias(color,nombre,idUsuario) values ("43e24f","importante",1);
+
+insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria) values ("Nota 1"," Esta es mi primera nota","43e24f",1,1,1);
+insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria) values ("Nota 2"," Esta es mi segunda nota","43224f",1,1,1);
+insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria) values ("Nota 3"," Esta es mi tercera nota","f3e28f",1,2,1);
