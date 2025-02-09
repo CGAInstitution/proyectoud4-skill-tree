@@ -4,6 +4,7 @@ import madstodolist.model.Nota;
 import madstodolist.model.Usuario;
 import madstodolist.repository.NotaRepository;
 import madstodolist.repository.UsuarioRepository;
+import madstodolist.service.EscritorioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,22 +16,19 @@ import java.util.List;
 @Controller
 public class EscritorioController {
 
-    private final NotaRepository notaRepository;
-    @Autowired
-    private UsuarioRepository usuarioRepository; // Aquí se inyecta el repository
+    private final EscritorioService escritorioService;
 
-    public EscritorioController(NotaRepository notaRepository) {
-        this.notaRepository = notaRepository;
+    @Autowired
+    public EscritorioController(EscritorioService escritorioService) {
+        this.escritorioService = escritorioService;
     }
 
     @GetMapping("/usuarios/{id}/escritorio")
     public String mostrarEscritorio(@PathVariable(value="id") Long idUsuario, Model model) {
-        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        List<Nota> notas = escritorioService.obtenerNotasPorUsuario(idUsuario);
 
-        if (usuario != null) {
-            List<Nota> notas = notaRepository.findByIdCreador(usuario);
+        if (notas != null) {
             System.out.println("Número de notas encontradas: " + notas.size()); // Agregar un log de la cantidad de notas
-
             model.addAttribute("notas", notas);
         } else {
             System.out.println("Usuario no encontrado.");
