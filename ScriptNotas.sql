@@ -33,10 +33,10 @@ create table Notas(
 	titulo varchar(30) not null,
     descripcion mediumtext,
     color varchar(6) not null,
-    idCreador BIGINT not null,
+    id_Creador BIGINT not null,
     idEscritorio BIGINT not null,
     idCategoria BIGINT not null,
-    foreign key (idCreador) references Usuarios(id),
+    foreign key (id_Creador) references Usuarios(id),
      foreign key (idCategoria) references Categorias(id),
     foreign key (idEscritorio) references Escritorios(id)
 );
@@ -61,3 +61,10 @@ create table Usuarios_Notas(
 );
 
 insert into Usuarios(email, nombre, apellidos, contraseña) values ("admin@gmail.com","Administrador","Admin","123");
+
+
+insert into Escritorios(nombre, idUsuario) values ("Escritorio1",1);
+insert into Categorias(color,nombre,idUsuario) values ("43e24f","importante",1);
+
+insert into Notas(titulo,descripcion,color,id_Creador,idEscritorio,idCategoria) values ("Nota 1"," Esta es mi primera nota","43e24f",1,1,1);
+insert into Notas(titulo,descripcion,color,id_Creador,idEscritorio,idCategoria) values ("Nota 2"," Esta es mi segunda nota","43e24f",1,1,1);
