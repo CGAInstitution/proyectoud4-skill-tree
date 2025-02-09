@@ -1,7 +1,9 @@
 package madstodolist.service;
 
 import madstodolist.dto.UsuarioData;
+import madstodolist.model.Escritorio;
 import madstodolist.model.Usuario;
+import madstodolist.repository.EscritorioRepository;
 import madstodolist.repository.UsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -23,6 +25,8 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private EscritorioRepository escritorioRepository;
 
     @Transactional(readOnly = true)
     public LoginStatus login(String eMail, String password) {
@@ -71,5 +75,14 @@ public class UsuarioService {
         else {
             return modelMapper.map(usuario, UsuarioData.class);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Escritorio obtenerPrimerEscritorio(Long usuarioId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new UsuarioServiceException("Usuario no encontrado"));
+
+        return escritorioRepository.findFirstByIdUsuarioOrderByIdAsc(usuario)
+                .orElseThrow(() -> new UsuarioServiceException("No se encontró un escritorio para el usuario"));
     }
 }

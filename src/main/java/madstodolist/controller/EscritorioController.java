@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,15 +24,17 @@ public class EscritorioController {
         this.escritorioService = escritorioService;
     }
 
-    @GetMapping("/usuarios/{id}/escritorio")
-    public String mostrarEscritorio(@PathVariable(value="id") Long idUsuario, Model model) {
-        List<Nota> notas = escritorioService.obtenerNotasPorUsuario(idUsuario);
+    @GetMapping("/usuarios/{idUsuario}/escritorios/{idEscritorio}")
+    public String mostrarEscritorio(@PathVariable Long idUsuario, @PathVariable Long idEscritorio, Model model) {
+        //ahora no se usa el idUsuario, pero habria que mantenerlo para en un futuro revisar que no ponga un escritorio de otra gente
+        List<Nota> notas = escritorioService.obtenerNotasPorEscritorio(idEscritorio);
 
-        if (notas != null) {
-            System.out.println("Número de notas encontradas: " + notas.size()); // Agregar un log de la cantidad de notas
+        if (notas != null && !notas.isEmpty()) {
+            System.out.println("Número de notas encontradas: " + notas.size());
             model.addAttribute("notas", notas);
         } else {
-            System.out.println("Usuario no encontrado.");
+            System.out.println("No hay notas en este escritorio.");
+            model.addAttribute("notas", new ArrayList<>());
         }
 
         return "escritorio"; // Thymeleaf usará "escritorio.html"

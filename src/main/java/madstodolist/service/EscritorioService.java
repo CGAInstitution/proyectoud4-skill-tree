@@ -1,8 +1,10 @@
 package madstodolist.service;
 
 
+import madstodolist.model.Escritorio;
 import madstodolist.model.Nota;
 import madstodolist.model.Usuario;
+import madstodolist.repository.EscritorioRepository;
 import madstodolist.repository.NotaRepository;
 import madstodolist.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,20 +16,18 @@ import java.util.List;
 public class EscritorioService {
 
     private final NotaRepository notaRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final EscritorioRepository escritorioRepository;
 
     @Autowired
-    public EscritorioService(NotaRepository notaRepository, UsuarioRepository usuarioRepository) {
+    public EscritorioService(NotaRepository notaRepository, EscritorioRepository escritorioRepository) {
         this.notaRepository = notaRepository;
-        this.usuarioRepository = usuarioRepository;
+        this.escritorioRepository = escritorioRepository;
     }
 
-    public List<Nota> obtenerNotasPorUsuario(Long idUsuario) {
-        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
-        if (usuario != null) {
-            return notaRepository.findByIdCreador(usuario);
-        } else {
-            return null;
-        }
+    public List<Nota> obtenerNotasPorEscritorio(Long idEscritorio) {
+        Escritorio escritorio = escritorioRepository.findById(idEscritorio)
+                .orElseThrow(() -> new RuntimeException("Escritorio no encontrado"));
+
+        return notaRepository.findByIdEscritorio(escritorio);
     }
 }
