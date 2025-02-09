@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "escritorios", indexes = {
-        @Index(name = "Escritorios", columnList = "idUsuario")
+        @Index(name = "Escritorios", columnList = "id_Usuario")
 })
 public class Escritorio {
     @Id
@@ -23,7 +23,7 @@ public class Escritorio {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idUsuario", nullable = false)
+    @JoinColumn(name = "id_Usuario", nullable = false)
     private Usuario idUsuario;
 
     @OneToMany(mappedBy = "idEscritorio")
