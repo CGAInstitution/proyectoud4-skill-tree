@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+
+    #paper{
+        padding: 2%;
+        border: 2px solid #0c5460;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2%;
+        height: 83vh;
+
+    }
+    hr{
+        margin-top: 1%;
+        margin-bottom: 2%;
+    }
+</style>
+<body>
+    <div id="paper" th:style="'background-color: #' + ${nota.color}">
+        <h1 contenteditable="true" th:text="${nota.titulo}">Titulo de la nota</h1>
+        <hr>
+        <div contenteditable="true" th:text="${nota.descripcion}">
+            Text...
+        </div>
+    </div>
+
+
+
+</body>
+</html>
