@@ -1,0 +1,76 @@
+.form-div {
+    background-color: #FFF9C4;
+    border: 1px solid #F0E68C;
+    border-radius: 8px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+
+    /*Para que el div esté en el centro de la página*/
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h1 {
+    color: #4A4A4A;
+    font-family: 'Caveat', cursive;
+    font-size: 5rem;
+    text-align: center;
+}
+
+label {
+    color: #5a4a42;
+    font-family: 'Arial', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+input {
+    background-color: #fffbe6;
+    border: 2px solid #e0c57e;
+    border-radius: 8px;
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+input:focus {
+    border-color: #ffcc00;
+    box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+}
+
+button {
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 8px;
+    color: #5a4a42;
+    cursor: pointer;
+    display: block;
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 12px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #e0b800;
+}
+
+a {
+    color: #008B8B;
+    display: block;
+    font-family: 'Arial', sans-serif;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #006666;
+    text-decoration: underline;
+}
