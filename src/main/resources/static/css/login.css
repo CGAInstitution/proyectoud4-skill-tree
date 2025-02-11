@@ -1,15 +1,14 @@
+body {
+    height: 90vh;
+}
+
 .form-div {
     background-color: #FFF9C4;
     border: 1px solid #F0E68C;
     border-radius: 8px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
+    margin-top: 4%;
     padding: 20px;
-
-    /*Para que el div esté en el centro de la página*/
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 h1 {
@@ -42,7 +41,7 @@ input:focus {
     box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
 }
 
-button {
+.submit-button {
     background-color: #ffcc00;
     border: none;
     border-radius: 8px;
@@ -56,7 +55,7 @@ button {
     transition: 0.3s;
 }
 
-button:hover {
+.submit-button:hover {
     background-color: #e0b800;
 }
 

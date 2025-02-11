@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -38,26 +40,40 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String loginSubmit(@ModelAttribute LoginData loginData, Model model, HttpSession session) {
+    public String loginSubmit(@ModelAttribute("loginData") @Valid LoginData loginData,
+                              BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes,
+                              HttpSession session) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/login";
+        }
 
         // Llamada al servicio para comprobar si el login es correcto
-        UsuarioService.LoginStatus loginStatus = usuarioService.login(loginData.geteMail(), loginData.getPassword());
+        UsuarioService.LoginStatus loginStatus = usuarioService.login(loginData.getEmail(), loginData.getPassword());
+
+        if (loginStatus == UsuarioService.LoginStatus.USER_NOT_FOUND) {
+            redirectAttributes.addFlashAttribute("errors",
+                    new ObjectError("conversion", "El usuario no existe"));
+            return "redirect:/login";
+        }
+
+        if (loginStatus == UsuarioService.LoginStatus.ERROR_PASSWORD) {
+            redirectAttributes.addFlashAttribute("errors",
+                    new ObjectError("conversion", "Contraseña incorrecta"));
+            return "redirect:/login";
+        }
 
         if (loginStatus == UsuarioService.LoginStatus.LOGIN_OK) {
-            UsuarioData usuario = usuarioService.findByEmail(loginData.geteMail());
+            UsuarioData usuario = usuarioService.findByEmail(loginData.getEmail());
             managerUserSession.logearUsuario(usuario.getId());
 
             Escritorio primerEscritorio = usuarioService.obtenerPrimerEscritorio(usuario.getId());
             return "redirect:/usuarios/" + usuario.getId() + "/escritorios/" + primerEscritorio.getId();
 
-        } else if (loginStatus == UsuarioService.LoginStatus.USER_NOT_FOUND) {
-            model.addAttribute("error", "No existe usuario");
-            return "formLogin";
-        } else if (loginStatus == UsuarioService.LoginStatus.ERROR_PASSWORD) {
-            model.addAttribute("error", "Contraseña incorrecta");
-            return "formLogin";
         }
-        return "formLogin";
+
+        return "login";
     }
 
     @GetMapping("/registro")

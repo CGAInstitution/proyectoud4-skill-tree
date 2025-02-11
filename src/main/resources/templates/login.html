@@ -1,31 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="fragments :: head (titulo='Login')"></head>
+<head th:replace="fragments :: head-full (titulo='Login')"></head>
 <link rel="stylesheet" th:href="@{/css/login.css}">
 <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
 <body>
-  <div class="form-div w-50">
-    <h1>Proyecto Notas</h1>
+  <form method="post" th:action="@{/login}" th:object="${loginData}" class="h-100 w-100">
+    <div class="form-div w-50 mx-auto">
+      <h1>Proyecto Notas</h1>
 
-    <form>
-      <div class="mx-auto mt-5 w-50">
-        <label for="email" class="mr-5">Email</label>
-        <input id="email" type="email" class="w-100"/>
-      </div>
+        <div class="mx-auto mt-5 w-50">
+          <label for="email" class="mr-5">Email</label>
+          <input id="email" type="email" class="w-100" th:field="*{email}"/>
+        </div>
 
-      <div class="mx-auto mt-5 w-50">
-        <label for="password" class="mr-5">Contraseña</label>
-        <input id="password" type="password" class="w-100"/>
-      </div>
+        <div class="mx-auto mt-5 w-50">
+          <label for="password" class="mr-5">Contraseña</label>
+          <input id="password" type="password" class="w-100" th:field="*{password}"/>
+        </div>
 
+        <button type="submit" class="submit-button mx-auto mt-5 mb-5 w-25">Log-In</button>
 
-      <button type="submit" class="mx-auto mt-5 mb-5 w-25">Log-In</button>
+        <a href="#">¿O todavía no tienes cuenta?</a>
+    </div>
 
-      <a href="#">¿O todavía no tienes cuenta?</a>
-    </form>
-  </div>
+    <div th:if="${errors}" role="alert"
+         class="error-div alert alert-danger alert-dismissible fade show w-25 mx-auto mt-5">
+      <p th:each="error : ${errors}" th:text="${error.defaultMessage}"></p>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </form>
 
-
-  <div th:replace="fragments::javascript"/>
+  <div th:replace="fragments::javascript-full"/>
 </body>
 </html>
