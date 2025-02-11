@@ -41,7 +41,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String loginSubmit(@ModelAttribute("loginData") @Valid LoginData loginData,
-                              BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes,
+                              BindingResult bindingResult, RedirectAttributes redirectAttributes,
                               HttpSession session) {
 
         if (bindingResult.hasErrors()) {
@@ -54,13 +54,13 @@ public class LoginController {
 
         if (loginStatus == UsuarioService.LoginStatus.USER_NOT_FOUND) {
             redirectAttributes.addFlashAttribute("errors",
-                    new ObjectError("conversion", "El usuario no existe"));
+                    new ObjectError("login", "El usuario no existe"));
             return "redirect:/login";
         }
 
         if (loginStatus == UsuarioService.LoginStatus.ERROR_PASSWORD) {
             redirectAttributes.addFlashAttribute("errors",
-                    new ObjectError("conversion", "Contraseña incorrecta"));
+                    new ObjectError("login", "Contraseña incorrecta"));
             return "redirect:/login";
         }
 
@@ -83,25 +83,28 @@ public class LoginController {
     }
 
    @PostMapping("/registro")
-   public String registroSubmit(@Valid RegistroData registroData, BindingResult result, Model model) {
+   public String registroSubmit(@ModelAttribute("registroData") @Valid RegistroData registroData,
+                                BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        if (result.hasErrors()) {
-            return "registro";
-        }
+       if (bindingResult.hasErrors()) {
+           redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+           return "redirect:/registro";
+       }
 
         if (usuarioService.findByEmail(registroData.getEmail()) != null) {
-            model.addAttribute("registroData", registroData);
-            model.addAttribute("error", "El usuario " + registroData.getEmail() + " ya existe");
-            return "registro";
+            redirectAttributes.addFlashAttribute("errors",
+                    new ObjectError("registro", "El email ya existe"));
+            return "redirect:/registro";
         }
 
         UsuarioData usuario = new UsuarioData();
         usuario.setEmail(registroData.getEmail());
-        usuario.setPassword(registroData.getPassword());
-        usuario.setFechaNacimiento(registroData.getFechaNacimiento());
+        usuario.setContraseña(registroData.getPassword());
         usuario.setNombre(registroData.getNombre());
+        usuario.setApellidos(registroData.getApellidos());
 
         usuarioService.registrar(usuario);
+       System.out.println("Usuario registrado con éxito");
         return "redirect:/login";
    }
 

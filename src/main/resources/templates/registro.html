@@ -11,26 +11,26 @@
 
         <div class="my-div">
           <label for="nombre" style="display: none">Nombre</label>
-          <input id="nombre" type="text" placeholder="Nombre" class="register-input w-100"/>
+          <input id="nombre" type="text" placeholder="Nombre" class="register-input w-100" th:field="*{nombre}"/>
         </div>
 
         <div class="my-div">
           <label for="apellidos" style="display: none">Apellidos</label>
-          <input id="apellidos" type="text" placeholder="Apellidos" class="register-input w-100"/>
+          <input id="apellidos" type="text" placeholder="Apellidos" class="register-input w-100" th:field="*{apellidos}"/>
         </div>
       </div>
 
       <div class="mt-5 mx-auto w-50">
         <label for="email" style="display: none">Email</label>
-        <input id="email" type="email" placeholder="Email" class="register-input w-100"/>
+        <input id="email" type="email" placeholder="Email" class="register-input w-100" th:field="*{email}"/>
       </div>
 
       <div class="mt-5 mx-auto w-50">
-        <label for="password" style="display: none">Email</label>
-        <input id="password" type="password" placeholder="Contraseña" class="register-input w-100"/>
+        <label for="password" style="display: none">Contraseña</label>
+        <input id="password" type="password" placeholder="Contraseña" class="register-input w-100" th:field="*{password}"/>
       </div>
 
-      <button type="submit" class="submit-button mx-auto mt-5 mb-5 w-25">Log-In</button>
+      <button type="submit" class="submit-button mx-auto mt-5 mb-5 w-25">Registrar</button>
 
       <a th:href="@{/login}">¿Ya tienes una cuenta?</a>
 

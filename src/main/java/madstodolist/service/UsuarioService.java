@@ -50,11 +50,19 @@ public class UsuarioService {
             throw new UsuarioServiceException("El usuario " + usuario.getEmail() + " ya está registrado");
         else if (usuario.getEmail() == null)
             throw new UsuarioServiceException("El usuario no tiene email");
-        else if (usuario.getPassword() == null)
+        else if (usuario.getContraseña() == null)
             throw new UsuarioServiceException("El usuario no tiene password");
         else {
             Usuario usuarioNuevo = modelMapper.map(usuario, Usuario.class);
+
+            //Guardamos al usuario con un escritorio vacío por defecto
+            Escritorio escritorio = new Escritorio();
+            escritorio.setNombre("Escritorio 1");
+            usuarioNuevo.addEscritorio(escritorio);
+
             usuarioNuevo = usuarioRepository.save(usuarioNuevo);
+            escritorio.setIdUsuario(usuarioNuevo);
+            escritorioRepository.save(escritorio);
             return modelMapper.map(usuarioNuevo, UsuarioData.class);
         }
     }

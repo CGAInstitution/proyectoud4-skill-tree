@@ -22,7 +22,7 @@ public class UsuarioServiceTest {
         UsuarioData usuario = new UsuarioData();
         usuario.setEmail("user@ua");
         usuario.setNombre("Usuario Ejemplo");
-        usuario.setPassword("123");
+        usuario.setContraseña("123");
         UsuarioData nuevoUsuario = usuarioService.registrar(usuario);
         return nuevoUsuario.getId();
     }
@@ -63,7 +63,7 @@ public class UsuarioServiceTest {
 
         UsuarioData usuario = new UsuarioData();
         usuario.setEmail("usuario.prueba2@gmail.com");
-        usuario.setPassword("12345678");
+        usuario.setContraseña("12345678");
 
         usuarioService.registrar(usuario);
 
@@ -103,7 +103,7 @@ public class UsuarioServiceTest {
 
         UsuarioData usuario = new UsuarioData();
         usuario.setEmail("user@ua");
-        usuario.setPassword("12345678");
+        usuario.setContraseña("12345678");
 
         Assertions.assertThrows(UsuarioServiceException.class, () -> {
             usuarioService.registrar(usuario);
@@ -119,7 +119,7 @@ public class UsuarioServiceTest {
 
         UsuarioData usuario = new UsuarioData();
         usuario.setEmail("usuario.prueba@gmail.com");
-        usuario.setPassword("12345678");
+        usuario.setContraseña("12345678");
 
         UsuarioData usuarioNuevo = usuarioService.registrar(usuario);
 
