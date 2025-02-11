@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments :: head-full (titulo='Registro')"></head>
+<link rel="stylesheet" th:href="@{/css/registro.css}">
+<body>
+  <form method="post" th:action="@{/registro}" th:object="${registroData}" class="h-100 w-100">
+    <div class="form-div w-50 mx-auto">
+      <h1>Registro</h1>
+
+      <div class="nombre-apellidos-div mx-auto mt-5 d-flex justify-content-evenly">
+
+        <div class="my-div">
+          <label for="nombre" style="display: none">Nombre</label>
+          <input id="nombre" type="text" placeholder="Nombre" class="register-input w-100"/>
+        </div>
+
+        <div class="my-div">
+          <label for="apellidos" style="display: none">Apellidos</label>
+          <input id="apellidos" type="text" placeholder="Apellidos" class="register-input w-100"/>
+        </div>
+      </div>
+
+      <div class="mt-5 mx-auto w-50">
+        <label for="email" style="display: none">Email</label>
+        <input id="email" type="email" placeholder="Email" class="register-input w-100"/>
+      </div>
+
+      <div class="mt-5 mx-auto w-50">
+        <label for="password" style="display: none">Email</label>
+        <input id="password" type="password" placeholder="Contraseña" class="register-input w-100"/>
+      </div>
+
+      <button type="submit" class="submit-button mx-auto mt-5 mb-5 w-25">Log-In</button>
+
+      <a th:href="@{/login}">¿Ya tienes una cuenta?</a>
+
+    </div>
+    <div th:if="${errors}" role="alert"
+         class="error-div alert alert-danger alert-dismissible fade show w-25 mx-auto mt-5">
+      <p th:each="error : ${errors}" th:text="${error.defaultMessage}"></p>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </form>
+
+<div th:replace="fragments::javascript-full"/>
+</body>
+</html>

@@ -2,7 +2,6 @@
 <html lang="en">
 <head th:replace="fragments :: head-full (titulo='Login')"></head>
 <link rel="stylesheet" th:href="@{/css/login.css}">
-<link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
 <body>
   <form method="post" th:action="@{/login}" th:object="${loginData}" class="h-100 w-100">
     <div class="form-div w-50 mx-auto">
@@ -20,7 +19,7 @@
 
         <button type="submit" class="submit-button mx-auto mt-5 mb-5 w-25">Log-In</button>
 
-        <a href="#">¿O todavía no tienes cuenta?</a>
+        <a th:href="@{/registro}">¿O todavía no tienes cuenta?</a>
     </div>
 
     <div th:if="${errors}" role="alert"
