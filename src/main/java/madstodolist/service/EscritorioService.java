@@ -11,9 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class EscritorioService {
+public class  EscritorioService {
 
     private final NotaRepository notaRepository;
     private final EscritorioRepository escritorioRepository;
@@ -29,5 +30,16 @@ public class EscritorioService {
                 .orElseThrow(() -> new RuntimeException("Escritorio no encontrado"));
 
         return notaRepository.findByIdEscritorio(escritorio);
+    }
+    public boolean actualizarPosicionNota(Long idNota, Integer posicionX, Integer posicionY) {
+        Optional<Nota> optionalNota = notaRepository.findById(idNota);
+        if (optionalNota.isPresent()) {
+            Nota nota = optionalNota.get();
+            nota.setPosicionX(posicionX);
+            nota.setPosicionY(posicionY);
+            notaRepository.save(nota);
+            return true;
+        }
+        return false;
     }
 }

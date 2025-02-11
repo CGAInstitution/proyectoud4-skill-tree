@@ -6,13 +6,15 @@ import madstodolist.repository.NotaRepository;
 import madstodolist.repository.UsuarioRepository;
 import madstodolist.service.EscritorioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class EscritorioController {
@@ -39,4 +41,22 @@ public class EscritorioController {
 
         return "escritorio"; // Thymeleaf usará "escritorio.html"
     }
+
+    @PostMapping("/notas/{idNota}/actualizar-posicion")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> actualizarPosicionNota(
+            @PathVariable Long idNota,
+            @RequestBody Map<String, Object> requestData) {
+
+        Integer posicionX = (Integer) requestData.get("posicionX");
+        Integer posicionY = (Integer) requestData.get("posicionY");
+
+        boolean success = escritorioService.actualizarPosicionNota(idNota, posicionX, posicionY);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", success);
+
+        return ResponseEntity.ok(response);
+    }
+
 }
