@@ -26,11 +26,43 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.addEventListener("mouseup", () => {
-        isDragging = false;
-        if (activeNoteContainer) {
-            activeNoteContainer.style.cursor = "move";
-            activeNoteContainer.style.zIndex = "1";
-            activeNoteContainer = null;
-        }
+      if (isDragging && activeNoteContainer) {
+                 const idNota = activeNoteContainer.getAttribute("data-id");  // Se asume que la nota tiene un atributo 'data-id'
+                 const newPosX = event.clientX - offsetX;
+                 const newPosY = event.clientY - offsetY;
+
+                 // Enviar la nueva posición al servidor
+                 fetch(`/notas/${idNota}/actualizar-posicion`, {
+                     method: "POST",
+                     headers: {
+                         "Content-Type": "application/json"
+                     },
+                     body: JSON.stringify({
+                         posicionX: newPosX,
+                         posicionY: newPosY
+                     })
+                 })
+                 .then(response => response.json())
+                 .then(data => {
+                     if (data.success) {
+                         console.log("Posición actualizada correctamente");
+                     } else {
+                         console.log("Error al actualizar la posición");
+                     }
+                 })
+                 .catch(error => {
+                     console.error("Error de red", error);
+                 });
+
+                 // Restaurar el estilo de la nota
+                 activeNoteContainer.style.cursor = "move";
+                 activeNoteContainer.style.zIndex = "1";
+                 isDragging = false;
+                 activeNoteContainer = null;
+             }
+
+
+
+
     });
 });

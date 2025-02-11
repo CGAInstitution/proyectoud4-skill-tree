@@ -8,6 +8,7 @@
 <body>
 <div class="note-container">
   <div th:each="nota : ${notas}"
+       th:attr="data-id=${nota.id}"
        th:style="'position: absolute; left:' + ${nota.posicionX} + 'px; top:' + ${nota.posicionY} + 'px;'">
 
     <div class="note" th:style="'background-color: #' + ${nota.color}">
