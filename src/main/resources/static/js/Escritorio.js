@@ -6,11 +6,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll(".note-container > div").forEach(noteContainer => {
         noteContainer.addEventListener("mousedown", (event) => {
+            event.preventDefault();
             isDragging = true;
             activeNoteContainer = noteContainer;
 
             offsetX = event.clientX - noteContainer.getBoundingClientRect().left;
             offsetY = event.clientY - noteContainer.getBoundingClientRect().top;
+
+
+            document.body.style.userSelect = "none";
+
 
             // Asegurar que la nota esté en primer plano
             noteContainer.style.zIndex = "1000";
@@ -20,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.addEventListener("mousemove", (event) => {
         if (isDragging && activeNoteContainer) {
+            event.preventDefault();
             activeNoteContainer.style.left = `${event.clientX - offsetX}px`;
             activeNoteContainer.style.top = `${event.clientY - offsetY}px`;
         }
@@ -53,6 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
                  .catch(error => {
                      console.error("Error de red", error);
                  });
+
+                 document.body.style.userSelect = "";
 
                  // Restaurar el estilo de la nota
                  activeNoteContainer.style.cursor = "move";
