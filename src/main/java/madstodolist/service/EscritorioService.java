@@ -42,6 +42,14 @@ public class  EscritorioService {
         }
         return false;
     }
+    public boolean eliminarNota(Long idNota) {
+        Optional<Nota> optionalNota = notaRepository.findById(idNota);
+        if (optionalNota.isPresent()) {
+            notaRepository.deleteById(idNota);
+            return true;
+        }
+        return false;
+    }
 
 
 }

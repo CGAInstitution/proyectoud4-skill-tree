@@ -105,4 +105,25 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("click", function () {
         contextMenu.style.display = "none";
     });
+    document.getElementById("delete-note").addEventListener("click", function () {
+        const noteId = contextMenu.getAttribute("data-id");
+
+        if (noteId) {
+            fetch(`/notas/${noteId}/eliminar`, { method: "DELETE" })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log(`Nota con ID ${noteId} eliminada`);
+                        const noteElement = document.querySelector(`.note-container > div[data-id='${noteId}']`);
+                        if (noteElement) {
+                            noteElement.remove(); // Elimina la nota del DOM
+                        }
+                    } else {
+                        console.error("Error al eliminar la nota");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        }
+    });
+
 });

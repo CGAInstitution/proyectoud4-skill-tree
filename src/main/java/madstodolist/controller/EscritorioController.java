@@ -58,6 +58,16 @@ public class EscritorioController {
 
         return ResponseEntity.ok(response);
     }
+    @DeleteMapping("/notas/{idNota}/eliminar")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> eliminarNota(@PathVariable Long idNota) {
+        System.out.println(idNota);
+        boolean success = escritorioService.eliminarNota(idNota);
 
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", success);
+
+        return ResponseEntity.ok(response);
+    }
 
 }
