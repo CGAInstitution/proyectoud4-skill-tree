@@ -48,16 +48,16 @@ document.addEventListener("DOMContentLoaded", function () {
                          posicionY: newPosY
                      })
                  })
-                 .then(response => response.json())
-                 .then(data => {
-                     if (data.success) {
-                         console.log("Posición actualizada correctamente");
-                     } else {
-                         console.log("Error al actualizar la posición");
-                     }
-                 })
-                 .catch(error => {
-                     console.error("Error de red", error);
+                     .then(response => response.json())
+                     .then(data => {
+                         if (data.success) {
+                             console.log("Posición actualizada correctamente");
+                         } else {
+                             console.log("Error al actualizar la posición");
+                         }
+                     })
+                     .catch(error => {
+                         console.error("Error de red", error);
                  });
 
                  document.body.style.userSelect = "";

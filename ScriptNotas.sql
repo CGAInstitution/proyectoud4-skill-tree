@@ -70,6 +70,6 @@ insert into Escritorios(nombre, id_Usuario) values ("Escritorio1",1);
 insert into Escritorios(nombre, id_Usuario) values ("Escritorio2",1);
 insert into Categorias(color,nombre,idUsuario) values ("43e24f","importante",1);
 
-insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 1"," Esta es mi primera nota","43e24f",1,1,1,1000,450);
-insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 2"," Esta es mi segunda nota","43224f",1,1,1,50,200);
-insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 3"," Esta es mi tercera nota","f3e28f",1,2,1,400,200);
+insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 1"," Esta es mi primera nota","ffadad",1,1,1,1000,450);
+insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 2"," Esta es mi segunda nota","ffc6ff",1,1,1,50,200);
+insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 3"," Esta es mi tercera nota","bdb2ff",1,2,1,400,200);
