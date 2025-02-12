@@ -27,8 +27,12 @@
 
       <div class="mt-5 mx-auto w-50">
         <label for="password" style="display: none">Contraseña</label>
-        <input id="password" type="password" placeholder="Contraseña" class="register-input w-100" th:field="*{password}"/>
+        <div class="password-container">
+          <input id="password" type="password" placeholder="Contraseña" class="register-input w-100" th:field="*{password}"/>
+          <button type="button" id="togglePassword" class="password-toggle">Mostrar</button>
+        </div>
       </div>
+
 
       <button type="submit" class="submit-button mx-auto mt-5 mb-5 w-25">Registrar</button>
 
@@ -43,5 +47,6 @@
   </form>
 
 <div th:replace="fragments::javascript-full"/>
+  <script src="/js/MostrarPswd.js"></script>
 </body>
 </html>
