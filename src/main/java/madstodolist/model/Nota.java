@@ -33,6 +33,14 @@ public class Nota {
     private String color;
 
     @NotNull
+    @Column(name = "posicionX", nullable = false)
+    private Integer posicionX;
+
+    @NotNull
+    @Column(name = "posicionY", nullable = false)
+    private Integer posicionY;
+
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_Creador", nullable = false)
     private Usuario idCreador;
@@ -83,6 +91,22 @@ public class Nota {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public @NotNull Integer getPosicionX() {
+        return posicionX;
+    }
+
+    public void setPosicionX(@NotNull Integer posicionX) {
+        this.posicionX = posicionX;
+    }
+
+    public @NotNull Integer getPosicionY() {
+        return posicionY;
+    }
+
+    public void setPosicionY(@NotNull Integer posicionY) {
+        this.posicionY = posicionY;
     }
 
     public Usuario getIdCreador() {
