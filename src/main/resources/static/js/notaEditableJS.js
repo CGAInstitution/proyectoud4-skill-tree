@@ -1,11 +1,24 @@
 const app = Vue.createApp({
     data() {
         return {
-            selectedColor: '#ffffff', // Default color
+            idNota: null,
+            titleContent: null,
+            selectedColor: '#ffadad',
             showPicker: false,
             colors: ['#ffadad', '#ffd6a5', '#bcfdae', '#9bf6ff', '#a0c4ff', '#bdb2ff', '#ffc6ff'],
-            pickerPosition: { top: '0px', left: '0px' } // Position of the color picker
+            pickerPosition: { top: '0px', left: '0px' }
         };
+    },
+    mounted() {
+        // Safely access the DOM after Vue has mounted the elements
+        const paperElement = this.$refs.paper;
+        const tituloElement = this.$refs.titulo;
+
+        if (paperElement && tituloElement) {
+            this.idNota = paperElement.getAttribute("data-idNota") || 1;
+            this.titleContent = tituloElement.getAttribute("data-titleContent") || "puta";
+            this.selectedColor = paperElement.getAttribute("data-color") || '#ffadad';
+        }
     },
     watch: {
         selectedColor(newColor) {
@@ -54,6 +67,41 @@ const app = Vue.createApp({
             g = Math.max(0, g - amount);
             b = Math.max(0, b - amount);
             return `rgb(${r}, ${g}, ${b})`;
+        },
+        updateTitleContent(event){
+            this.titleContent = event.target.innerText;
+            // Clear the previous timer if it exists
+            if (this.updateTimer) {
+                clearTimeout(this.updateTimer);
+            }
+
+            // Set a new timer to send the data after 5 seconds
+            this.updateTimer = setTimeout(() => {
+                this.sendTitleToBackend(this.titleContent);
+            }, 5000); // 5000 milliseconds = 5 seconds
+        },
+        sendTitleToBackend(nuevoTitulo) {
+            // Send the data to the backend using fetch
+            fetch(`/notas/${this.idNota}/actualizar-titulo`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({titulo:nuevoTitulo})
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Título actualizado correctamente");
+                } else {
+                    console.error("Error al actualizar el título");
+                }
+            })
+            .catch(error => {
+                console.error("Error de red:", error);
+            });
+
+            // Reset the timer ID
+            this.updateTimer = null;
         }
     }
 });

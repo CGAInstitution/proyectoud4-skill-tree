@@ -2,34 +2,35 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Color Picker</title>
+    <title>Nota</title>
     <link rel="stylesheet" href="/css/notaEditableStyle.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
-    <script src="/js/notaEditableJS.js" defer></script>
+    <script th:src="@{/js/notaEditableJS.js}" src="/js/notaEditableJS.js" defer></script>
 </head>
 <body id="app">
-<div class="buttonContainer">
-    <button id="btnColor" @click="toggleColorPicker" :style="{ backgroundColor: selectedColor }"></button>
-    <button><img th:src="@{/images/download.svg}" src="../static/images/download.svg" alt="Descarga"></button>
-    <button><img th:src="@{/images/user-round.svg}" src="../static/images/user-round.svg" alt="Descarga"></button>
-    <button><img th:src="@{/images/x.svg}" src="../static/images/x.svg" alt="Descarga"></button>
-</div>
-
-<!-- Color Picker -->
-<div :class="['color-picker', { show: showPicker }]" :style="pickerPosition">
-    <div
-            v-for="color in colors"
-            :key="color"
-            class="color-option"
-            :style="{ backgroundColor: color }"
-            @click="selectColor(color)">
+    <!--Botones-->
+    <div class="buttonContainer">
+        <button id="btnColor" @click="toggleColorPicker" :style="{ backgroundColor: selectedColor }"></button>
+        <button><img th:src="@{/images/download.svg}" src="../static/images/download.svg" alt="Descarga"></button>
+        <button><img th:src="@{/images/user-round.svg}" src="../static/images/user-round.svg" alt="Descarga"></button>
+        <button><img th:src="@{/images/x.svg}" src="../static/images/x.svg" alt="Descarga"></button>
     </div>
-</div>
 
-<div id="paper" :style="{ backgroundColor: selectedColor }">
-    <h1 contenteditable="true" th:text="${nota.titulo}">Titulo de la nota</h1>
-    <hr style="height:2px; border-width:0;">
-    <div contenteditable="true" th:text="${nota.descripcion}">Text...</div>
-</div>
+    <!-- Color Picker -->
+    <div :class="['color-picker', { show: showPicker }]" :style="pickerPosition">
+        <div
+                v-for="color in colors"
+                :key="color"
+                class="color-option"
+                :style="{ backgroundColor: color }"
+                @click="selectColor(color)">
+        </div>
+    </div>
+    <!--Nota-->
+    <div ref="paper" id="paper" :style="{ backgroundColor: selectedColor }" th:attr="data-color=${nota.color}, data-idNota=${nota.idNota}">
+        <h1 ref="titulo" id="titulo" contenteditable="true" v-text="titleContent" @blur="updateTitleContent" th:attr="data-titleContent=${nota.titulo}">Titulo de la nota</h1>
+        <hr style="height:2px; border-width:0;">
+        <div id="descripcion" contenteditable="true" th:text="${nota.descripcion}" th:attr="data-desc-content=${nota.descripcion}">Text...</div>
+    </div>
 </body>
 </html>
