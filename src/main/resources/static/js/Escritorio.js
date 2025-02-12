@@ -74,3 +74,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const contextMenu = document.getElementById("context-menu");
+    let selectedNote = null;
+
+   document.querySelectorAll(".note-container").forEach(noteContainer => {
+       noteContainer.addEventListener("contextmenu", function (event) {
+           event.preventDefault(); // Evita el menú del navegador
+
+           selectedNote = noteContainer;  // Aseguramos que estamos seleccionando el contenedor, no solo el div .note
+           console.log("Nota seleccionada: ", selectedNote);  // Verifica que se seleccione correctamente
+
+           contextMenu.style.top = `${event.pageY}px`;
+           contextMenu.style.left = `${event.pageX}px`;
+           contextMenu.style.display = "block";
+       });
+   });
+
+
+    document.addEventListener("click", function () {
+        contextMenu.style.display = "none";
+    });
+
+
+
+
+        
+    });
