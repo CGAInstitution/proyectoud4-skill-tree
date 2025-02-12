@@ -36,8 +36,7 @@ public class UsuarioService {
         String hashedPassword = hashPassword(password);
         if (!usuario.isPresent()) {
             return LoginStatus.USER_NOT_FOUND;
-        } else if (!usuario.get().getContraseña().equals(hashedPassword)) {
-
+        } else if (usuario.get().getContraseña().compareTo(hashedPassword) != 0) {
             return LoginStatus.ERROR_PASSWORD;
         } else {
             return LoginStatus.LOGIN_OK;
