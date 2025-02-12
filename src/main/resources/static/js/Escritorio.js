@@ -32,73 +32,77 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.addEventListener("mouseup", () => {
-      if (isDragging && activeNoteContainer) {
-                 const idNota = activeNoteContainer.getAttribute("data-id");  // Se asume que la nota tiene un atributo 'data-id'
-                 const newPosX = event.clientX - offsetX;
-                 const newPosY = event.clientY - offsetY;
+        if (isDragging && activeNoteContainer) {
+            const idNota = activeNoteContainer.getAttribute("data-id");  // Se asume que la nota tiene un atributo 'data-id'
+            const newPosX = event.clientX - offsetX;
+            const newPosY = event.clientY - offsetY;
 
-                 // Enviar la nueva posición al servidor
-                 fetch(`/notas/${idNota}/actualizar-posicion`, {
-                     method: "POST",
-                     headers: {
-                         "Content-Type": "application/json"
-                     },
-                     body: JSON.stringify({
-                         posicionX: newPosX,
-                         posicionY: newPosY
-                     })
-                 })
-                     .then(response => response.json())
-                     .then(data => {
-                         if (data.success) {
-                             console.log("Posición actualizada correctamente");
-                         } else {
-                             console.log("Error al actualizar la posición");
-                         }
-                     })
-                     .catch(error => {
-                         console.error("Error de red", error);
-                 });
+            // Enviar la nueva posición al servidor
+            fetch(`/notas/${idNota}/actualizar-posicion`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    posicionX: newPosX,
+                    posicionY: newPosY
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("Posición actualizada correctamente");
+                    } else {
+                        console.log("Error al actualizar la posición");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error de red", error);
+                });
 
-                 document.body.style.userSelect = "";
+            document.body.style.userSelect = "";
 
-                 // Restaurar el estilo de la nota
-                 activeNoteContainer.style.cursor = "move";
-                 activeNoteContainer.style.zIndex = "1";
-                 isDragging = false;
-                 activeNoteContainer = null;
-             }
+            // Restaurar el estilo de la nota
+            activeNoteContainer.style.cursor = "move";
+            activeNoteContainer.style.zIndex = "1";
+            isDragging = false;
+            activeNoteContainer = null;
+        }
 
 
 
 
     });
 });
-
 document.addEventListener("DOMContentLoaded", function () {
     const contextMenu = document.getElementById("context-menu");
     let selectedNote = null;
 
-   document.querySelectorAll(".note-container").forEach(noteContainer => {
-       noteContainer.addEventListener("contextmenu", function (event) {
-           event.preventDefault(); // Evita el menú del navegador
 
-           selectedNote = noteContainer;  // Aseguramos que estamos seleccionando el contenedor, no solo el div .note
-           console.log("Nota seleccionada: ", selectedNote);  // Verifica que se seleccione correctamente
+    document.querySelectorAll(".note-container > div").forEach(note => {
+      
+        note.addEventListener("contextmenu", function (event) {
+            event.preventDefault();
+            activeNoteContainer = note;
+            selectedNote = note.closest('.note-container');
+            const noteId = activeNoteContainer.getAttribute("data-id");
 
-           contextMenu.style.top = `${event.pageY}px`;
-           contextMenu.style.left = `${event.pageX}px`;
-           contextMenu.style.display = "block";
-       });
-   });
+            
+
+            console.log("Nota seleccionada con ID: ", noteId);
 
 
+            contextMenu.style.top = `${event.pageY}px`;
+            contextMenu.style.left = `${event.pageX}px`;
+            contextMenu.style.display = "block";
+
+            // Establecer el data-id en el menú contextual para usarlo después
+            contextMenu.setAttribute('data-id', noteId);
+        });
+    });
+
+    // Cerrar el menú cuando se haga clic en cualquier lugar
     document.addEventListener("click", function () {
         contextMenu.style.display = "none";
     });
-
-
-
-
-        
-    });
+});
