@@ -34,8 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("mouseup", () => {
       if (isDragging && activeNoteContainer) {
                  const idNota = activeNoteContainer.getAttribute("data-id");  // Se asume que la nota tiene un atributo 'data-id'
-                 const newPosX = event.clientX - offsetX;
-                 const newPosY = event.clientY - offsetY;
+          const newPosX = Math.round(event.clientX - offsetX);
+          const newPosY = Math.round(event.clientY - offsetY);
 
                  // Enviar la nueva posición al servidor
                  fetch(`/notas/${idNota}/actualizar-posicion`, {
