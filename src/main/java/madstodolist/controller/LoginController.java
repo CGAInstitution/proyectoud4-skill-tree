@@ -34,7 +34,10 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String loginForm(Model model) {
+    public String loginForm(Model model, HttpSession session) {
+        if (managerUserSession.usuarioLogeado() != null) {
+            System.out.println("Hay sesión abierta");
+        }
         model.addAttribute("loginData", new LoginData());
         return "login";
     }
