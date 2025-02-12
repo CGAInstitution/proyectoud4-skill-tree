@@ -8,12 +8,12 @@ import javax.validation.constraints.Size;
 @Table(name = "preferencias")
 public class Preferencia {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "idUsuario", nullable = false)
     private Long id;
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuarios;
 
     @NotNull

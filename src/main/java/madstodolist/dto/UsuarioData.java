@@ -9,8 +9,9 @@ public class UsuarioData {
     private Long id;
     private String email;
     private String nombre;
-    private String password;
-    private Date fechaNacimiento;
+    private String apellidos;
+    private String contraseña;
+
 
     // Getters y setters
 
@@ -38,17 +39,19 @@ public class UsuarioData {
         this.nombre = nombre;
     }
 
-    public void setPassword(String password) { this.password = password; }
-
-    public String getPassword() { return password; }
-
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
+
+    public void setContraseña(String contraseña) { this.contraseña = contraseña; }
+
+    public String getContraseña() { return contraseña; }
+
+
 
     // Sobreescribimos equals y hashCode para que dos usuarios sean iguales
     // si tienen el mismo ID (ignoramos el resto de atributos)
