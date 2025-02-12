@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 @Service
@@ -31,9 +33,11 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public LoginStatus login(String eMail, String password) {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(eMail);
+        String hashedPassword = hashPassword(password);
         if (!usuario.isPresent()) {
             return LoginStatus.USER_NOT_FOUND;
-        } else if (!usuario.get().getContraseña().equals(password)) {
+        } else if (!usuario.get().getContraseña().equals(hashedPassword)) {
+
             return LoginStatus.ERROR_PASSWORD;
         } else {
             return LoginStatus.LOGIN_OK;
@@ -54,6 +58,7 @@ public class UsuarioService {
             throw new UsuarioServiceException("El usuario no tiene password");
         else {
             Usuario usuarioNuevo = modelMapper.map(usuario, Usuario.class);
+            usuarioNuevo.setContraseña(hashPassword(usuario.getContraseña()));
 
             //Guardamos al usuario con un escritorio vacío por defecto
             Escritorio escritorio = new Escritorio();
@@ -93,4 +98,26 @@ public class UsuarioService {
         return escritorioRepository.findFirstByIdUsuarioOrderByIdAsc(usuario)
                 .orElseThrow(() -> new UsuarioServiceException("No se encontró un escritorio para el usuario"));
     }
+
+
+    private static String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(password.getBytes());
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0'); // Agregar un cero si es necesario
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error al generar el hash de la contraseña", e);
+        }
+    }
+
 }
