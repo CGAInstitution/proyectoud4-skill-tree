@@ -50,7 +50,6 @@ public class Nota {
     @JoinColumn(name = "id_Escritorio", nullable = false)
     private Escritorio idEscritorio;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria idCategoria;
