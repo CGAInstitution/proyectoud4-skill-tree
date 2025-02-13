@@ -3,30 +3,30 @@ package madstodolist.dto;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 // Clase de datos para el formulario de registro
 public class RegistroData {
-    @Email
-    private String eMail;
-    private String password;
+    @NotBlank(message = "El nombre no puede estar vacío")
     private String nombre;
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date fechaNacimiento;
 
-    public String getEmail() {
-        return eMail;
-    }
+    @NotBlank(message = "Los apellidos no pueden estar vacíos")
+    private String apellidos;
 
-    public void setEmail(String eMail) {
-        this.eMail = eMail;
-    }
+    @NotBlank(message = "El email no puede estar vacío")
+    @Email(message = "El email debe tener un formato correcto")
+    private String email;
 
-    public String getPassword() {
-        return password;
-    }
+    @NotBlank(message = "La contraseña no puede estar vacía")
+    private String password;
 
-    public void setPassword(String password) {
+    public RegistroData() {}
+
+    public RegistroData(String nombre, String apellidos, String email, String password) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.email = email;
         this.password = password;
     }
 
@@ -38,11 +38,27 @@ public class RegistroData {
         this.nombre = nombre;
     }
 
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

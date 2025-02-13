@@ -16,7 +16,7 @@ create table Escritorios(
     nombre varchar(20) not null,
     id_Usuario BIGINT not null,
     
-    foreign key Escritorios(id_Usuario) references Usuarios(id)
+    foreign key Escritorios(id_Usuario) references Usuarios(id) on delete cascade
 );
 
 
@@ -26,7 +26,7 @@ create table Categorias(
     nombre varchar(15) not null,
     idUsuario BIGINT not null,
     
-    foreign key (idUsuario) references Usuarios(id)
+    foreign key (idUsuario) references Usuarios(id) on delete cascade
 );
 create table Notas(
 	id BIGINT primary key auto_increment,
@@ -37,10 +37,10 @@ create table Notas(
      posiciony int not null,
     id_Creador BIGINT not null,
     id_Escritorio BIGINT not null,
-    idCategoria BIGINT not null,
-    foreign key (id_Creador) references Usuarios(id),
-     foreign key (idCategoria) references Categorias(id),
-    foreign key (id_Escritorio) references Escritorios(id)
+    idCategoria BIGINT,
+    foreign key (id_Creador) references Usuarios(id) on delete cascade,
+     foreign key (idCategoria) references Categorias(id) on delete set null,
+    foreign key (id_Escritorio) references Escritorios(id) on delete cascade
 );
 
 create table Preferencias(
@@ -50,19 +50,19 @@ create table Preferencias(
     idioma varchar(2) not null,
     idUsuario BIGINT not null primary key,
     
-	foreign key (idUsuario) references Usuarios(id)
+	foreign key (idUsuario) references Usuarios(id) on delete cascade
 );
 
 create table Usuarios_Notas(
 	idUsuario BIGINT not null,
     idNota BIGINT not null,
     
-	foreign key (idUsuario) references Usuarios(id),
-	foreign key (idNota) references Notas(id),
+	foreign key (idUsuario) references Usuarios(id) on delete cascade,
+	foreign key (idNota) references Notas(id) on delete cascade,
     primary key(idUsuario, idNota)
 );
 
-insert into Usuarios(email, nombre, apellidos, contraseña) values ("admin@gmail.com","Administrador","Admin","123");
+insert into Usuarios(email, nombre, apellidos, contraseña) values ("admin@gmail.com","Administrador","Admin","a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3");
 
 
 insert into Escritorios(nombre, id_Usuario) values ("Escritorio1",1);

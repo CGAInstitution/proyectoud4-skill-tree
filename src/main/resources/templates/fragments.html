@@ -5,12 +5,26 @@
     <meta charset="UTF-8"/>
     <title th:text="${titulo}"></title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
 </head>
 
 <div th:fragment="javascript">
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/popper.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
+</div>
+
+<head th:fragment="head-full (titulo)">
+    <meta charset="UTF-8"/>
+    <title th:text="${titulo}"></title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+</head>
+
+<div th:fragment="javascript-full">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
 </div>
 
 </html>
