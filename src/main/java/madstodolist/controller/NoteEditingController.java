@@ -50,4 +50,18 @@ public class NoteEditingController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/notas/{idNota}/actualizar-color")
+    @ResponseBody
+    public ResponseEntity<Map<String,Object>> actualizarColor(@PathVariable Long idNota, @RequestBody Map<String, Object> requestData){
+        String color = (String) requestData.get("color");
+        System.out.println(color);
+        color=color.substring(1);
+        System.out.println(color);
+        boolean success=notaService.actualizarColorNota(idNota, color);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", success);
+
+        return ResponseEntity.ok(response);
+    }
+
 }

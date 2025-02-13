@@ -53,4 +53,15 @@ public class NotaService {
         }
         return false;
     }
+
+    public boolean actualizarColorNota(Long idNota, String color) {
+        Optional<Nota> nota = notaRepository.findById(idNota);
+        if (nota.isPresent()) {
+            Nota notaActual = nota.get();
+            notaActual.setColor(color);
+            notaRepository.save(notaActual);
+            return true;
+        }
+        return false;
+    }
 }

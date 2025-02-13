@@ -54,6 +54,8 @@ const app = Vue.createApp({
         selectColor(color) {
             this.selectedColor = color;
             this.showPicker = false;
+
+            this.sendColorToBackend(this.selectedColor)
         },
         calculatePickerPosition() {
             // Get the button's position
@@ -88,12 +90,12 @@ const app = Vue.createApp({
         updateTitleContent(event){
             this.titleContent = event.target.innerText;
             // Clear the previous timer if it exists
-            if (this.updateTimer) {
-                clearTimeout(this.updateTimer);
+            if (this.updateTimerTitle) {
+                clearTimeout(this.updateTimerTitle);
             }
 
             // Set a new timer to send the data after 5 seconds
-            this.updateTimer = setTimeout(() => {
+            this.updateTimerTitle = setTimeout(() => {
                 this.sendTitleToBackend(this.titleContent);
             }, 5000); // 5000 milliseconds = 5 seconds
         },
@@ -133,7 +135,6 @@ const app = Vue.createApp({
             }, 5000); // 5000 milliseconds = 5 seconds
         },
         sendDescriptionToBackend(nuevaDescripcion) {
-            // Send the data to the backend using fetch
             fetch(`/notas/${this.idNota}/actualizar-descripcion`, {
                 method: 'POST',
                 headers: {
@@ -154,6 +155,26 @@ const app = Vue.createApp({
 
             // Reset the timer ID
             this.updateTimer = null;
+        },
+        sendColorToBackend(nuevoColor){
+            fetch(`/notas/${this.idNota}/actualizar-color`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({color:nuevoColor})
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Color actualizado correctamente");
+                    } else {
+                        console.error("Error al actualizar el color");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error de red:", error);
+                });
+
         }
     }
 });
