@@ -36,8 +36,9 @@ public class LoginController {
     @GetMapping("/login")
     public String loginForm(Model model, HttpSession session) {
         if (managerUserSession.usuarioLogeado() != null) {
-            System.out.println("Hay sesión abierta");
+            return "redirect:/escritorio";
         }
+
         model.addAttribute("loginData", new LoginData());
         return "login";
     }
@@ -71,8 +72,7 @@ public class LoginController {
             UsuarioData usuario = usuarioService.findByEmail(loginData.getEmail());
             managerUserSession.logearUsuario(usuario.getId());
 
-            Escritorio primerEscritorio = usuarioService.obtenerPrimerEscritorio(usuario.getId());
-            return "redirect:/usuarios/" + usuario.getId() + "/escritorios/" + primerEscritorio.getId();
+            return "redirect:/escritorio";
 
         }
 
@@ -106,9 +106,9 @@ public class LoginController {
         usuario.setNombre(registroData.getNombre());
         usuario.setApellidos(registroData.getApellidos());
 
-        usuarioService.registrar(usuario);
-       System.out.println("Usuario registrado con éxito");
-        return "redirect:/login";
+        UsuarioData newUsuario = usuarioService.registrar(usuario);
+        managerUserSession.logearUsuario(newUsuario.getId());
+        return "redirect:/escritorio";
    }
 
    @GetMapping("/logout")
