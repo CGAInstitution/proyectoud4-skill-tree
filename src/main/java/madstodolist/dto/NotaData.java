@@ -12,8 +12,6 @@ import java.util.Set;
 
 public class NotaData {
 
-    @NotNull
-    private Long idNota;
     @Size(max = 30)
     @NotNull
     private String titulo;
@@ -27,8 +25,6 @@ public class NotaData {
     private Usuario idCreador;
     private Escritorio idEscritorio;
     private Categoria idCategoria;
-
-    public Long getIdNota() { return idNota; }
 
     public String getTitulo() {
         return titulo;

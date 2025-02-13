@@ -3,21 +3,38 @@ const app = Vue.createApp({
         return {
             idNota: null,
             titleContent: null,
-            selectedColor: '#ffadad',
+            descripcionContent:null,
+            selectedColor: null,
             showPicker: false,
-            colors: ['#ffadad', '#ffd6a5', '#bcfdae', '#9bf6ff', '#a0c4ff', '#bdb2ff', '#ffc6ff'],
+            colors: ['#ffadad', '#ffd6a5', '#fae890','#bcfdae', '#9bf6ff', '#a0c4ff', '#bdb2ff', '#ffc6ff'],
             pickerPosition: { top: '0px', left: '0px' }
         };
     },
     mounted() {
-        // Safely access the DOM after Vue has mounted the elements
-        const paperElement = this.$refs.paper;
-        const tituloElement = this.$refs.titulo;
+        console.log("mounted")
 
-        if (paperElement && tituloElement) {
-            this.idNota = paperElement.getAttribute("data-idNota") || 1;
-            this.titleContent = tituloElement.getAttribute("data-titleContent") || "puta";
-            this.selectedColor = paperElement.getAttribute("data-color") || '#ffadad';
+        if (this.$refs.paper){
+            this.idNota = this.$refs.paper.getAttribute("data-idNota");
+            console.log(this.idNota)
+            this.selectedColor ='#'+ this.$refs.paper.getAttribute("data-color");
+        }
+        else {
+            console.error("Referencia paper no encontrada")
+        }
+
+        if(this.$refs.titulo){
+            this.titleContent = this.$refs.titulo.getAttribute("data-titleContent") || "";
+
+        }
+        else {
+            console.error("Referencia titulo no encontrada")
+        }
+
+        if(this.$refs.descripcion){
+            this.descripcionContent =this.$refs.descripcion.getAttribute("data-desc-content") || "";
+
+        }else{
+            console.error("Referencia descripción no encontrada")
         }
     },
     watch: {
@@ -99,6 +116,41 @@ const app = Vue.createApp({
             .catch(error => {
                 console.error("Error de red:", error);
             });
+
+            // Reset the timer ID
+            this.updateTimer = null;
+        },
+        updateDescriptionContent(event){
+            this.descripcionContent = event.target.innerText;
+            // Clear the previous timer if it exists
+            if (this.updateTimer) {
+                clearTimeout(this.updateTimer);
+            }
+
+            // Set a new timer to send the data after 5 seconds
+            this.updateTimer = setTimeout(() => {
+                this.sendDescriptionToBackend(this.descripcionContent);
+            }, 5000); // 5000 milliseconds = 5 seconds
+        },
+        sendDescriptionToBackend(nuevaDescripcion) {
+            // Send the data to the backend using fetch
+            fetch(`/notas/${this.idNota}/actualizar-descripcion`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({descripcion:nuevaDescripcion})
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Descripcion actualizada correctamente");
+                    } else {
+                        console.error("Error al actualizar la descripcion");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error de red:", error);
+                });
 
             // Reset the timer ID
             this.updateTimer = null;

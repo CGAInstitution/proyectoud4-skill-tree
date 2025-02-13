@@ -27,12 +27,9 @@ public class NotaService {
 
     @Transactional(readOnly = true)
     public NotaData findById(Long idNota) {
-        Nota nota = notaRepository.findById(idNota).orElse(null);
-        if (nota == null) {
-         //Todo devuelve un error
-         return null;
-        }
-        else return modelMapper.map(nota, NotaData.class);
+        Nota nota = notaRepository.findById(idNota).orElseThrow(()->new RuntimeException("Nota no encontrada"));
+
+        return modelMapper.map(nota, NotaData.class);
     }
 
     public boolean actualizarTituloNota(Long idNota, String titulo) {
@@ -40,6 +37,17 @@ public class NotaService {
         if (nota.isPresent()) {
             Nota notaActual = nota.get();
             notaActual.setTitulo(titulo);
+            notaRepository.save(notaActual);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean actualizarDescripcionNota(Long idNota, String descripcion) {
+        Optional<Nota> nota = notaRepository.findById(idNota);
+        if (nota.isPresent()) {
+            Nota notaActual = nota.get();
+            notaActual.setDescripcion(descripcion);
             notaRepository.save(notaActual);
             return true;
         }

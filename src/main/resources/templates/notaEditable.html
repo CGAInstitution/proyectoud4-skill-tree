@@ -28,10 +28,10 @@
         </div>
     </div>
     <!--Nota-->
-    <div ref="paper" id="paper" :style="{ backgroundColor: selectedColor }" th:attr="data-color=${nota.color}, data-idNota=${nota.idNota}">
+    <div ref="paper" id="paper" :style="{ backgroundColor: selectedColor }" th:attr="data-color=${nota.color}, data-idNota=${idNota}">
         <h1 ref="titulo" id="titulo" contenteditable="true" v-text="titleContent" @blur="updateTitleContent" th:attr="data-titleContent=${nota.titulo}">Titulo de la nota</h1>
         <hr style="height:2px; border-width:0;">
-        <div id="descripcion" contenteditable="true" th:text="${nota.descripcion}" th:attr="data-desc-content=${nota.descripcion}">Text...</div>
+        <div ref="descripcion" id="descripcion" contenteditable="true" v-text="descripcionContent" @blur="updateDescriptionContent" th:attr="data-desc-content=${nota.descripcion}">Text...</div>
     </div>
 </body>
 </html>
