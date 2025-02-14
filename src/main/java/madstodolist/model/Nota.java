@@ -8,8 +8,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "notas", indexes = {
-        @Index(name = "idCreador", columnList = "idCreador"),
-        @Index(name = "idEscritorio", columnList = "idEscritorio"),
+        @Index(name = "idCreador", columnList = "id_Creador"),
+        @Index(name = "idEscritorio", columnList = "id_Escritorio"),
         @Index(name = "idCategoria", columnList = "idCategoria")
 })
 public class Nota {
@@ -42,15 +42,14 @@ public class Nota {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idCreador", nullable = false)
+    @JoinColumn(name = "id_Creador", nullable = false)
     private Usuario idCreador;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idEscritorio", nullable = false)
+    @JoinColumn(name = "id_Escritorio", nullable = false)
     private Escritorio idEscritorio;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria idCategoria;

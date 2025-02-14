@@ -1,0 +1,109 @@
+body {
+    height: 90vh;
+}
+
+.form-div {
+    background-color: #FFF9C4;
+    border: 1px solid #F0E68C;
+    border-radius: 8px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
+    margin-top: 4%;
+    padding: 20px;
+}
+
+h1 {
+    color: #4A4A4A;
+    font-family: 'Caveat', cursive;
+    font-size: 5rem;
+    text-align: center;
+}
+
+label {
+    color: #5a4a42;
+    font-family: 'Arial', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+input {
+    background-color: #fffbe6;
+    border: 2px solid #e0c57e;
+    border-radius: 8px;
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+input:focus {
+    border-color: #ffcc00;
+    box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+}
+
+.submit-button {
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 8px;
+    color: #5a4a42;
+    cursor: pointer;
+    display: block;
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 12px;
+    transition: 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #e0b800;
+}
+
+a {
+    color: #008B8B;
+    display: block;
+    font-family: 'Arial', sans-serif;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #006666;
+    text-decoration: underline;
+}
+.password-container {
+    display: flex;
+    align-items: center;
+    border: 2px solid #e0c57e;
+    border-radius: 8px;
+    background-color: #fffbe6;
+    padding: 5px;
+}
+
+.password-container input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    padding: 10px;
+    outline: none;
+}
+
+.password-toggle {
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 8px;
+    color: #5a4a42;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 8px 12px;
+    margin-left: 10px;
+    transition: 0.3s;
+}
+
+.password-toggle:hover {
+    background-color: #e0b800;
+}

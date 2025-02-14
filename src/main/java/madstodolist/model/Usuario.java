@@ -108,6 +108,10 @@ public class Usuario {
         this.escritorios = escritorios;
     }
 
+    public void addEscritorio(Escritorio escritorio) {
+        this.escritorios.add(escritorio);
+    }
+
     public Set<Nota> getNotas() {
         return notas;
     }
