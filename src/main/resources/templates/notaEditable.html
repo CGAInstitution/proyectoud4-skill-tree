@@ -45,7 +45,7 @@
             <h2>Compartir Nota</h2>
             <label for="correo">Ingresa el correo:</label>
             <input type="email" id="correo" v-model="correo" placeholder="Correo electrónico" />
-            <button @click="compartirNota">Compartir</button>
+            <button @click="compartirNota" :disabled="!correo">Compartir</button>
         </div>
     </div>
 
