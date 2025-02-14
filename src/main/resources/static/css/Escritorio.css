@@ -53,13 +53,31 @@ body {
 }
 
 #toggle-menu {
-    background-color: red;
+    background-color: #f4f4f4;
+    border-right: #bbbbbb 2px solid;
+    overflow: hidden;
     width: 0;
-
     transition: width 600ms cubic-bezier(.62,.04,.3,1.56);
     transition-delay: 100ms;
 }
 
 #toggle-menu.show {
-    width: 30%;
+    width: 35%;
+}
+
+.views-container {
+    height: 100%;
+    position: absolute;
+    top: 5%;
+}
+
+.views-menu {
+    border: #bbbbbb 1px solid;
+    border-radius: 8px;
+    height: 44%;
+    padding: 3%;
+}
+
+.row-view {
+    height: 35%;
 }
