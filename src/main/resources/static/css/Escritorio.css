@@ -1,0 +1,80 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.note-container {
+    width: 100%;
+    padding: 20px;
+}
+
+.note {
+    width: 200px;
+    height: 150px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+}
+.context-menu {
+    display: none;
+    position: absolute;
+    background: #fff8dc;
+    border: 1px solid #d4a900;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 120px;
+}
+
+.context-menu ul {
+    list-style: none;
+    padding: 5px;
+    margin: 0;
+}
+
+.context-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #5a4a42;
+    transition: background 0.2s;
+}
+
+.context-menu li:hover {
+    background: #ffcc00;
+}
+
+.note:hover {
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.note-link {
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding: 5px 0;
+    cursor: pointer;
+}
+
+.note-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.note-description {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.note-link:hover {
+    color: #333;
+    opacity: 0.9;
+}

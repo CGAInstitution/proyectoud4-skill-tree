@@ -1,7 +1,9 @@
 package madstodolist.service;
 
 import madstodolist.dto.UsuarioData;
+import madstodolist.model.Escritorio;
 import madstodolist.model.Usuario;
+import madstodolist.repository.EscritorioRepository;
 import madstodolist.repository.UsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -10,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 @Service
@@ -23,13 +27,16 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private EscritorioRepository escritorioRepository;
 
     @Transactional(readOnly = true)
     public LoginStatus login(String eMail, String password) {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(eMail);
+        String hashedPassword = hashPassword(password);
         if (!usuario.isPresent()) {
             return LoginStatus.USER_NOT_FOUND;
-        } else if (!usuario.get().getPassword().equals(password)) {
+        } else if (usuario.get().getContraseña().compareTo(hashedPassword) != 0) {
             return LoginStatus.ERROR_PASSWORD;
         } else {
             return LoginStatus.LOGIN_OK;
@@ -46,11 +53,20 @@ public class UsuarioService {
             throw new UsuarioServiceException("El usuario " + usuario.getEmail() + " ya está registrado");
         else if (usuario.getEmail() == null)
             throw new UsuarioServiceException("El usuario no tiene email");
-        else if (usuario.getPassword() == null)
+        else if (usuario.getContraseña() == null)
             throw new UsuarioServiceException("El usuario no tiene password");
         else {
             Usuario usuarioNuevo = modelMapper.map(usuario, Usuario.class);
+            usuarioNuevo.setContraseña(hashPassword(usuario.getContraseña()));
+
+            //Guardamos al usuario con un escritorio vacío por defecto
+            Escritorio escritorio = new Escritorio();
+            escritorio.setNombre("Escritorio 1");
+            usuarioNuevo.addEscritorio(escritorio);
+
             usuarioNuevo = usuarioRepository.save(usuarioNuevo);
+            escritorio.setIdUsuario(usuarioNuevo);
+            escritorioRepository.save(escritorio);
             return modelMapper.map(usuarioNuevo, UsuarioData.class);
         }
     }
@@ -72,4 +88,35 @@ public class UsuarioService {
             return modelMapper.map(usuario, UsuarioData.class);
         }
     }
+
+    @Transactional(readOnly = true)
+    public Escritorio obtenerPrimerEscritorio(Long usuarioId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new UsuarioServiceException("Usuario no encontrado"));
+
+        return escritorioRepository.findFirstByIdUsuarioOrderByIdAsc(usuario)
+                .orElseThrow(() -> new UsuarioServiceException("No se encontró un escritorio para el usuario"));
+    }
+
+
+    private static String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(password.getBytes());
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0'); // Agregar un cero si es necesario
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error al generar el hash de la contraseña", e);
+        }
+    }
+
 }

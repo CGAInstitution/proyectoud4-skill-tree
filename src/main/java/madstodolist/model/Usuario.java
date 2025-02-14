@@ -2,44 +2,55 @@ package madstodolist.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
+import javax.validation.constraints.Size;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
+
+    @Size(max = 50)
     @NotNull
+    @Column(name = "email", nullable = false, length = 50)
     private String email;
+
+    @Size(max = 20)
+    @NotNull
+    @Column(name = "nombre", nullable = false, length = 20)
     private String nombre;
-    private String password;
-    @Column(name = "fecha_nacimiento")
-    @Temporal(TemporalType.DATE)
-    private Date fechaNacimiento;
 
-    // La relación es lazy por defecto,
-    // es necesario acceder a la lista de tareas para que se carguen
-    @OneToMany(mappedBy = "usuario")
-    Set<Tarea> tareas = new HashSet<>();
+    @Size(max = 40)
+    @NotNull
+    @Column(name = "apellidos", nullable = false, length = 40)
+    private String apellidos;
 
-    // Constructor vacío necesario para JPA/Hibernate.
-    // No debe usarse desde la aplicación.
-    public Usuario() {}
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "`contraseña`", nullable = false)
+    private String contraseña;
 
-    // Constructor público con los atributos obligatorios. En este caso el correo electrónico.
-    public Usuario(String email) {
-        this.email = email;
-    }
+    @OneToMany(mappedBy = "idUsuario")
+    private Set<Categoria> categorias = new LinkedHashSet<>();
 
-    // Getters y setters atributos básicos
+    @OneToMany(mappedBy = "idUsuario")
+    private Set<Escritorio> escritorios = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "idCreador")
+    private Set<Nota> notas = new LinkedHashSet<>();
+
+    @OneToOne(mappedBy = "usuarios")
+    private Preferencia preferencia;
+
+    @ManyToMany
+    @JoinTable(name = "usuarios_notas",
+            joinColumns = @JoinColumn(name = "idUsuario"),
+            inverseJoinColumns = @JoinColumn(name = "idNota"))
+    private Set<Nota> notasCompartidas = new LinkedHashSet<>();
 
     public Long getId() {
         return id;
@@ -65,55 +76,64 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getPassword() {
-        return password;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
+    public String getContraseña() {
+        return contraseña;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
-    // Getters y setters de la relación
-
-    public Set<Tarea> getTareas() {
-        return tareas;
+    public Set<Categoria> getCategorias() {
+        return categorias;
     }
 
-    // Método helper para añadir una tarea a la lista y establecer la relación inversa
-    public void addTarea(Tarea tarea) {
-        // Si la tarea ya está en la lista, no la añadimos
-        if (tareas.contains(tarea)) return;
-        // Añadimos la tarea a la lista
-        tareas.add(tarea);
-        // Establecemos la relación inversa del usuario en la tarea
-        if (tarea.getUsuario() != this) {
-            tarea.setUsuario(this);
-        }
+    public void setCategorias(Set<Categoria> categorias) {
+        this.categorias = categorias;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Usuario usuario = (Usuario) o;
-        if (id != null && usuario.id != null)
-            // Si tenemos los ID, comparamos por ID
-            return Objects.equals(id, usuario.id);
-        // si no comparamos por campos obligatorios
-        return email.equals(usuario.email);
+    public Set<Escritorio> getEscritorios() {
+        return escritorios;
     }
 
-    @Override
-    public int hashCode() {
-        // Generamos un hash basado en los campos obligatorios
-        return Objects.hash(email);
+    public void setEscritorios(Set<Escritorio> escritorios) {
+        this.escritorios = escritorios;
     }
+
+    public void addEscritorio(Escritorio escritorio) {
+        this.escritorios.add(escritorio);
+    }
+
+    public Set<Nota> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(Set<Nota> notas) {
+        this.notas = notas;
+    }
+
+    public Preferencia getPreferencia() {
+        return preferencia;
+    }
+
+    public void setPreferencia(Preferencia preferencia) {
+        this.preferencia = preferencia;
+    }
+
+    public Set<Nota> getNotasCompartidas() {
+        return notasCompartidas;
+    }
+
+    public void setNotasCompartidas(Set<Nota> notasCompartidas) {
+        this.notasCompartidas = notasCompartidas;
+    }
+
 }

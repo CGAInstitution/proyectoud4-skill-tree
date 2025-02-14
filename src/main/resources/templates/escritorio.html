@@ -1,0 +1,38 @@
+  <!DOCTYPE html>
+  <html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>Notas Estilo Post-it</title>
+    <link rel="stylesheet" href="/css/Escritorio.css"> <!-- Enlace al archivo CSS -->
+  </head>
+  <body>
+  <div class="note-container">
+    <div th:each="nota : ${notas}"
+         th:attr="data-id=${nota.id}"
+         th:style="'position: absolute; left:' + ${nota.posicionX} + 'px; top:' + ${nota.posicionY} + 'px;'">
+
+      <div class="note" th:style="'background-color: #' + ${nota.color}">
+        <a class="note-link"
+           th:href="@{/usuarios/{idUsuario}/escritorios/{idEscritorio}/notas/{idNota}(idUsuario=1, idEscritorio=1, idNota=${nota.id})}">
+          <p th:text="${nota.titulo}" class="note-title">Título de la nota</p>
+        </a>
+        <a class="note-link"
+           th:href="@{/usuarios/{idUsuario}/escritorios/{idEscritorio}/notas/{idNota}(idUsuario=1, idEscritorio=1, idNota=${nota.id})}">
+          <p th:text="${nota.descripcion}" class="note-description">Descripción de la nota</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+<div id="context-menu" class="context-menu">
+  <ul>
+    <li id="edit-note">✏️ Editar</li>
+    <li id="delete-note">🗑️ Borrar</li>
+  </ul>
+</div>
+
+
+
+  <script src="/js/Escritorio.js"></script> <!-- Enlace al archivo JS -->
+  </body>
+  </html>
