@@ -54,6 +54,26 @@ const app = Vue.createApp({
         selectColor(color) {
             this.selectedColor = color;
             this.showPicker = false;
+            this.updateColorInBackend(color);
+        },
+        updateColorInBackend(color) {
+            fetch(`/notas/${this.idNota}/actualizar-color`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ color })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Color actualizado correctamente");
+                    } else {
+                        console.error("Error al actualizar el color");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error de red:", error);
+                });
         },
         calculatePickerPosition() {
             // Get the button's position
@@ -155,6 +175,10 @@ const app = Vue.createApp({
             // Reset the timer ID
             this.updateTimer = null;
         }
+
+
+
+
     }
 });
 
