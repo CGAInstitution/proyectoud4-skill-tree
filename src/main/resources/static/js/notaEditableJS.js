@@ -7,7 +7,9 @@ const app = Vue.createApp({
             selectedColor: null,
             showPicker: false,
             colors: ['#ffadad', '#ffd6a5', '#fae890','#bcfdae', '#9bf6ff', '#a0c4ff', '#bdb2ff', '#ffc6ff'],
-            pickerPosition: { top: '0px', left: '0px' }
+            pickerPosition: { top: '0px', left: '0px' },
+            correo: '',
+            modalVisible: false
         };
     },
     mounted() {
@@ -174,10 +176,46 @@ const app = Vue.createApp({
 
             // Reset the timer ID
             this.updateTimer = null;
+        },
+        mostrarModal() {
+            this.modalVisible = true;
+        },
+
+
+        cerrarModal() {
+            this.modalVisible = false;
+        },
+
+        compartirNota() {
+            if (this.correo) {
+                // Suponemos que el correo está asociado a un usuario
+                fetch('/notas/compartir', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        idNota: this.idNota,
+                        correo: this.correo // Asegúrate de que el backend pueda buscar el usuario por correo
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(`Nota compartida con ${this.correo}`);
+                            this.cerrarModal(); // Cierra el modal después de compartir
+                        } else {
+                            alert("Hubo un error al compartir la nota.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error al compartir:", error);
+                        alert("Error al compartir la nota.");
+                    });
+            } else {
+                alert("Por favor ingresa un correo.");
+            }
         }
-
-
-
 
     }
 });

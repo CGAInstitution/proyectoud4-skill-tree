@@ -31,6 +31,11 @@ public class NotaService {
 
         return modelMapper.map(nota, NotaData.class);
     }
+    @Transactional(readOnly = true)
+    public Nota findNotaById(Long idNota) {
+        Nota nota = notaRepository.findById(idNota).orElseThrow(()->new RuntimeException("Nota no encontrada"));
+        return nota;
+    }
 
     public boolean actualizarTituloNota(Long idNota, String titulo) {
         Optional<Nota> nota = notaRepository.findById(idNota);

@@ -12,7 +12,9 @@
     <div class="buttonContainer">
         <button id="btnColor" @click="toggleColorPicker" :style="{ backgroundColor: selectedColor }"></button>
         <button><img th:src="@{/images/download.svg}" src="../static/images/download.svg" alt="Descarga"></button>
-        <button><img th:src="@{/images/user-round.svg}" src="../static/images/user-round.svg" alt="Compartir"></button>
+
+        <button @click="mostrarModal"><img th:src="@{/images/user-round.svg}" src="../static/images/user-round.svg" alt="Compartir"></button>
+
         <button><img th:src="@{/images/trash-2.svg}" src="../static/images/trash-2.svg" alt="Eliminar"></button>
         <button><img th:src="@{/images/x.svg}" src="../static/images/x.svg" alt="Cerrar"></button>
     </div>
@@ -27,11 +29,26 @@
                 @click="selectColor(color)">
         </div>
     </div>
+
+
     <!--Nota-->
     <div ref="paper" id="paper" :style="{ backgroundColor: selectedColor }" th:attr="data-color=${nota.color}, data-idNota=${idNota}">
         <h1 ref="titulo" id="titulo" contenteditable="true" v-text="titleContent" @blur="updateTitleContent" th:attr="data-titleContent=${nota.titulo}">Titulo de la nota</h1>
         <hr style="height:2px; border-width:0;">
         <div ref="descripcion" id="descripcion" contenteditable="true" v-text="descripcionContent" @blur="updateDescriptionContent" th:attr="data-desc-content=${nota.descripcion}">Text...</div>
     </div>
+
+    <!--ventana modal para compartir-->
+    <div v-if="modalVisible" id="modalCompartir" class="modal">
+        <div class="modal-content">
+            <span class="close" @click="cerrarModal">&times;</span>
+            <h2>Compartir Nota</h2>
+            <label for="correo">Ingresa el correo:</label>
+            <input type="email" id="correo" v-model="correo" placeholder="Correo electrónico" />
+            <button @click="compartirNota">Compartir</button>
+        </div>
+    </div>
+
+
 </body>
 </html>
