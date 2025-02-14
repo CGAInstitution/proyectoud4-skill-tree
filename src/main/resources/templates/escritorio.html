@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>Notas Estilo Post-it</title>
-  <link rel="stylesheet" href="/css/Escritorio.css"> <!-- Enlace al archivo CSS -->
-</head>
+<head th:replace="fragments :: head-full (titulo='Notas Estilo Post-it')"></head>
+<link rel="stylesheet" href="/css/Escritorio.css"> <!-- Enlace al archivo CSS -->
 <body>
+
+<nav class="navbar position-absolute top-0 start-0 z-3 navbar-div">
+  <div class="container-fluid">
+    <button id="show-toggle-menu-button" class="navbar-toggler" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+
 <div class="note-container">
   <div th:each="nota : ${notas}"
        th:attr="data-id=${nota.id}"
@@ -27,6 +33,13 @@
 </div>
 
 
+<div id="toggle-menu" class="h-100 position-absolute top-0 start-0 z-3">
+  <button id="close-toggle-menu-button" class="position-absolute top-0 end-0 m-2">
+    <img th:src="@{/images/x.svg}" src="../static/images/x.svg" alt="Close Menu">
+  </button>
+</div>
+
 <script src="/js/Escritorio.js"></script> <!-- Enlace al archivo JS -->
+<div th:replace="fragments::javascript-full"/>
 </body>
 </html>

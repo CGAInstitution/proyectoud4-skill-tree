@@ -51,3 +51,15 @@ body {
 .context-menu li:hover {
     background: #ffcc00;
 }
+
+#toggle-menu {
+    background-color: red;
+    width: 0;
+
+    transition: width 600ms cubic-bezier(.62,.04,.3,1.56);
+    transition-delay: 100ms;
+}
+
+#toggle-menu.show {
+    width: 30%;
+}
