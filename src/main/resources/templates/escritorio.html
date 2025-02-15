@@ -13,11 +13,11 @@
 
       <div class="note" th:style="'background-color: #' + ${nota.color}">
         <a class="note-link"
-           th:href="@{/usuarios/{idUsuario}/escritorios/{idEscritorio}/notas/{idNota}(idUsuario=1, idEscritorio=1, idNota=${nota.id})}">
+           th:href="@{/notas/{idNota}(idNota=${nota.id})}">
           <p th:text="${nota.titulo}" class="note-title">Título de la nota</p>
         </a>
         <a class="note-link"
-           th:href="@{/usuarios/{idUsuario}/escritorios/{idEscritorio}/notas/{idNota}(idUsuario=1, idEscritorio=1, idNota=${nota.id})}">
+           th:href="@{/notas/{idNota}( idNota=${nota.id})}">
           <p th:text="${nota.descripcion}" class="note-description">Descripción de la nota</p>
         </a>
       </div>
