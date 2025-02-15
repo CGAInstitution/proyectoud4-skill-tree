@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.modelmapper.ModelMapper;
 
-import java.util.Optional;
-
 @Service
 public class NotaService {
 
@@ -27,47 +25,11 @@ public class NotaService {
 
     @Transactional(readOnly = true)
     public NotaData findById(Long idNota) {
-        Nota nota = notaRepository.findById(idNota).orElseThrow(()->new RuntimeException("Nota no encontrada"));
-
-        return modelMapper.map(nota, NotaData.class);
-    }
-    @Transactional(readOnly = true)
-    public Nota findNotaById(Long idNota) {
-        Nota nota = notaRepository.findById(idNota).orElseThrow(()->new RuntimeException("Nota no encontrada"));
-        return nota;
-    }
-
-    public boolean actualizarTituloNota(Long idNota, String titulo) {
-        Optional<Nota> nota = notaRepository.findById(idNota);
-        if (nota.isPresent()) {
-            Nota notaActual = nota.get();
-            notaActual.setTitulo(titulo);
-            notaRepository.save(notaActual);
-            return true;
+        Nota nota = notaRepository.findById(idNota).orElse(null);
+        if (nota == null) {
+         //Todo devuelve un error
+         return null;
         }
-        return false;
+        else return modelMapper.map(nota, NotaData.class);
     }
-
-    public boolean actualizarDescripcionNota(Long idNota, String descripcion) {
-        Optional<Nota> nota = notaRepository.findById(idNota);
-        if (nota.isPresent()) {
-            Nota notaActual = nota.get();
-            notaActual.setDescripcion(descripcion);
-            notaRepository.save(notaActual);
-            return true;
-        }
-        return false;
-    }
-    public boolean actualizarColorNota(Long idNota, String color) {
-        color = color.substring(1);
-        Optional<Nota> nota = notaRepository.findById(idNota);
-        if (nota.isPresent()) {
-            Nota notaActual = nota.get();
-            notaActual.setColor(color);
-            notaRepository.save(notaActual);
-            return true;
-        }
-        return false;
-    }
-
 }
