@@ -114,3 +114,30 @@ body {
     height: 5%;
     width: 100%;
 }
+
+.note:hover {
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.note-link {
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding: 5px 0;
+    cursor: pointer;
+}
+
+.note-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.note-description {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.note-link:hover {
+    color: #333;
+    opacity: 0.9;
+}

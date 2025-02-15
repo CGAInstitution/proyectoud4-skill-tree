@@ -17,13 +17,18 @@
        th:attr="data-id=${nota.id}"
        th:style="'position: absolute; left:' + ${nota.posicionX} + 'px; top:' + ${nota.posicionY} + 'px;'">
 
-    <div class="note" th:style="'background-color: #' + ${nota.color}">
-      <p th:text="${nota.titulo}">Título de la nota</p>
-      <p th:text="${nota.descripcion}">Descripción de la nota</p>
+      <div class="note" th:style="'background-color: #' + ${nota.color}">
+        <a class="note-link"
+           th:href="@{/notas/{idNota}(idNota=${nota.id})}">
+          <p th:text="${nota.titulo}" class="note-title">Título de la nota</p>
+        </a>
+        <a class="note-link"
+           th:href="@{/notas/{idNota}( idNota=${nota.id})}">
+          <p th:text="${nota.descripcion}" class="note-description">Descripción de la nota</p>
+        </a>
+      </div>
     </div>
-    <br/>
   </div>
-</div>
 
 <div id="context-menu" class="context-menu">
   <ul>
@@ -31,7 +36,6 @@
     <li id="delete-note">🗑️ Borrar</li>
   </ul>
 </div>
-
 
 <div id="toggle-menu" class="h-100 position-absolute top-0 start-0 z-3">
   <button id="close-toggle-menu-button" class="position-absolute top-0 end-0 m-2">
