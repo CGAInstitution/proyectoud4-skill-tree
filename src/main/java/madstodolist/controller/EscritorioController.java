@@ -7,6 +7,7 @@ import madstodolist.model.Nota;
 import madstodolist.model.Usuario;
 import madstodolist.service.EscritorioService;
 import madstodolist.service.UsuarioService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,13 +25,15 @@ public class EscritorioController {
     private final EscritorioService escritorioService;
     private final ManagerUserSession managerUserSession;
     private final UsuarioService usuarioService;
+    private final ModelMapper modelMapper;
 
     @Autowired
     public EscritorioController(EscritorioService escritorioService, ManagerUserSession managerUserSession,
-                                UsuarioService usuarioService) {
+                                UsuarioService usuarioService, ModelMapper modelMapper) {
         this.escritorioService = escritorioService;
         this.managerUserSession = managerUserSession;
         this.usuarioService = usuarioService;
+        this.modelMapper = modelMapper;
     }
 
     /*@GetMapping("/usuarios/{idUsuario}/escritorios/{idEscritorio}")
@@ -54,6 +57,12 @@ public class EscritorioController {
         if (managerUserSession.usuarioLogeado() == null) {
             return "redirect:/login";
         }
+
+        UsuarioData userData = usuarioService.findById(managerUserSession.usuarioLogeado());
+        Usuario currentlyLoggedUser = modelMapper.map(userData, Usuario.class);
+
+        List<Escritorio> escritorios = escritorioService.obtenerEscritoriosPorUsuario(currentlyLoggedUser);
+        model.addAttribute("escritorios", escritorios);
 
         List<Nota> notas = escritorioService.obtenerNotasPorEscritorio(managerUserSession.currentEscritorio());
 

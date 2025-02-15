@@ -65,6 +65,11 @@ body {
     width: 35%;
 }
 
+#close-toggle-menu-button {
+    background-color: transparent;
+    border: none;
+}
+
 .views-container {
     height: 100%;
     position: absolute;
@@ -78,6 +83,34 @@ body {
     padding: 3%;
 }
 
-.row-view {
-    height: 35%;
+.card {
+    height: 42%;
+    margin-bottom: 3%;
+    width: 30%;
+    max-height: 42%;
+}
+
+.escritorio-card {
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+}
+
+.escritorio-card:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0 18px 36px -18px inset;
+}
+
+.nota-card {
+    border: none;
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.nota-card:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0 18px 36px -18px inset;
+    color: white;
+}
+
+.overflow-separator {
+    height: 5%;
+    width: 100%;
 }
