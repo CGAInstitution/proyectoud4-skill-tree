@@ -143,3 +143,31 @@ body {
     color: #333;
     opacity: 0.9;
 }
+
+.settings {
+    height: 5%;
+}
+
+.icon-img {
+    filter: invert(0%) sepia(100%) saturate(5874%) hue-rotate(4deg) brightness(107%) contrast(107%);
+}
+
+.icon-img:hover {
+    border: #bbbbbb 1px solid;
+}
+
+.close-svg, .logout-svg {
+    color: black;
+}
+
+.close-svg:hover, .logout-svg:hover {
+    color: #bbbbbb;
+}
+
+.settings-svg {
+    fill: black;
+}
+
+.settings-svg:hover {
+    fill: #bbbbbb;
+}
