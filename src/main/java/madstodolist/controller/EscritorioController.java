@@ -14,10 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class EscritorioController {
@@ -101,6 +98,20 @@ public class EscritorioController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("success", success);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/escritorio/change")
+    public ResponseEntity<Map<String, Object>> changeEscritorio(@RequestBody Map<String, Long> requestData) {
+        Map<String, Object> response = new HashMap<>();
+        managerUserSession.setCurrentEscritorio(requestData.get("idEscritorio"));
+
+        if (Objects.equals(managerUserSession.currentEscritorio(), requestData.get("idEscritorio"))) {
+            response.put("success", true);
+        } else {
+            response.put("success", false);
+        }
 
         return ResponseEntity.ok(response);
     }

@@ -34,6 +34,10 @@ public class ManagerUserSession {
         return (Long) session.getAttribute("currentEscritorio");
     }
 
+    public void setCurrentEscritorio(Long idEscritorio) {
+        session.setAttribute("currentEscritorio", idEscritorio);
+    }
+
     public void logout() {
         session.setAttribute("idUsuarioLogeado", null);
     }
