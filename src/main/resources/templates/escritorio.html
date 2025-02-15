@@ -51,7 +51,7 @@
       <div class="overflow-y-scroll h-100 w-100 d-flex flex-wrap justify-content-around mb-2">
 
         <div class="card escritorio-card" th:each="escritorio : ${escritorios}"
-             th:attr="data-id=${escritorio.id}">
+             th:attr="data-id=${escritorio.id}" onclick="changeEscritorio(this)">
           <p th:text="${escritorio.nombre}" class="text-center m-auto fs-3"/>
         </div>
 

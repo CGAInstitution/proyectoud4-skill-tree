@@ -143,3 +143,26 @@ document.addEventListener("DOMContentLoaded", function () {
         toggleMenu.classList.toggle("show");
     });
 });
+
+function changeEscritorio(element) {
+    fetch("escritorio/change", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idEscritorio: element.dataset.id
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            console.log("Error al cambiar de escritorio");
+        }
+    })
+    .catch(error => {
+        console.log("Error al conectarse con el servidor", error);
+    })
+}
