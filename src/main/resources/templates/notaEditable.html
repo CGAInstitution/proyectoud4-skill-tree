@@ -11,7 +11,7 @@
     <!--Botones-->
     <div class="buttonContainer">
         <button id="btnColor" @click="toggleColorPicker" :style="{ backgroundColor: selectedColor }"></button>
-        <button><img th:src="@{/images/download.svg}" src="../static/images/download.svg" alt="Descarga"></button>
+        <button @click="downloadNota"><img th:src="@{/images/download.svg}" src="../static/images/download.svg" alt="Descarga"></button>
 
         <button @click="mostrarModal"><img th:src="@{/images/user-round.svg}" src="../static/images/user-round.svg" alt="Compartir"></button>
 

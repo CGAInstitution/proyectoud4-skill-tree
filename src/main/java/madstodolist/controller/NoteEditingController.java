@@ -11,12 +11,14 @@ import madstodolist.service.UsuarioService;
 import madstodolist.service.UsuariosNotaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -121,4 +123,20 @@ public class NoteEditingController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("notas/{idNota}/descargar")
+    public ResponseEntity<byte[]> sownloadNota(@PathVariable Long idNota) {
+        Nota nota = notaService.findNotaById(idNota);
+        String titulo = nota.getTitulo();
+        String descripcion = nota.getDescripcion();
+
+        String markdownContent = "# " + titulo + "\n" + descripcion;
+
+        byte[] contentBytes = markdownContent.getBytes(StandardCharsets.UTF_8);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=nota.md");
+        headers.add(HttpHeaders.CONTENT_TYPE, "text/markdown; charset=UTF-8");
+
+        return new ResponseEntity<>(contentBytes, headers, HttpStatus.OK);
+    }
 }

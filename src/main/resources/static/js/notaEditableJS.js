@@ -13,11 +13,8 @@ const app = Vue.createApp({
         };
     },
     mounted() {
-        console.log("mounted")
-
         if (this.$refs.paper){
             this.idNota = this.$refs.paper.getAttribute("data-idNota");
-            console.log(this.idNota)
             this.selectedColor ='#'+ this.$refs.paper.getAttribute("data-color");
         }
         else {
@@ -214,6 +211,30 @@ const app = Vue.createApp({
             } else {
                 alert("Por favor ingresa un correo.");
             }
+        },
+        downloadNota(){
+            fetch(`/notas/${this.idNota}/descargar`, {
+                method: "GET"
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Error al descargar la nota");
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = this.titleContent.replaceAll(" ", "_")+".md";
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error("Error al descargar:", error);
+                    alert("Error al descargar la nota.");
+                });
         }
     }
 });
