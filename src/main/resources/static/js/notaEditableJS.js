@@ -236,6 +236,7 @@ const app = Vue.createApp({
                     alert("Error al descargar la nota.");
                 });
         }
+
     }
 });
 
