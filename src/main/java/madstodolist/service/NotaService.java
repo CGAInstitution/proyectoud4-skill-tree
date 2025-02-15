@@ -31,6 +31,11 @@ public class NotaService {
 
         return modelMapper.map(nota, NotaData.class);
     }
+    @Transactional(readOnly = true)
+    public Nota findNotaById(Long idNota) {
+        Nota nota = notaRepository.findById(idNota).orElseThrow(()->new RuntimeException("Nota no encontrada"));
+        return nota;
+    }
 
     public boolean actualizarTituloNota(Long idNota, String titulo) {
         Optional<Nota> nota = notaRepository.findById(idNota);
@@ -53,8 +58,8 @@ public class NotaService {
         }
         return false;
     }
-
     public boolean actualizarColorNota(Long idNota, String color) {
+        color = color.substring(1);
         Optional<Nota> nota = notaRepository.findById(idNota);
         if (nota.isPresent()) {
             Nota notaActual = nota.get();
@@ -64,4 +69,5 @@ public class NotaService {
         }
         return false;
     }
+
 }
