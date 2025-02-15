@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             // Asegurar que la nota esté en primer plano
-            noteContainer.style.zIndex = "1000";
+            noteContainer.style.zIndex = "2";
             noteContainer.style.cursor = "grabbing";
         });
     });
@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 });
+
 document.addEventListener("DOMContentLoaded", function () {
     const contextMenu = document.getElementById("context-menu");
     let selectedNote = null;
@@ -126,4 +127,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    let isToggleMenuShowing = false;
+    const showToggleButton = document.getElementById("show-toggle-menu-button");
+    const closeToggleButton = document.getElementById("close-toggle-menu-button")
+    const toggleMenu = document.getElementById("toggle-menu");
+
+    showToggleButton.addEventListener("click", () => {
+        toggleMenu.classList.toggle("show");
+    });
+
+    closeToggleButton.addEventListener("click", () => {
+        toggleMenu.classList.toggle("show");
+    });
 });
