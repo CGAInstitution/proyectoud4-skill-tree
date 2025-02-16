@@ -166,3 +166,8 @@ function changeEscritorio(element) {
         console.log("Error al conectarse con el servidor", error);
     })
 }
+
+function viewNota(element) {
+    let id = element.dataset.id;
+    window.location.href = 'notas/' + id;
+}

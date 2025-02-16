@@ -1,9 +1,12 @@
 package madstodolist.model;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -16,7 +19,7 @@ public class Usuario {
 
     @Size(max = 50)
     @NotNull
-    @Column(name = "email", nullable = false, length = 50)
+    @Column(name = "email", nullable = false, length = 50, unique = true)
     private String email;
 
     @Size(max = 20)
@@ -136,4 +139,15 @@ public class Usuario {
         this.notasCompartidas = notasCompartidas;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Usuario)) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(id, usuario.id) && Objects.equals(email, usuario.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email);
+    }
 }

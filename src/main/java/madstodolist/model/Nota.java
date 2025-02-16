@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -54,7 +55,7 @@ public class Nota {
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria idCategoria;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuarios_notas",
             joinColumns = @JoinColumn(name = "idNota"),
             inverseJoinColumns = @JoinColumn(name = "idUsuario"))
