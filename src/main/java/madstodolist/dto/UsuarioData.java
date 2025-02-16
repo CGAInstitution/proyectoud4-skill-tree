@@ -1,7 +1,12 @@
 package madstodolist.dto;
 
+import madstodolist.model.Categoria;
+import madstodolist.model.Escritorio;
+import madstodolist.model.Nota;
+
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 // Data Transfer Object para la clase Usuario
 public class UsuarioData {
@@ -11,6 +16,7 @@ public class UsuarioData {
     private String nombre;
     private String apellidos;
     private String contraseña;
+    private Set<Nota> notasCompartidas;
 
 
     // Getters y setters
@@ -51,7 +57,13 @@ public class UsuarioData {
 
     public String getContraseña() { return contraseña; }
 
+    public Set<Nota> getNotasCompartidas() {
+        return notasCompartidas;
+    }
 
+    public void setNotasCompartidas(Set<Nota> notasCompartidas) {
+        this.notasCompartidas = notasCompartidas;
+    }
 
     // Sobreescribimos equals y hashCode para que dos usuarios sean iguales
     // si tienen el mismo ID (ignoramos el resto de atributos)

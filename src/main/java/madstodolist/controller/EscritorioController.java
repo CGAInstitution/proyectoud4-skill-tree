@@ -62,6 +62,7 @@ public class EscritorioController {
         model.addAttribute("escritorios", escritorios);
 
         List<Nota> notas = escritorioService.obtenerNotasPorEscritorio(managerUserSession.currentEscritorio());
+        Set<Nota> notasCompartidas = currentlyLoggedUser.getNotasCompartidas();
 
         if (notas != null && !notas.isEmpty()) {
             System.out.println("Número de notas encontradas: " + notas.size());
@@ -69,6 +70,13 @@ public class EscritorioController {
         } else {
             System.out.println("No hay notas en este escritorio.");
             model.addAttribute("notas", new ArrayList<>());
+        }
+
+        if (notasCompartidas != null && !notasCompartidas.isEmpty()) {
+            model.addAttribute("notasCompartidas", notasCompartidas);
+        } else {
+            System.out.println("No hay notas en este escritorio.");
+            model.addAttribute("notasCompartidas", new ArrayList<>());
         }
 
         return "escritorio";

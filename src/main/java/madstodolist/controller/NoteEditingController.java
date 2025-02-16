@@ -1,5 +1,6 @@
 package madstodolist.controller;
 
+import madstodolist.authentication.ManagerUserSession;
 import madstodolist.dto.NotaData;
 import madstodolist.dto.UsuarioData;
 import madstodolist.model.Nota;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,16 +33,23 @@ public class NoteEditingController {
     private final NotaService notaService;
     private final UsuarioService usuarioService;
     private final UsuariosNotaService usuariosNotaService;
+    private final ManagerUserSession managerUserSession;
 
     @Autowired
-    public NoteEditingController(NotaService notaService,UsuarioService usuarioService, UsuariosNotaService usuariosNotaService) {
+    public NoteEditingController(NotaService notaService,UsuarioService usuarioService,
+                                 UsuariosNotaService usuariosNotaService, ManagerUserSession managerUserSession) {
         this.notaService = notaService;
         this.usuarioService = usuarioService;
         this.usuariosNotaService = usuariosNotaService;
+        this.managerUserSession = managerUserSession;
     }
 
     @GetMapping("/notas/{idNota}")
     public String mostrarNotaEditable(@PathVariable Long idNota, Model model){
+        if (!checkUserAccess(managerUserSession.usuarioLogeado(), idNota)) {
+            return "redirect:/escritorio";
+        }
+
         NotaData nota = notaService.findById(idNota);
         model.addAttribute("nota", nota);
         model.addAttribute("idNota", idNota);
@@ -138,5 +147,24 @@ public class NoteEditingController {
         headers.add(HttpHeaders.CONTENT_TYPE, "text/markdown; charset=UTF-8");
 
         return new ResponseEntity<>(contentBytes, headers, HttpStatus.OK);
+    }
+
+    private boolean checkUserAccess(long userId, long notaId) {
+        boolean hasAccess = false;
+
+        Usuario usuario = modelMapper.map(usuarioService.findById(userId), Usuario.class);
+        Nota nota = notaService.findNotaById(notaId);
+
+        if (nota.getIdCreador().getId().equals(usuario.getId())) {
+            hasAccess = true;
+            return hasAccess;
+        }
+
+        if (nota.getUsuarios().contains(usuario)) {
+            hasAccess = true;
+            return hasAccess;
+        }
+
+        return hasAccess;
     }
 }

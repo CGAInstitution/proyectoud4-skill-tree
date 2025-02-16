@@ -69,7 +69,7 @@
 
       <div class="overflow-y-scroll h-100 w-100 d-flex flex-wrap justify-content-around mb-2">
 
-        <div class="card nota-card" th:each="nota : ${notas}"
+        <div class="card nota-card" th:each="nota : ${notasCompartidas}" onclick="viewNota(this)"
              th:attr="data-id=${nota.id}" th:style="'background-color: #' + ${nota.color}">
           <p th:text="${nota.titulo}" class="text-center m-auto fs-3"/>
         </div>

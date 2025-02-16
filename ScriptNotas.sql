@@ -80,3 +80,5 @@ insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 7"," Esta es mi septima nota","ffc6ff",1,1,1,1000,100);
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 8"," Esta es mi octava nota","ffadad",1,1,1,320,200);
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 9"," Esta es mi novena nota","bdb2ff",1,2,1,700,200);
+
+select * from usuarios_notas;
