@@ -15,8 +15,11 @@
 
         <button @click="mostrarModal"><img th:src="@{/images/user-round.svg}" src="../static/images/user-round.svg" alt="Compartir"></button>
 
-        <button><img th:src="@{/images/trash-2.svg}" src="../static/images/trash-2.svg" alt="Eliminar"></button>
-        <button><img th:src="@{/images/x.svg}" src="../static/images/x.svg" alt="Cerrar"></button>
+        <button @click="eliminarNota">
+            <img th:src="@{/images/trash-2.svg}" src="../static/images/trash-2.svg" alt="Eliminar">
+        </button>
+
+        <a id="botonCerrar" th:href="@{/escritorio}"><button><img th:src="@{/images/x.svg}" src="../static/images/x.svg" alt="Cerrar"></button></a>
     </div>
 
     <!-- Color Picker -->

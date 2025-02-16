@@ -7,16 +7,14 @@ import madstodolist.model.Nota;
 import madstodolist.model.Usuario;
 import madstodolist.service.EscritorioService;
 import madstodolist.service.UsuarioService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class EscritorioController {
@@ -24,13 +22,15 @@ public class EscritorioController {
     private final EscritorioService escritorioService;
     private final ManagerUserSession managerUserSession;
     private final UsuarioService usuarioService;
+    private final ModelMapper modelMapper;
 
     @Autowired
     public EscritorioController(EscritorioService escritorioService, ManagerUserSession managerUserSession,
-                                UsuarioService usuarioService) {
+                                UsuarioService usuarioService, ModelMapper modelMapper) {
         this.escritorioService = escritorioService;
         this.managerUserSession = managerUserSession;
         this.usuarioService = usuarioService;
+        this.modelMapper = modelMapper;
     }
 
     /*@GetMapping("/usuarios/{idUsuario}/escritorios/{idEscritorio}")
@@ -55,7 +55,14 @@ public class EscritorioController {
             return "redirect:/login";
         }
 
+        UsuarioData userData = usuarioService.findById(managerUserSession.usuarioLogeado());
+        Usuario currentlyLoggedUser = modelMapper.map(userData, Usuario.class);
+
+        List<Escritorio> escritorios = escritorioService.obtenerEscritoriosPorUsuario(currentlyLoggedUser);
+        model.addAttribute("escritorios", escritorios);
+
         List<Nota> notas = escritorioService.obtenerNotasPorEscritorio(managerUserSession.currentEscritorio());
+        Set<Nota> notasCompartidas = currentlyLoggedUser.getNotasCompartidas();
 
         if (notas != null && !notas.isEmpty()) {
             System.out.println("Número de notas encontradas: " + notas.size());
@@ -63,6 +70,13 @@ public class EscritorioController {
         } else {
             System.out.println("No hay notas en este escritorio.");
             model.addAttribute("notas", new ArrayList<>());
+        }
+
+        if (notasCompartidas != null && !notasCompartidas.isEmpty()) {
+            model.addAttribute("notasCompartidas", notasCompartidas);
+        } else {
+            System.out.println("No hay notas en este escritorio.");
+            model.addAttribute("notasCompartidas", new ArrayList<>());
         }
 
         return "escritorio";
@@ -92,6 +106,20 @@ public class EscritorioController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("success", success);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/escritorio/change")
+    public ResponseEntity<Map<String, Object>> changeEscritorio(@RequestBody Map<String, Long> requestData) {
+        Map<String, Object> response = new HashMap<>();
+        managerUserSession.setCurrentEscritorio(requestData.get("idEscritorio"));
+
+        if (Objects.equals(managerUserSession.currentEscritorio(), requestData.get("idEscritorio"))) {
+            response.put("success", true);
+        } else {
+            response.put("success", false);
+        }
 
         return ResponseEntity.ok(response);
     }

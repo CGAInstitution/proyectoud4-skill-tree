@@ -235,7 +235,43 @@ const app = Vue.createApp({
                     console.error("Error al descargar:", error);
                     alert("Error al descargar la nota.");
                 });
+        },
+        async eliminarNota() {
+            // Obtener el idNota desde el atributo del div que lo contiene
+            const paper = this.$refs.paper;
+            const idNota = paper.getAttribute("data-idNota");
+
+            if (!idNota) {
+                alert("No se encontró el ID de la nota.");
+                return;
+            }
+
+            if (!confirm("¿Estás seguro de que quieres eliminar esta nota?")) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/notas/${idNota}/eliminar`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert("Nota eliminada correctamente.");
+                    window.location.href = "/escritorio"; // Redirige después de eliminar
+                } else {
+                    alert("Error al eliminar la nota.");
+                }
+            } catch (error) {
+                console.error("Error en la solicitud:", error);
+                alert("Hubo un problema al eliminar la nota.");
+            }
         }
+
     }
 });
 

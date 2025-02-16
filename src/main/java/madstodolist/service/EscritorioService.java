@@ -51,5 +51,7 @@ public class  EscritorioService {
         return false;
     }
 
-
+    public List<Escritorio> obtenerEscritoriosPorUsuario(Usuario usuario) {
+        return escritorioRepository.findAllByIdUsuarioOrderByIdDesc(usuario);
+    }
 }

@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             // Asegurar que la nota esté en primer plano
-            noteContainer.style.zIndex = "1000";
+            noteContainer.style.zIndex = "2";
             noteContainer.style.cursor = "grabbing";
         });
     });
@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 });
+
 document.addEventListener("DOMContentLoaded", function () {
     const contextMenu = document.getElementById("context-menu");
     let selectedNote = null;
@@ -127,3 +128,46 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    let isToggleMenuShowing = false;
+    const showToggleButton = document.getElementById("show-toggle-menu-button");
+    const closeToggleButton = document.getElementById("close-toggle-menu-button")
+    const toggleMenu = document.getElementById("toggle-menu");
+
+    showToggleButton.addEventListener("click", () => {
+        toggleMenu.classList.toggle("show");
+    });
+
+    closeToggleButton.addEventListener("click", () => {
+        toggleMenu.classList.toggle("show");
+    });
+});
+
+function changeEscritorio(element) {
+    fetch("escritorio/change", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idEscritorio: element.dataset.id
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            console.log("Error al cambiar de escritorio");
+        }
+    })
+    .catch(error => {
+        console.log("Error al conectarse con el servidor", error);
+    })
+}
+
+function viewNota(element) {
+    let id = element.dataset.id;
+    window.location.href = 'notas/' + id;
+}

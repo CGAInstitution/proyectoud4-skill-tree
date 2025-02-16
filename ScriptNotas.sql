@@ -68,6 +68,7 @@ insert into Usuarios(email, nombre, apellidos, contraseña) values ("admin@gmail
 insert into Escritorios(nombre, id_Usuario) values ("Escritorio1",1);
 
 insert into Escritorios(nombre, id_Usuario) values ("Escritorio2",1);
+insert into Escritorios(nombre, id_Usuario) values ("Escritorio3",1);
 insert into Categorias(color,nombre,idUsuario) values ("43e24f","importante",1);
 
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 1"," Esta es mi primera nota","ffadad",1,1,1,1000,450);
@@ -79,3 +80,5 @@ insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 7"," Esta es mi septima nota","ffc6ff",1,1,1,1000,100);
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 8"," Esta es mi octava nota","ffadad",1,1,1,320,200);
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 9"," Esta es mi novena nota","bdb2ff",1,2,1,700,200);
+
+select * from usuarios_notas;
