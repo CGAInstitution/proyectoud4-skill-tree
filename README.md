@@ -1,18 +1,41 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/0a0_p58R)
 [![Work in MakeCode](https://classroom.github.com/assets/work-in-make-code-8824cc13a1a3f34ffcd245c82f0ae96fdae6b7d554b6539aec3a03a70825519c.svg)](https://classroom.github.com/online_ide?assignment_repo_id=18039946&assignment_repo_type=AssignmentRepo)
-# Aplicación inicial ToDoList
 
-Aplicación ToDoList para la asignatura de Acceso a Datos usando Spring Boot y plantillas Thymeleaf. Este repositorio se ha creado gracias al template repository del excelente profesor Domingo Gallardo de la Universidad de Alicante para la asignatura de [MADS](https://github.com/domingogallardo/mads-todolist-inicial).
+# Aplicación SpriNotes
 
-## Requisitos
+Esta aplicación fue creada como un trabajo para la asignatura de Acceso a datos donde se busca reflejar lo aprendido sobre SpringBoot.
+La aplicación permite al usuario registrarte y acceder a un área personal donde crear escritorios y notas, que aparecerán en forma de posits.
+De esta forma la aplicación permite la organización de las notas mediante los escritorios y las categorías asignadas a las notas.
+
+___
+# Índice
+
+1. [Diagrama ER de la BD en Notación Crow's Foot Model de BD](#diagrama-er-de-la-bd-en-notación-crows-foot)
+1. [Manual técnico para desarrolladores](#manual-técnico-para-desarrolladores) <br>
+   2.1. [Requisitos](#requisitos)<br>
+   2.2. [Ejecución](#ejecución)<br>
+   2.3. [Estructura de la aplicación](#estructura-de-la-aplicación)
+2. [Manual de usuario](#manual-de-usuario)
+1. [Explicación de GitProject](#explicación-de-gitproject)
+1. Propuestas de mejora: nuevas opciones, control de errores ...
+1. Conclusiones y opinión del trabajo realizado. Incluid dedicación temporal y cualificación estimada.
+___
+## Diagrama ER de la BD en Notación Crow's Foot
+
+## Manual técnico para desarrolladores
+En esta parte abordaremos los aspectos técnicos de este proyecto, para ello incluimos algún ejemplo de código fuente que consideramos interesante y su explicación.
+
+### Requisitos
 
 Necesitas tener instalado en tu sistema:
 
-- Java 8
+- Java 17
+- Maven: Se utiliza Maven para la gestión de dependencias.
+- MySQL: La aplicación utiliza una base de datos MySQL, el archivo de creación está incluido dentro del repositorio.
 
-## Ejecución
+### Ejecución
 
-Puedes ejecutar la aplicación usando el _goal_ `run` del _plugin_ Maven 
+Puedes ejecutar la aplicación usando el _goal_ `run` del _plugin_ Maven
 de Spring Boot:
 
 ```
@@ -29,3 +52,34 @@ $ java -jar target/mads-todolist-inicial-0.0.1-SNAPSHOT.jar
 Una vez lanzada la aplicación puedes abrir un navegador y probar la página de inicio:
 
 - [http://localhost:8080/login](http://localhost:8080/login)
+
+### Estructura de la aplicación
+
+Esta aplicación se ha creado siguiendo los modelos de diseño MVC y DAO, por lo que podemos dividir su estructura en:
+- **Authentication:** Paquete responsable de la seguridad y autentificación de los usuarios.
+- **Config:** Contiene código relacionado con la configuración de la aplicación.
+- **Controller:** Es la capa de entrada de la aplicación, donde se reciben las solicitude HTTP.
+- **DTO:** Las clases de este paquete permiten transmitir información entre capas.
+- **Model:** Representa las entidades de la base de datos.
+- **Repository:** Paquete encargado de acceder a la base de datos mediante JPA.
+- **Service:** Aquí se contiene la lógica de negocio. Llama a las clases de **Repository** para obtener datos y los manipula antes de enviarlos a la capa **Controller**.
+- **Resources:** Almacena archivos estáticos y templates.
+
+Esta arquitectura por capas permite a la aplicación una separación clara de responsabilidades, mejorando la escalabilidad, el mantenimiento y la reutilización del código.
+El flujo de interacción entre capas sigue un enfoque estructurado:
+
+1. El Cliente envía una solicitud al Controller al acceder a un url, que como punto de entrada.
+1. El Controller delega la lógica de negocio a la capa Service, asegurando que las reglas de negocio se apliquen correctamente.
+1. La capa Service interactúa con Repository, que puede consultar o actualizar la Base de Datos a través del Model.
+1. La respuesta fluye de regreso en el mismo orden, transformando los datos si es necesario mediante DTOs, hasta que el Controller envía la respuesta al cliente.
+___
+## Manual de usuario
+___
+## Explicación de GitProject
+La primera fase de este trabajo pasó por establecer las tareas a realizar y su orden
+mediante la creación de un tablero de estados. Dentro de este se crearon issues correspondientes a cada tarea y se asignaron a los diferentes miembros del equipo.
+De esta forma se puede resumir de forma rápida y visual la cantidad de trabajo y su estado.
+
+En cuanto al manejo del repositorio se usó la metodología GitFlow. Se generaron ramas para las distintas funcionalidades, que una vez terminadas se asimilaban a la rama Develop mediante Pull Requests.
+El uso de las Pull Request permitió al equipo un mejor control sobre el avance de la aplicación, pudiendo revisar el código y previniendo así errores.
+
