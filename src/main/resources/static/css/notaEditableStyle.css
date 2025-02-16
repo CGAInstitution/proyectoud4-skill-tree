@@ -16,7 +16,7 @@ body {
     gap: 0.5%;
 }
 
-.buttonContainer > button {
+.buttonContainer > button, #botonCerrar > button{
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -27,7 +27,10 @@ body {
     cursor: pointer;
     border: 5px solid white;
 }
-
+#botonCerrar{
+    display: inline-block;  /* Make it inline like a button */
+    text-decoration: none;
+}
 #paper {
     border-radius: 15px;
     padding: 2%;
