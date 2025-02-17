@@ -14,14 +14,21 @@ ___
 1. [Manual técnico para desarrolladores](#manual-técnico-para-desarrolladores) <br>
    2.1. [Requisitos](#requisitos)<br>
    2.2. [Ejecución](#ejecución)<br>
-   2.3. [Estructura de la aplicación](#estructura-de-la-aplicación)
+   2.3. [Estructura de la aplicación](#estructura-de-la-aplicación)<br>
+   2.4. [Código destacable](#código-destacable)
 2. [Manual de usuario](#manual-de-usuario)
 1. [Explicación de GitProject](#explicación-de-gitproject)
-1. Propuestas de mejora: nuevas opciones, control de errores ...
-1. Conclusiones y opinión del trabajo realizado. Incluid dedicación temporal y cualificación estimada.
+1. [Propuestas de mejora](#propuestas-de-mejora)
+1. [Conclusiones y opinión del trabajo realizado](#conclusiones-y-opinión-del-trabajo-realizado)
 ___
 ## Diagrama ER de la BD en Notación Crow's Foot
+En la siguiente imagen podemos ver el diagrama Entidad Relación de nuestra base de datos.
+Los usuarios pueden tener uno o muchos escritorios, que al mismo tiempo pueden contener ninguna o muchas notas (creadas por un único usuario). Estas notas deben pertenecer a una categoría y pueden ser compartidas con multiples usuarios. 
+Por último cada usuario tiene unas preferencias, que referencian a las características de la aplicación.
 
+![diagramaER.png](diagramaER.png)
+[⬆️Volver al índice](#índice)
+___
 ## Manual técnico para desarrolladores
 En esta parte abordaremos los aspectos técnicos de este proyecto, para ello incluimos algún ejemplo de código fuente que consideramos interesante y su explicación.
 
@@ -31,7 +38,7 @@ Necesitas tener instalado en tu sistema:
 
 - Java 17
 - Maven: Se utiliza Maven para la gestión de dependencias.
-- MySQL: La aplicación utiliza una base de datos MySQL, el archivo de creación está incluido dentro del repositorio.
+- MySQL (Si quieres trabajar en local): La aplicación utiliza una base de datos MySQL, el archivo de creación está incluido dentro del  en caso de que quieras usarla sin conexión.
 
 ### Ejecución
 
@@ -72,14 +79,39 @@ El flujo de interacción entre capas sigue un enfoque estructurado:
 1. El Controller delega la lógica de negocio a la capa Service, asegurando que las reglas de negocio se apliquen correctamente.
 1. La capa Service interactúa con Repository, que puede consultar o actualizar la Base de Datos a través del Model.
 1. La respuesta fluye de regreso en el mismo orden, transformando los datos si es necesario mediante DTOs, hasta que el Controller envía la respuesta al cliente.
+
+### Código destacable
+
+[⬆️Volver al índice](#índice)
 ___
 ## Manual de usuario
+
+Para mostrar como funciona la aplicación desde el punto de vista del usuario hemos creado el siguiente videotutorial:
+
+
+[⬆️Volver al índice](#índice)
 ___
 ## Explicación de GitProject
-La primera fase de este trabajo pasó por establecer las tareas a realizar y su orden
-mediante la creación de un tablero de estados. Dentro de este se crearon issues correspondientes a cada tarea y se asignaron a los diferentes miembros del equipo.
-De esta forma se puede resumir de forma rápida y visual la cantidad de trabajo y su estado.
+Para la organización del proyecto se usó una de las herramientas ofrecidas por GitHub para crear un tablero de estados.
+La primera fase de este trabajo fue establecer dentro de este las tareas (cada una creada con un issue) y asignarlas a los diferentes miembros del equipo.
+De esta forma se puede resumir de forma rápida y visual la carga de trabajo para cada miembro, la cantidad de trabajo general y su estado de completación.
+
+En el siguiente enlace se pueden consultar todas las issues creadas y su asignación:
+https://github.com/CGAInstitution/proyectoud4-skill-tree/issues?q=is%3Aissue%20
+
 
 En cuanto al manejo del repositorio se usó la metodología GitFlow. Se generaron ramas para las distintas funcionalidades, que una vez terminadas se asimilaban a la rama Develop mediante Pull Requests.
-El uso de las Pull Request permitió al equipo un mejor control sobre el avance de la aplicación, pudiendo revisar el código y previniendo así errores.
+El uso de las Pull Request permitió al equipo un mejor control sobre el avance de la aplicación, pudiendo revisar el código y prevenir errores.
 
+[⬆️Volver al índice](#índice)
+___
+## Propuestas de mejora
+- **Añadir opciones de idioma**: Nos gustaría que el usuario pueda cambiar su preferencia de idioma en settings y poder cambiar acorde los textos de la aplicación.
+- **Añadir un modo oscuro**
+- **Opción de compartir escritorios**
+- **Diferentes modos de compartir:** Dar al usuario la opción de compartir notas con permisos de vista o de editor.
+- **Añadir notas que te han compartido a tus escritorios**
+
+[⬆️Volver al índice](#índice)
+___
+## Conclusiones y opinión del trabajo realizado
