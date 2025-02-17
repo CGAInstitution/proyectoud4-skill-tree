@@ -86,5 +86,14 @@ public class  EscritorioService {
 
         return nuevaNota;
     }
+    public boolean eliminarEscritorio(Long idEscritorio) {
+        Optional<Escritorio> optionalEscritorio = escritorioRepository.findById(idEscritorio);
+        if (optionalEscritorio.isPresent()) {
+            escritorioRepository.deleteById(idEscritorio);
+            return true;
+        }
+        return false;
+    }
+
 
 }

@@ -185,6 +185,48 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const contextMenuEscritorio = document.getElementById("context-menu-escritorio");
+    let selectedEscritorio = null;
+
+    document.querySelectorAll(".escritorio-card").forEach(escritorio => {
+        escritorio.addEventListener("contextmenu", function (event) {
+            event.preventDefault();
+
+            selectedEscritorio = escritorio;
+            const escritorioId = escritorio.getAttribute("data-id");
+
+            contextMenuEscritorio.style.top = `${event.pageY}px`;
+            contextMenuEscritorio.style.left = `${event.pageX}px`;
+            contextMenuEscritorio.style.display = "block";
+
+            contextMenuEscritorio.setAttribute("data-id", escritorioId);
+        });
+    });
+
+    document.addEventListener("click", function () {
+        contextMenuEscritorio.style.display = "none";
+    });
+    document.getElementById("delete-escritorio").addEventListener("click", function () {
+        const escritorioId = contextMenuEscritorio.getAttribute("data-id");
+        if (escritorioId) {
+            fetch(`/escritorio/${escritorioId}/eliminar`, { method: "DELETE" })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log(`Escritorio con ID ${escritorioId} eliminado`);
+                        const escritorioElement = document.querySelector(`.escritorio-card[data-id='${escritorioId}']`);
+                        if (escritorioElement) {
+                            escritorioElement.remove();
+                        }
+                    } else {
+                        console.error("Error al eliminar el escritorio");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        }
+    });
+});
 
 document.addEventListener("DOMContentLoaded", function () {
     let isToggleMenuShowing = false;
