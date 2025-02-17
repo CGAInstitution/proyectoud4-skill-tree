@@ -121,15 +121,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.getElementById("create-note").addEventListener("click", function () {
+        console.log(createNoteX,createNoteY);
         let posX = createNoteX;
         let posY = createNoteY;
-
+        console.log(posX,posY);
         if (!posX || !posY) {
             posX = 500;
             posY = 500;
         }
+        const url = `/notas/nueva?posicionX=${posX}&posicionY=${posY}`;
 
-        fetch("/notas/nueva", {
+        fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -138,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(response => {
                 if (response.ok) {
-                    window.location.href = response.url;  
+                    window.location.href = response.url;
                 } else {
                     console.error("Error al crear la nota");
                 }

@@ -131,6 +131,9 @@ public class EscritorioController {
         Long idUsuario = managerUserSession.usuarioLogeado();
         Long idEscritorio = managerUserSession.currentEscritorio();
 
+        System.out.println("valor x");
+        System.out.printf(String.valueOf(posicionX));
+
         if (posicionX == null || posicionY == null) {
             posicionX = 500;
             posicionY = 500;
