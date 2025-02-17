@@ -12,23 +12,23 @@
   </div>
 </nav>
 
-<div class="note-container">
-  <div th:each="nota : ${notas}"
-       th:attr="data-id=${nota.id}"
-       th:style="'position: absolute; left:' + ${nota.posicionX} + 'px; top:' + ${nota.posicionY} + 'px;'">
+  <div class="note-container">
+    <div th:each="nota : ${notas}"
+         th:attr="data-id=${nota.id}"
+         th:style="'position: absolute; left:' + ${nota.posicionX} + 'px; top:' + ${nota.posicionY} + 'px;'">
 
-      <div class="note" th:style="'background-color: #' + ${nota.color}">
-        <a class="note-link"
-           th:href="@{/notas/{idNota}(idNota=${nota.id})}">
-          <p th:text="${nota.titulo}" class="note-title">Título de la nota</p>
-        </a>
-        <a class="note-link"
-           th:href="@{/notas/{idNota}( idNota=${nota.id})}">
-          <p th:text="${nota.descripcion}" class="note-description">Descripción de la nota</p>
-        </a>
+        <div class="note" th:style="'background-color: #' + ${nota.color}">
+          <a class="note-link"
+             th:href="@{/notas/{idNota}(idNota=${nota.id})}">
+            <p th:text="${nota.titulo}" class="note-title">Título de la nota</p>
+          </a>
+          <a class="note-link"
+             th:href="@{/notas/{idNota}( idNota=${nota.id})}">
+            <p th:text="${nota.descripcion}" class="note-description">Descripción de la nota</p>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
 
 <div id="context-menu-note" class="context-menu" style="display: none;">
   <ul>

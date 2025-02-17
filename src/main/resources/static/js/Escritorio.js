@@ -171,6 +171,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 .catch(error => console.error("Error:", error));
         }
     });
+    document.getElementById("edit-note").addEventListener("click", function () {
+        const noteId = contextMenuNote.getAttribute("data-id");
+
+        if (noteId) {
+            window.location.href = `/notas/${noteId}`;
+        }
+    });
 });
 
 document.addEventListener("DOMContentLoaded", function () {
