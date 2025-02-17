@@ -11,7 +11,7 @@
     div{
         background-color: #FFF9C4;
         border-radius: 20px;
-        width: 80%;
+        width: 40%;
         margin: auto;
         padding: 5%;
         text-align: center;
@@ -71,16 +71,16 @@
         <h1>Settings</h1>
         <form action="#" method="post">
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
+            <input type="text" id="nombre" name="nombre" th:text="${usuario.nombre}" required>
 
             <label for="apellidos">Apellidos:</label>
-            <input type="text" id="apellidos" name="apellidos" required>
+            <input type="text" id="apellidos" name="apellidos" th:text="${usuario.apellidos}" required>
 
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" th:text="${usuario.email}" required>
 
             <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contraseña" name="contraseña" required>
+            <input type="password" id="contraseña" name="contraseña"  required>
 
             <label>Modo de Vista:</label>
             <div class="rb-container">
