@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Sattings</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+    <script th:src="@{/js/settings.js}" src="/js/settings.js" defer></script>
+
+
 </head>
 <style>
     *{
@@ -71,7 +75,7 @@
         <h1>Settings</h1>
         <form action="#" method="post">
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" th:text="${usuario.nombre}" required>
+            <input ref="nombre" type="text" id="nombre" name="nombre" th:text="${usuario.nombre}" required>
 
             <label for="apellidos">Apellidos:</label>
             <input type="text" id="apellidos" name="apellidos" th:text="${usuario.apellidos}" required>
