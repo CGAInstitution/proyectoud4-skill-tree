@@ -171,3 +171,14 @@ function viewNota(element) {
     let id = element.dataset.id;
     window.location.href = 'notas/' + id;
 }
+
+function openCreateEscritorioWindow(element) {
+    const mainWindows = window;
+    const height = 500;
+    const width = 500;
+    const left = (screen.width - width) / 2;
+    const top = (screen.height - height) / 4;
+    const newWindow = window.open("escritorio/create","Nuevo escritorio",'resizable=yes, width=' + width
+        + ', height=' + height + ', top='
+        + top + ', left=' + left);
+}

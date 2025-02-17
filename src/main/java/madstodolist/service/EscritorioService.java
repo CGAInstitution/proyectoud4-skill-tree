@@ -54,4 +54,8 @@ public class  EscritorioService {
     public List<Escritorio> obtenerEscritoriosPorUsuario(Usuario usuario) {
         return escritorioRepository.findAllByIdUsuarioOrderByIdDesc(usuario);
     }
+
+    public Escritorio save(Escritorio escritorio) {
+        return escritorioRepository.save(escritorio);
+    }
 }

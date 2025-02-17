@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments :: head-full (titulo='')"></head>
+<link rel="stylesheet" href="/css/escritorioForm.css">
+<body>
+    <form method="post" th:action="@{/escritorio/submit}" th:object="${escritorioData}">
+        <div class="form-div m-auto w-50 flex-column mt-5">
+            <h1 class="mb-4">Crear escritorio</h1>
+            <label for="nombre" class="d-none">Nombre del escritorio</label>
+            <input class="mb-4" id="nombre" type="text" placeholder="Nombre" required th:field="*{nombre}">
+            <button type="submit" class="submit-button m-auto mb-2" onclick="sendAndClose(this)">Crear</button>
+        </div>
+
+        <div th:if="${errors}" role="alert"
+             class="error-div alert alert-danger alert-dismissible fade show w-50 mx-auto mt-5">
+            <p th:each="error : ${errors}" th:text="${error.defaultMessage}"></p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+    </form>
+    <script src="/js/escritorioForm.js"></script>
+    <div th:replace="fragments::javascript-full"/>
+</body>
+</html>

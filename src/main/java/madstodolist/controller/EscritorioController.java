@@ -1,6 +1,8 @@
 package madstodolist.controller;
 
 import madstodolist.authentication.ManagerUserSession;
+import madstodolist.dto.EscritorioCreateData;
+import madstodolist.dto.LoginData;
 import madstodolist.dto.UsuarioData;
 import madstodolist.model.Escritorio;
 import madstodolist.model.Nota;
@@ -12,8 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.*;
 
 @Controller
@@ -122,6 +128,31 @@ public class EscritorioController {
         }
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/escritorio/create")
+    public String crearEscritorio(Model model) {
+        model.addAttribute("escritorioData", new EscritorioCreateData());
+        return "escritorioForm";
+    }
+
+    @PostMapping("/escritorio/submit")
+    public String submitEscritorio(@ModelAttribute("escritorioData") @Valid EscritorioCreateData escritorioData,
+                                   BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                   HttpSession session) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/escritorio/create";
+        }
+
+        Escritorio escritorio = new Escritorio();
+        escritorio.setNombre(escritorioData.getNombre());
+        escritorio.setIdUsuario(modelMapper.map(usuarioService.findById(managerUserSession.usuarioLogeado()), Usuario.class));
+
+        escritorioService.save(escritorio);
+
+        return "close";
     }
 
 }
