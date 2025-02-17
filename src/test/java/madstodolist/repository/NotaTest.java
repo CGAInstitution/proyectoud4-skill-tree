@@ -26,11 +26,12 @@ public class NotaTest {
     @Autowired
     private EscritorioRepository escritorioRepository;
 
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
     private Usuario usuarioTest = new Usuario();
     private Escritorio escritorioTest = new Escritorio();
     private Categoria categoriaTest = new Categoria();
-    @Autowired
-    private CategoriaRepository categoriaRepository;
 
     //Tests de modelo de notas en memoria, sin conexión a la BD
 

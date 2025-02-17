@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -59,6 +60,22 @@ public class Escritorio {
 
     public void setNotas(Set<Nota> notas) {
         this.notas = notas;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Escritorio)) return false;
+        Escritorio escritorio = (Escritorio) o;
+        if (escritorio.id == null || id == null) {
+            return false;
+        }
+        if (Objects.equals(id, escritorio.id)) return true;
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 }
