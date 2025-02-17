@@ -177,8 +177,8 @@ body {
     position: fixed;
     bottom: 20px; /* Ajusta la distancia del borde inferior */
     right: 20px; /* Ajusta la distancia del borde derecho */
-    background-color: #007bff; /* Color de fondo */
-    color: white; /* Color del texto */
+    background-color: #fff8dc;
+    color: black;
     border: none;
     border-radius: 50%;
     width: 60px;
@@ -193,5 +193,6 @@ body {
 }
 
 .btn-flotante:hover {
-    background-color: #0056b3; /* Cambio de color al pasar el mouse */
+    background-color: #ffcc00;
+    color:white;
 }

@@ -84,7 +84,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll(".note-container > div").forEach(note => {
         note.addEventListener("contextmenu", function (event) {
-            console.log("hola")
+            // Evitar que el menú contextual se muestre si el clic es dentro del menú de navegación
+            if (event.target.closest('#toggle-menu') || event.target.closest('.navbar')) {
+                return; // Si estamos sobre el menú o la barra de navegación, no mostrar el menú contextual
+            }
             event.preventDefault();
             activeNoteContainer = note;
             selectedNote = note.closest('.note-container');
@@ -101,18 +104,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.querySelector("body").addEventListener("contextmenu", function (event) {
-            console.log("adios")
-        if (!event.target.closest('.note')) {
-            event.preventDefault();
-            createNoteX = event.pageX;
-            createNoteY = event.pageY;
-
-            contextMenuCreate.style.top = `${event.pageY}px`;
-            contextMenuCreate.style.left = `${event.pageX}px`;
-            contextMenuCreate.style.display = "block";
-
-            contextMenuNote.style.display = "none";
+        // Evitar que el menú contextual se muestre si el clic es dentro del menú de navegación
+        if (event.target.closest('#toggle-menu') || event.target.closest('.navbar') || event.target.closest('.note')) {
+            return; // Si estamos dentro del menú o una nota, no mostrar el menú contextual
         }
+
+        event.preventDefault();
+        createNoteX = event.pageX;
+        createNoteY = event.pageY;
+
+        contextMenuCreate.style.top = `${event.pageY}px`;
+        contextMenuCreate.style.left = `${event.pageX}px`;
+        contextMenuCreate.style.display = "block";
+
+        contextMenuNote.style.display = "none";
     });
 
     document.addEventListener("click", function () {
@@ -121,10 +126,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.getElementById("create-note").addEventListener("click", function () {
-        console.log(createNoteX,createNoteY);
+        console.log(createNoteX, createNoteY);
         let posX = createNoteX;
         let posY = createNoteY;
-        console.log(posX,posY);
+        console.log(posX, posY);
         if (!posX || !posY) {
             posX = 500;
             posY = 500;
@@ -150,7 +155,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 
-
     document.getElementById("delete-note").addEventListener("click", function () {
         const noteId = contextMenuNote.getAttribute("data-id");
 
@@ -171,6 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .catch(error => console.error("Error:", error));
         }
     });
+
     document.getElementById("edit-note").addEventListener("click", function () {
         const noteId = contextMenuNote.getAttribute("data-id");
 
@@ -179,6 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
 
 document.addEventListener("DOMContentLoaded", function () {
     let isToggleMenuShowing = false;
