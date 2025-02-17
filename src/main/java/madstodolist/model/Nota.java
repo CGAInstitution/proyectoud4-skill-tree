@@ -141,4 +141,19 @@ public class Nota {
         this.usuarios = usuarios;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Nota)) return false;
+        Nota nota = (Nota) o;
+        if (nota.id == null || id == null) {
+            return false;
+        }
+        if (Objects.equals(id, nota.id)) return true;
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
