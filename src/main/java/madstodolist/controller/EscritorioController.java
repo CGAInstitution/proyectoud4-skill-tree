@@ -98,6 +98,7 @@ public class EscritorioController {
 
         return ResponseEntity.ok(response);
     }
+
     @DeleteMapping("/notas/{idNota}/eliminar")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> eliminarNota(@PathVariable Long idNota) {
@@ -124,21 +125,23 @@ public class EscritorioController {
         return ResponseEntity.ok(response);
     }
 
-
     @PostMapping("/notas/nueva")
-    public String crearNota() {
+    public String crearNota(@RequestParam(required = false) Integer posicionX,
+                            @RequestParam(required = false) Integer posicionY) {
         Long idUsuario = managerUserSession.usuarioLogeado();
         Long idEscritorio = managerUserSession.currentEscritorio();
 
-        Nota nuevaNota = escritorioService.crearNuevaNota(idUsuario, idEscritorio);
+        if (posicionX == null || posicionY == null) {
+            posicionX = 500;
+            posicionY = 500;
+        }
 
-        // Si la creación fue exitosa, redirigir a la página de la nueva nota
+        Nota nuevaNota = escritorioService.crearNuevaNota(idUsuario, idEscritorio, posicionX, posicionY);
+
         if (nuevaNota != null) {
             return "redirect:/notas/" + nuevaNota.getId();
         } else {
             return "error";
         }
     }
-
-
 }

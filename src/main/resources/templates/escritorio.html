@@ -30,12 +30,20 @@
     </div>
   </div>
 
-<div id="context-menu" class="context-menu">
+<div id="context-menu-note" class="context-menu" style="display: none;">
   <ul>
     <li id="edit-note">✏️ Editar</li>
     <li id="delete-note">🗑️ Borrar</li>
   </ul>
 </div>
+
+
+<div id="context-menu-create" class="context-menu" style="display: none;">
+  <ul>
+    <li id="create-note">➕ Crear</li>
+  </ul>
+</div>
+
 
 <form id="crearNotaForm" th:action="@{/notas/nueva}" method="post" style="position: fixed; bottom: 20px; right: 20px;">
   <button type="submit" class="btn-flotante">
