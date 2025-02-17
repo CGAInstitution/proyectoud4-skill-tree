@@ -70,4 +70,8 @@ public class NotaService {
         return false;
     }
 
+    public Nota save(Nota nota) {
+        return notaRepository.save(nota);
+    }
+
 }

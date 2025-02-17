@@ -158,7 +158,6 @@ public class UsuarioTest {
         usuario.setApellidos("Doe");
         usuario.setContraseña("12345678");
         usuarioRepository.save(usuario);
-        usuarioRepository.save(usuario);
 
         // WHEN
         // buscamos al usuario por su correo electrónico,
