@@ -124,4 +124,21 @@ public class EscritorioController {
         return ResponseEntity.ok(response);
     }
 
+
+    @PostMapping("/notas/nueva")
+    public String crearNota() {
+        Long idUsuario = managerUserSession.usuarioLogeado();
+        Long idEscritorio = managerUserSession.currentEscritorio();
+
+        boolean success = escritorioService.crearNuevaNota(idUsuario, idEscritorio);
+
+        if (success) {
+            return "redirect:/escritorio";
+        } else {
+
+            return "error";
+        }
+    }
+
+
 }

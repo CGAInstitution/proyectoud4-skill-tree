@@ -171,3 +171,27 @@ body {
 .settings-svg:hover {
     fill: #bbbbbb;
 }
+
+/* Estilo del botón flotante */
+.btn-flotante {
+    position: fixed;
+    bottom: 20px; /* Ajusta la distancia del borde inferior */
+    right: 20px; /* Ajusta la distancia del borde derecho */
+    background-color: #007bff; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.btn-flotante:hover {
+    background-color: #0056b3; /* Cambio de color al pasar el mouse */
+}
