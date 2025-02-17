@@ -29,6 +29,10 @@ public class Preferencia {
     @Column(name = "idioma", nullable = false, length = 2)
     private String idioma;
 
+    public Preferencia() {
+    }
+
+
     public Long getId() {
         return id;
     }

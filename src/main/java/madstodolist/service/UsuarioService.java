@@ -3,8 +3,10 @@ package madstodolist.service;
 import madstodolist.dto.UsuarioData;
 import madstodolist.model.Escritorio;
 import madstodolist.model.Nota;
+import madstodolist.model.Preferencia;
 import madstodolist.model.Usuario;
 import madstodolist.repository.EscritorioRepository;
+import madstodolist.repository.PreferenciaRepository;
 import madstodolist.repository.UsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -21,6 +23,8 @@ import java.util.Optional;
 public class UsuarioService {
 
     Logger logger = LoggerFactory.getLogger(UsuarioService.class);
+    @Autowired
+    private PreferenciaRepository preferenciaRepository;
 
     public enum LoginStatus {LOGIN_OK, USER_NOT_FOUND, ERROR_PASSWORD}
 
@@ -98,6 +102,7 @@ public class UsuarioService {
         return escritorioRepository.findFirstByIdUsuarioOrderByIdAsc(usuario)
                 .orElseThrow(() -> new UsuarioServiceException("No se encontró un escritorio para el usuario"));
     }
+
 
 
     private static String hashPassword(String password) {

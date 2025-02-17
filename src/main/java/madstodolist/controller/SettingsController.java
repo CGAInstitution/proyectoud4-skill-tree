@@ -3,6 +3,8 @@ package madstodolist.controller;
 import madstodolist.authentication.ManagerUserSession;
 import madstodolist.dto.SettingsForm;
 import madstodolist.dto.UsuarioData;
+import madstodolist.model.Preferencia;
+import madstodolist.service.PreferenciaService;
 import madstodolist.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +23,14 @@ import java.util.Map;
 public class SettingsController {
     private final ManagerUserSession managerUserSession;
     private final UsuarioService usuarioService;
+    private final PreferenciaService preferenciaService;
 
 
     @Autowired
-    public SettingsController(ManagerUserSession managerUserSession, UsuarioService usuarioService) {
+    public SettingsController(ManagerUserSession managerUserSession, UsuarioService usuarioService, PreferenciaService preferenciaService) {
         this.managerUserSession = managerUserSession;
         this.usuarioService = usuarioService;
-
+        this.preferenciaService = preferenciaService;
     }
 
     @GetMapping("/user/settings")
@@ -51,6 +54,12 @@ public class SettingsController {
             usuarioService.actualizarContrasenia(managerUserSession.usuarioLogeado(), settingsForm.getContrasenia());
 
         }
+
+        preferenciaService.actualizarIdioma(managerUserSession.usuarioLogeado(), settingsForm.getIdioma());
+        preferenciaService.actualizarModo(managerUserSession.usuarioLogeado(), settingsForm.getModo());
+        preferenciaService.actualizarIdioma(managerUserSession.usuarioLogeado(), settingsForm.getIdioma());
+
+
         redirectAttributes.addFlashAttribute("show", true);
         return "redirect:/user/settings";
     }
