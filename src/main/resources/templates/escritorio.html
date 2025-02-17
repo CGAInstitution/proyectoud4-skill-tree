@@ -43,7 +43,11 @@
     <li id="create-note">➕ Crear</li>
   </ul>
 </div>
-
+<div id="context-menu-escritorio" class="context-menu" style="display: none;">
+  <ul>
+    <li id="delete-escritorio">🗑️ Borrar</li>
+  </ul>
+</div>
 
 <form id="crearNotaForm" th:action="@{/notas/nueva}" method="post" style="position: fixed; bottom: 20px; right: 20px;">
   <button type="submit" class="btn-flotante">

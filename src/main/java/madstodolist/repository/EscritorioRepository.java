@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface EscritorioRepository extends CrudRepository<Escritorio, Long> {
     Optional<Escritorio> findFirstByIdUsuarioOrderByIdAsc(Usuario usuario);
     List<Escritorio> findAllByIdUsuarioOrderByIdDesc(Usuario usuario);
-
+    int countByIdUsuario(Usuario idUsuario);
     Usuario id(Long id);
 }
 
