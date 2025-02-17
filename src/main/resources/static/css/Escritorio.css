@@ -164,12 +164,17 @@ body {
     color: #bbbbbb;
 }
 
-.settings-svg {
+.settings-svg, .crear-escritorio-svg {
     fill: black;
 }
 
-.settings-svg:hover {
+.settings-svg:hover, .crear-escritorio-svg:hover {
     fill: #bbbbbb;
+}
+
+#crear-escritorio-button {
+    background-color: transparent;
+    border: none;
 }
 
 /* Estilo del botón flotante */

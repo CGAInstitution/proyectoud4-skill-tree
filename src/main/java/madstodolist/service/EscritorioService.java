@@ -62,6 +62,9 @@ public class  EscritorioService {
     public List<Escritorio> obtenerEscritoriosPorUsuario(Usuario usuario) {
         return escritorioRepository.findAllByIdUsuarioOrderByIdDesc(usuario);
     }
+    public Escritorio save(Escritorio escritorio) {
+        return escritorioRepository.save(escritorio);
+    }
 
     public Nota crearNuevaNota(Long idUsuario, Long idEscritorio, Integer posicionX, Integer posicionY) {
         Usuario usuario = usuarioRepository.findById(idUsuario)
