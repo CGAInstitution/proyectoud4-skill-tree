@@ -1,96 +1,98 @@
 package madstodolist.controller;
 
+import madstodolist.Application;
+import madstodolist.authentication.ManagerUserSession;
+import madstodolist.dto.LoginData;
 import madstodolist.dto.UsuarioData;
+import madstodolist.model.Escritorio;
+import madstodolist.model.Usuario;
+import madstodolist.repository.EscritorioRepository;
+import madstodolist.service.EscritorioService;
+import madstodolist.service.NotaService;
 import madstodolist.service.UsuarioService;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.validation.BindingResult;
 
+import javax.naming.Binding;
+import javax.persistence.metamodel.Bindable;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-//
-// A diferencia de los tests web de tarea, donde usábamos los datos
-// de prueba de la base de datos, aquí vamos a practicar otro enfoque:
-// moquear el usuarioService.
+@Sql(scripts = "/clean-db.sql")
 public class UsuarioWebTest {
-
     @Autowired
     private MockMvc mockMvc;
 
-    // Moqueamos el usuarioService.
-    // En los tests deberemos proporcionar el valor devuelto por las llamadas
-    // a los métodos de usuarioService que se van a ejecutar cuando se realicen
-    // las peticiones a los endpoint.
-    @MockBean
+    @Autowired
     private UsuarioService usuarioService;
 
-    @Test
-    public void servicioLoginUsuarioOK() throws Exception {
-        // GIVEN
-        // Moqueamos la llamada a usuarioService.login para que
-        // devuelva un LOGIN_OK y la llamada a usuarioServicie.findByEmail
-        // para que devuelva un usuario determinado.
+    @Autowired
+    private EscritorioService escritorioService;
 
-        UsuarioData anaGarcia = new UsuarioData();
-        anaGarcia.setNombre("Ana García");
-        anaGarcia.setId(1L);
+    @Autowired
+    private EscritorioRepository escritorioRepository;
 
-        when(usuarioService.login("ana.garcia@gmail.com", "12345678"))
-                .thenReturn(UsuarioService.LoginStatus.LOGIN_OK);
-        when(usuarioService.findByEmail("ana.garcia@gmail.com"))
-                .thenReturn(anaGarcia);
+    @MockBean
+    private ManagerUserSession managerUserSession;
 
-        // WHEN, THEN
-        // Realizamos una petición POST al login pasando los datos
-        // esperados en el mock, la petición devolverá una redirección a la
-        // URL con las tareas del usuario
+    @MockBean
+    private BindingResult bindingResult;
 
-        this.mockMvc.perform(post("/login")
-                        .param("eMail", "ana.garcia@gmail.com")
-                        .param("password", "12345678"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/usuarios/1/tareas"));
+    Map<String, Object> prepareBD() {
+        UsuarioData usuario1 = new UsuarioData();
+        usuario1.setEmail("johndoe@gmail.com");
+        usuario1.setContraseña("123");
+        usuario1.setNombre("John");
+        usuario1.setApellidos("Doe");
+        usuario1 = usuarioService.registrar(usuario1);
+
+        UsuarioData usuario2 = new UsuarioData();
+        usuario2.setEmail("janedoe@gmail.com");
+        usuario2.setContraseña("abc");
+        usuario2.setNombre("Jane");
+        usuario2.setApellidos("Doe");
+        usuario2 = usuarioService.registrar(usuario2);
+
+        Map<String, Object> results = new HashMap<>();
+        results.put("John", usuario1.getId());
+        results.put("Jane", usuario2.getId());
+
+        return results;
     }
 
     @Test
-    public void servicioLoginUsuarioNotFound() throws Exception {
-        // GIVEN
-        // Moqueamos el método usuarioService.login para que devuelva
-        // USER_NOT_FOUND
-        when(usuarioService.login("pepito.perez@gmail.com", "12345678"))
-                .thenReturn(UsuarioService.LoginStatus.USER_NOT_FOUND);
+    public void mostrarEscritorio() throws Exception {
+        //GIVEN
+        //Usuario recién registrado con un escritorio por defecto con nombre: Escritorio1
+        Long idUsuario = (Long) prepareBD().get("John");
 
-        // WHEN, THEN
-        // Realizamos una petición POST con los datos del usuario mockeado y
-        // se debe devolver una página que contenga el mensaja "No existe usuario"
-        this.mockMvc.perform(post("/login")
-                        .param("eMail","pepito.perez@gmail.com")
-                        .param("password","12345678"))
-                .andExpect(content().string(containsString("No existe usuario")));
-    }
+        //Moqueamos inicio de sesión del usuario recién registrado
+        when(managerUserSession.usuarioLogeado()).thenReturn(idUsuario);
+        when(managerUserSession.currentEscritorio()).thenReturn(
+                usuarioService.obtenerPrimerEscritorio(idUsuario).getId()
+        );
 
-    @Test
-    public void servicioLoginUsuarioErrorPassword() throws Exception {
-        // GIVEN
-        // Moqueamos el método usuarioService.login para que devuelva
-        // ERROR_PASSWORD
-        when(usuarioService.login("ana.garcia@gmail.com", "000"))
-                .thenReturn(UsuarioService.LoginStatus.ERROR_PASSWORD);
-
-        // WHEN, THEN
-        // Realizamos una petición POST con los datos del usuario mockeado y
-        // se debe devolver una página que contenga el mensaja "Contraseña incorrecta"
-        this.mockMvc.perform(post("/login")
-                        .param("eMail","ana.garcia@gmail.com")
-                        .param("password","000"))
-                .andExpect(content().string(containsString("Contraseña incorrecta")));
+        //WHEN, THEN
+        //Realizamos la petición get a /escritorio que tendrá en el menu desplegable una tarjeta para Escritorio 1
+        this.mockMvc.perform(get("/escritorio"))
+                .andExpect((content().string(allOf(
+                        containsString("Escritorio 1")
+                ))));
     }
 }

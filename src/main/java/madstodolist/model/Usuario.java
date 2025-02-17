@@ -143,7 +143,12 @@ public class Usuario {
     public boolean equals(Object o) {
         if (!(o instanceof Usuario)) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(id, usuario.id) && Objects.equals(email, usuario.email);
+        if (Objects.equals(email, usuario.email)) return true;
+        if (usuario.id == null || id == null) {
+            return false;
+        }
+        if (Objects.equals(id, usuario.id)) return true;
+        return false;
     }
 
     @Override
