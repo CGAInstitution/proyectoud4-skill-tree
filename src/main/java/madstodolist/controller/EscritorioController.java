@@ -181,9 +181,10 @@ public class EscritorioController {
     @DeleteMapping("/escritorio/{idEscritorio}/eliminar")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> eliminarEscritorio(@PathVariable Long idEscritorio) {
-        boolean success = escritorioService.eliminarEscritorio(idEscritorio);
         Map<String, Object> response = new HashMap<>();
+        boolean success = escritorioService.eliminarEscritorio(idEscritorio, response);
         response.put("success", success);
         return ResponseEntity.ok(response);
     }
+
 }

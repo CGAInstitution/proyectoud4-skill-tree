@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -86,14 +87,21 @@ public class  EscritorioService {
 
         return nuevaNota;
     }
-    public boolean eliminarEscritorio(Long idEscritorio) {
+    public boolean eliminarEscritorio(Long idEscritorio, Map<String, Object> response) {
         Optional<Escritorio> optionalEscritorio = escritorioRepository.findById(idEscritorio);
         if (optionalEscritorio.isPresent()) {
+            Escritorio escritorio = optionalEscritorio.get();
+            // Verificar la cantidad de escritorios del usuario
+            int cantidadEscritorios = escritorioRepository.countByIdUsuario(escritorio.getIdUsuario());
+            if (cantidadEscritorios <= 1) {
+                response.put("error", "Debes tener al menos un escritorio.");
+                return false;
+            }
             escritorioRepository.deleteById(idEscritorio);
             return true;
         }
+        response.put("error", "Escritorio no encontrado.");
         return false;
     }
-
 
 }

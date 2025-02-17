@@ -220,7 +220,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             escritorioElement.remove();
                         }
                     } else {
-                        console.error("Error al eliminar el escritorio");
+                        // Mostrar el mensaje de error (si lo hay)
+                        alert(data.error || "Error al eliminar el escritorio");
                     }
                 })
                 .catch(error => console.error("Error:", error));
