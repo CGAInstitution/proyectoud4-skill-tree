@@ -130,12 +130,12 @@ public class EscritorioController {
         Long idUsuario = managerUserSession.usuarioLogeado();
         Long idEscritorio = managerUserSession.currentEscritorio();
 
-        boolean success = escritorioService.crearNuevaNota(idUsuario, idEscritorio);
+        Nota nuevaNota = escritorioService.crearNuevaNota(idUsuario, idEscritorio);
 
-        if (success) {
-            return "redirect:/escritorio";
+        // Si la creación fue exitosa, redirigir a la página de la nueva nota
+        if (nuevaNota != null) {
+            return "redirect:/notas/" + nuevaNota.getId();
         } else {
-
             return "error";
         }
     }

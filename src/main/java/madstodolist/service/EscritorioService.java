@@ -62,7 +62,7 @@ public class  EscritorioService {
     public List<Escritorio> obtenerEscritoriosPorUsuario(Usuario usuario) {
         return escritorioRepository.findAllByIdUsuarioOrderByIdDesc(usuario);
     }
-    public boolean crearNuevaNota(Long idUsuario, Long idEscritorio) {
+    public Nota  crearNuevaNota(Long idUsuario, Long idEscritorio) {
         Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
@@ -84,6 +84,7 @@ public class  EscritorioService {
         notaRepository.save(nuevaNota);
 
 
-        return true;
+        return nuevaNota;
+
     }
 }
