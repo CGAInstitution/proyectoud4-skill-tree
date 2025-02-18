@@ -1,174 +1,88 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Sattings</title>
-
-
+    <title>Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/settings.css">
 </head>
-<style>
-    *{
-        margin: 0;
-        padding:0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    }
-    div{
 
-        padding: 2%;
-        text-align: center;
-    }
-    .backgrown{
-        border: 1px solid #F0E68C;
-        background-color: #FFF9C4;
-        border-radius: 8px;
-        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
-        width: 40%;
-        margin: 2% auto 0 auto;
-    }
-    form{
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        width: 80%;
-        align-items: center;
-    }
-    form>input{
-        margin-bottom: 2%;
-    }
-    .rb-container{
-        display: flex;
-        justify-content: center;
-        gap: 5px;
-
-    }
-    .rb-container>label{
-       margin-right: 10px;
-
-    }
-    input,select{
-        margin-top: 5px;
-        background-color: #fffbe6;
-        border: 2px solid #e0c57e;
-        border-radius: 8px;
-        font-family: 'Arial', sans-serif;
-        font-size: 1rem;
-        outline: none;
-        padding: 10px;
-        transition: all 0.3s ease-in-out;
-    }
-    button{
-        background-color: #ffcc00;
-        border: none;
-
-        color: #5a4a42;
-        cursor: pointer;
-        display: block;
-        font-family: 'Arial', sans-serif;
-        font-size: 1rem;
-        font-weight: bold;
-        padding: 12px;
-        transition: 0.3s;
-    }
-    .volver{
-        border-radius: 100%;
-        height: 50px;
-        width: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .enviar{
-        border-radius: 8px;
-        width: 30%;
-
-    }
-    button:hover {
-        background-color: #e0b800;
-    }
-
-</style>
 <body>
-    <div class="backgrown">
-        <a th:href="@{/escritorio}"><button class="volver"><img th:src="@{/images/arrow-left.svg}" src="../static/images/arrow-left.svg" alt="Eliminar"></button></a>
-        <div id="toast" th:attr="data-show=${show}" style="display: none; position: fixed; bottom: 20px; right: 20px; background: #28a745; color: white; padding: 15px; border-radius: 5px;">
-            Los cambios se han guardado exitosamente.
-        </div>
-        <h1>Settings</h1>
-        <form th:action="@{/user/settings/savesettings}" method="post" th:object="${settingsForm}">
-            <label for="nombre">Nombre:</label>
-            <input ref="nombre" type="text" id="nombre" name="nombre" th:value="${usuario.nombre}" required>
-
-            <label for="apellidos">Apellidos:</label>
-            <input type="text" id="apellidos" name="apellidos" th:value="${usuario.apellidos}" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" th:value="${usuario.email}" required>
-
-            <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contraseña" name="contraseña">
-
-            <label for="confirmar_contraseña">Repite la contraseña:</label>
-            <input type="password" id="confirmar_contraseña" name="confirmarContrasenia">
-            <span id="passwordError" style="color: red; display: none; margin-bottom: 15px">Las contraseñas no coinciden</span>
-
-
-            <label>Modo de Vista:</label>
-            <div class="rb-container">
-                <input type="radio" id="oscuro" name="modo" value="false">
-                <label for="oscuro">Oscuro</label>
-                <input type="radio" id="claro" name="modo" value="true" checked>
-                <label for="claro">Claro</label>
-            </div>
-
-            <label for="tamano_fuente">Tamaño de Fuente:</label>
-            <input type="number" id="tamano_fuente" name="tamano_fuente" min="8" max="36" value="16" required>
-
-            <label for="idioma">Idioma:</label>
-            <select id="idioma" name="idioma" required>
-                <option value="es">Español</option>
-                <option value="en">Inglés</option>
-                <option value="fr">Francés</option>
-                <option value="de">Alemán</option>
-            </select><br><br>
-
-            <button type="submit" class="enviar">Actualizar</button>
-        </form>
+<div class="backgrown">
+    <a th:href="@{/escritorio}">
+        <button class="volver"><img th:src="@{/images/arrow-left.svg}" src="../static/images/arrow-left.svg"
+                                    alt="Eliminar"></button>
+    </a>
+    <div id="toast" th:attr="data-show=${show}"
+         style="display: none; position: fixed; bottom: 20px; right: 20px; background: #28a745; color: white; padding: 15px; border-radius: 5px;">
+        Los cambios se han guardado exitosamente.
     </div>
+    <h1>Ajustes</h1>
+    <form th:action="@{/user/settings/savesettings}" method="post" th:object="${settingsForm}">
+        
 
-    <script>
-        function showToast() {
-            let toast = document.getElementById("toast");
-            toast.style.display = "block";
+        <label for="nombre">Nombre:</label>
+        <input ref="nombre" type="text" id="nombre" name="nombre" th:value="${usuario.nombre}" required>
 
-            setTimeout(() => {
-                toast.style.display = "none";
-            }, 3000);
-        }
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" th:value="${usuario.apellidos}" required>
 
-        document.addEventListener("DOMContentLoaded", function () {
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" th:value="${usuario.email}" required>
 
-            let show = document.getElementById("toast").getAttribute("data-show");
-            if (show) {
-                showToast("Los cambios se han guardado exitosamente.");
-            }
-        });
+        <label for="contraseña">Contraseña:</label>
+        <div class="password-container">
+            <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña" >
+            <button type="button" id="togglePassword" class="password-toggle">Mostrar</button>
+        </div>
 
-        document.querySelector("form").addEventListener("submit", function(event) {
-            let password = document.getElementById("contraseña").value;
 
-            let confirmPassword = document.getElementById("confirmar_contraseña").value;
-            let errorSpan = document.getElementById("passwordError");
+        <label for="confirmar_contraseña">Repite la contraseña:</label>
+        <div class="password-container">
+            <input type="password" id="confirmar_contraseña" name="confirmarContrasenia"
+                   placeholder="Repite la contraseña" >
+            <button type="button" id="toggleConfirmPassword" class="password-toggle">Mostrar</button>
+        </div>
 
-            if (password){
-                if (password !== confirmPassword) {
-                    event.preventDefault(); // Prevent form submission
-                    errorSpan.style.display = "inline"; // Show error message
-                } else {
-                    errorSpan.style.display = "none"; // Hide error message
-                }
-            }
 
-        });
-    </script>
+        <div th:if="${errorContrasenas}" style="color: red; margin-bottom: 15px;" th:text="${errorContrasenas}"></div>
+
+        <br>
+        <label>Modo de Vista:</label>
+        <div class="rb-container">
+            <!-- Si el modo de preferencia es verdadero (true), se selecciona "Claro" -->
+            <input type="radio" id="oscuro" name="modo" value="false"
+                   th:checked="${preferencia.modoOscuro == false}">
+            <label for="oscuro">Oscuro</label>
+            <input type="radio" id="claro" name="modo" value="true"
+                   th:checked="${preferencia.modoOscuro == true}">
+            <label for="claro">Claro</label>
+        </div>
+        <br>
+        <label for="tamano_fuente">Tamaño de Fuente:</label>
+        <input type="number" id="tamano_fuente" name="tamano_fuente"
+               min="8" max="36" th:value="${preferencia['tamañoFuente']}" required>
+
+        <label for="idioma">Idioma:</label>
+        <select id="idioma" name="idioma" required>
+            <option value="es" th:selected="${preferencia.idioma == 'es'}">Español</option>
+            <option value="en" th:selected="${preferencia.idioma == 'en'}">Inglés</option>
+            <option value="fr" th:selected="${preferencia.idioma == 'fr'}">Francés</option>
+            <option value="de" th:selected="${preferencia.idioma == 'de'}">Alemán</option>
+        </select><br>
+
+        <label for="passwordActual">Contraseña actual:</label>
+        <div class="password-container">
+            <input type="password" id="passwordActual" name="passwordActual" placeholder="Contraseña actual" required>
+            <button type="button" id="toggleCurrentPassword" class="password-toggle">Mostrar</button>
+        </div>
+        <div th:if="${errorPasswordActual}" style="color: red; margin-bottom: 15px;"
+             th:text="${errorPasswordActual}"></div>
+        <br>
+        <button type="submit" class="enviar">Actualizar</button>
+    </form>
+</div>
+
+<script src="/js/MostrarPswd.js"></script>
 </body>
 </html>

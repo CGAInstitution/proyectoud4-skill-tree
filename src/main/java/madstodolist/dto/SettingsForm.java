@@ -2,6 +2,7 @@ package madstodolist.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.Locale;
 
 public class SettingsForm {
     @NotNull
@@ -38,6 +39,10 @@ public class SettingsForm {
         this.modo = modo;
         this.textSize = textSize;
         this.idioma = idioma;
+    }
+
+    public String setIdioma(String idioma) {
+        return idioma;
     }
 
     public String getNombre() {
@@ -84,9 +89,6 @@ public class SettingsForm {
     }
     public String getIdioma() {
         return idioma;
-    }
-    public void setIdioma(String idioma) {
-        this.idioma = idioma;
     }
 
 }

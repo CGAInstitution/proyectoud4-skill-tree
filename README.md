@@ -96,6 +96,8 @@ Para la organización del proyecto se usó una de las herramientas ofrecidas por
 La primera fase de este trabajo fue establecer dentro de este las tareas (cada una creada con un issue) y asignarlas a los diferentes miembros del equipo.
 De esta forma se puede resumir de forma rápida y visual la carga de trabajo para cada miembro, la cantidad de trabajo general y su estado de completación.
 
+![tablero.PNG](tablero.PNG)
+
 En el siguiente enlace se pueden consultar todas las issues creadas y su asignación:
 https://github.com/CGAInstitution/proyectoud4-skill-tree/issues?q=is%3Aissue%20
 
@@ -111,7 +113,21 @@ ___
 - **Opción de compartir escritorios**
 - **Diferentes modos de compartir:** Dar al usuario la opción de compartir notas con permisos de vista o de editor.
 - **Añadir notas que te han compartido a tus escritorios**
+- **Hacer la web responsive**
+- **Añadir la funcionalidad de las categorías a las notas**
 
 [⬆️Volver al índice](#índice)
 ___
 ## Conclusiones y opinión del trabajo realizado
+
+Con este trabajo hemos aprendido mucho sobre SpringBoot y las aplicaciones web, repasando conocimientos anteriores de frontend y juntándolo con lo aprendido en esta asignatura consultas y tratamiento de datos en el backend.
+Por ejemplo hemos realizado peticiones desde el frontend a la API de la aplicación, y hemos utilizado capas de service y repository (que cubren las consultas básicas a sql), y con dtos. Sentimos que los conocimientos se han asentado y hemos logrado un nuevo nivel de entendimiento.
+No tuvimos todo el tiempo que nos gustaría para dedicarle al proyecto, por lo que ciertos ajustes finales en cuanto a la interfaz y las funcionalidades han tenido que cortarse.
+
+Contamos que de media le hemos dedicado unas 25 horas al proyecto. Esperamos una calificación de 8 o 8,5, ya que hemos cumplidocon los requisitos del proyecto y hemos realizado varios extras:
+- Comprobación de formularios
+- Creación de un frontend con Vue (notas editables)
+
+
+
+

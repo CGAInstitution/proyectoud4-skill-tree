@@ -12,7 +12,7 @@ public class Preferencia {
     private Long id;
 
     @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuarios;
 
@@ -28,6 +28,10 @@ public class Preferencia {
     @NotNull
     @Column(name = "idioma", nullable = false, length = 2)
     private String idioma;
+
+    public Preferencia() {
+    }
+
 
     public Long getId() {
         return id;
@@ -69,4 +73,15 @@ public class Preferencia {
         this.idioma = idioma;
     }
 
+
+    @Override
+    public String toString() {
+        return "Preferencia{" +
+                "id=" + id +
+                ", usuarios=" + usuarios +
+                ", modoOscuro=" + modoOscuro +
+                ", tamañoFuente=" + tamañoFuente +
+                ", idioma='" + idioma + '\'' +
+                '}';
+    }
 }
