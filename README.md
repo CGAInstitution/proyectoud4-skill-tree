@@ -86,12 +86,81 @@ Lo más destacable del código de este proyecto es que hemos aprendido a realiza
 En el backend los endpoint son los configurados en los controladores de SpringBoot mientras que en el frontend tenemos los fetch de JavaScript, por ejemplo:
 ![destacable.png](destacable.png)
 
+#### Descargar nota
+Una de las funciones que nos parece interesante es la de descargar la nota como archivo md. Para ello el usuario tiene un botón de descarga conectado mediante la anotación @click de Vue con una función.
+Esta función realiza una petición GET al controller, que, en una respuesta correcta, devolverá un archivo markdown en un byte[ ]. La función crará un anchor y un url (ambos temporales) a  los que vincular el archivo y los accionará para iniciar la descarga.
+
+**HTML**
+```html
+        <button @click="downloadNota"><img th:src="@{/images/download.svg}" src="../static/images/download.svg" alt="Descarga"></button>
+
+```
+**VUE**
+```js
+data() {
+        return {
+            idNota: null,
+            titleContent: null,
+            descripcionContent:null,
+            selectedColor: null,
+            showPicker: false,
+            colors: ['#ffadad', '#ffd6a5', '#fae890','#bcfdae', '#9bf6ff', '#a0c4ff', '#bdb2ff', '#ffc6ff'],
+            pickerPosition: { top: '0px', left: '0px' },
+            correo: '',
+            modalVisible: false
+        };
+    },
+    mounted() {
+        if (this.$refs.paper){
+            this.idNota = this.$refs.paper.getAttribute("data-idNota");
+            this.selectedColor ='#'+ this.$refs.paper.getAttribute("data-color");
+        }
+        else {
+            console.error("Referencia paper no encontrada")
+        }
+
+        if(this.$refs.titulo){
+            this.titleContent = this.$refs.titulo.getAttribute("data-titleContent") || "";
+
+        }
+        else {
+            console.error("Referencia titulo no encontrada")
+        }
+
+        if(this.$refs.descripcion){
+            this.descripcionContent =this.$refs.descripcion.getAttribute("data-desc-content") || "";
+
+        }else{
+            console.error("Referencia descripción no encontrada")
+        }
+    },
+```
+**Controller**
+```java
+@GetMapping("notas/{idNota}/descargar")
+    public ResponseEntity<byte[]> sownloadNota(@PathVariable Long idNota) {
+        Nota nota = notaService.findNotaById(idNota);
+        String titulo = nota.getTitulo();
+        String descripcion = nota.getDescripcion();
+
+        String markdownContent = "# " + titulo + "\n" + descripcion;
+
+        byte[] contentBytes = markdownContent.getBytes(StandardCharsets.UTF_8);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=nota.md");
+        headers.add(HttpHeaders.CONTENT_TYPE, "text/markdown; charset=UTF-8");
+
+        return new ResponseEntity<>(contentBytes, headers, HttpStatus.OK);
+    }
+```
+
 [⬆️Volver al índice](#índice)
 ___
 ## Manual de usuario
 
 Para mostrar como funciona la aplicación desde el punto de vista del usuario hemos creado el siguiente videotutorial:
-
+https://drive.google.com/file/d/1fBH0lyEn-_GUy7OkoP6omFzFtkYNl9A7/view?usp=drive_link
 
 [⬆️Volver al índice](#índice)
 ___
@@ -131,6 +200,8 @@ No tuvimos todo el tiempo que nos gustaría para dedicarle al proyecto, por lo q
 Contamos que de media le hemos dedicado unas 25 horas al proyecto. Esperamos una calificación de 8 o 8,5, ya que hemos cumplidocon los requisitos del proyecto y hemos realizado varios extras:
 - Comprobación de formularios
 - Creación de un frontend con Vue (notas editables)
+
+[⬆️Volver al índice](#índice)
 
 
 
