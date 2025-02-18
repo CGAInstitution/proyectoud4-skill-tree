@@ -25,39 +25,20 @@ public class PreferenciaService {
         preferenciaRepository.save(preferencia);
     }
 
-    public boolean actualizarModo(Long idPreferencia, boolean modo) {
-        Optional<Preferencia> preferencia = preferenciaRepository.findById(idPreferencia);
-        if (preferencia.isPresent()) {
-            Preferencia preferenciaActual = preferencia.get();
-            preferenciaActual.setModoOscuro(modo);
-            preferenciaRepository.save(preferenciaActual);
-            return true;
-        }
-        return false;
-    }
-    public boolean actualizarTamanioFuente(Long idPreferencia, int tamanio) {
-        Optional<Preferencia> preferencia = preferenciaRepository.findById(idPreferencia);
-        if (preferencia.isPresent()) {
-            Preferencia preferenciaActual = preferencia.get();
-            preferenciaActual.setTamañoFuente((byte)tamanio);
-            preferenciaRepository.save(preferenciaActual);
-            return true;
-        }
-        return false;
-    }
-    public boolean actualizarIdioma(Long idPreferencia, String idioma) {
-        Optional<Preferencia> preferencia = preferenciaRepository.findById(idPreferencia);
-        if (preferencia.isPresent()) {
-            Preferencia preferenciaActual = preferencia.get();
-            preferenciaActual.setIdioma(idioma);
-            preferenciaRepository.save(preferenciaActual);
-            return true;
-        }
-        return false;
-    }
 
     public Preferencia findById(Long idUsuario) {
         Preferencia preferencia = preferenciaRepository.findById(idUsuario).orElseThrow(()->new RuntimeException("Preferencia no encontrada"));
         return preferencia;
+
     }
+
+    public void updatePreferencias(Long idUsuario, boolean modo, int tamanoFuente, String idioma) {
+        Preferencia preferencia = findById(idUsuario);
+        preferencia.setModoOscuro(modo);
+        preferencia.setTamañoFuente((byte) tamanoFuente);
+        preferencia.setIdioma(idioma);
+        System.out.println(preferencia);
+        preferenciaRepository.save(preferencia);
+    }
+
 }

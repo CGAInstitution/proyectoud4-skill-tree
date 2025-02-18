@@ -76,10 +76,10 @@ DELIMITER ;
 
 insert into Usuarios(email, nombre, apellidos, contraseña) values ("admin@gmail.com","Administrador","Admin","a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3");
 
-
+insert into Usuarios(email, nombre, apellidos, contraseña) values ("admin2@gmail.com","Administrador","Admin","a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3");
 insert into Escritorios(nombre, id_Usuario) values ("Escritorio1",1);
 
-insert into Escritorios(nombre, id_Usuario) values ("Escritorio2",1);
+insert into Escritorios(nombre, id_Usuario) values ("Escritorio2",2);
 insert into Escritorios(nombre, id_Usuario) values ("Escritorio3",1);
 insert into Categorias(color,nombre,idUsuario) values ("43e24f","importante",1);
 
@@ -88,7 +88,7 @@ insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 3"," Esta es mi tercera nota","bdb2ff",1,2,1,400,200);
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 4"," Esta es mi cuarta nota","a0c4ff",1,1,1,100,330);
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 5"," Esta es mi quinta nota","ffd6a5",1,1,1,50,650);
-insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 6"," Esta es mi sexta nota","bdb2ff",1,2,1,580,75);
+insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 6"," Esta es mi sexta nota","bdb2ff",2,2,1,580,75);
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 7"," Esta es mi septima nota","ffc6ff",1,1,1,1000,100);
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 8"," Esta es mi octava nota","ffadad",1,1,1,320,200);
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 9"," Esta es mi novena nota","bdb2ff",1,2,1,700,200);

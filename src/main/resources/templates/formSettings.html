@@ -114,23 +114,27 @@
 
             <label>Modo de Vista:</label>
             <div class="rb-container">
-                <input type="radio" id="oscuro" name="modo" value="false">
+                <!-- Si el modo de preferencia es verdadero (true), se selecciona "Claro" -->
+                <input type="radio" id="oscuro" name="modo" value="false"
+                       th:checked="${preferencia.modoOscuro == false}">
                 <label for="oscuro">Oscuro</label>
-                <input type="radio" id="claro" name="modo" value="true" checked>
+                <input type="radio" id="claro" name="modo" value="true"
+                       th:checked="${preferencia.modoOscuro == true}">
                 <label for="claro">Claro</label>
             </div>
 
             <label for="tamano_fuente">Tamaño de Fuente:</label>
-            <input type="number" id="tamano_fuente" name="tamano_fuente" min="8" max="36" value="16" required>
+            <input type="number" id="tamano_fuente" name="tamano_fuente"
+                   min="8" max="36" th:value="${preferencia['tamañoFuente']}" required>
 
             <label for="idioma">Idioma:</label>
             <select id="idioma" name="idioma" required>
-                <option value="es" selected>Español</option>
-                <option value="en">Inglés</option>
-                <option value="fr">Francés</option>
-                <option value="de">Alemán</option>
+                <option value="es" th:selected="${preferencia.idioma == 'es'}">Español</option>
+                <option value="en" th:selected="${preferencia.idioma == 'en'}">Inglés</option>
+                <option value="fr" th:selected="${preferencia.idioma == 'fr'}">Francés</option>
+                <option value="de" th:selected="${preferencia.idioma == 'de'}">Alemán</option>
             </select><br><br>
-            
+
             <label for="passwordActual">Contraseña actual:</label>
             <input type="password" id="passwordActual" name="passwordActual" required>
             <div th:if="${errorPasswordActual}" style="color: red; margin-bottom: 15px;" th:text="${errorPasswordActual}"></div>

@@ -2,6 +2,7 @@ package madstodolist.controller;
 
 import madstodolist.authentication.ManagerUserSession;
 import madstodolist.dto.UsuarioData;
+import madstodolist.model.Preferencia;
 import madstodolist.model.Usuario;
 import madstodolist.service.PreferenciaService;
 import madstodolist.service.UsuarioService;
@@ -31,8 +32,15 @@ public class SettingsController {
 
     @GetMapping("/user/settings")
     public String mostrarSettings(Model model) {
+        Long idUsuario = managerUserSession.usuarioLogeado();
+
         UsuarioData userData = usuarioService.findById(managerUserSession.usuarioLogeado());
         model.addAttribute("usuario", userData);
+
+        Preferencia preferencia = preferenciaService.findById(idUsuario);
+        model.addAttribute("preferencia", preferencia);
+
+
         return "formSettings";
     }
 
@@ -43,10 +51,12 @@ public class SettingsController {
             @RequestParam("email") String email,
             @RequestParam(value = "contraseña", required = false) String contrasenia,
             @RequestParam(value = "confirmarContrasenia", required = false) String confirmarContrasenia,
-            @RequestParam("passwordActual") String passwordActual,  // Campo para la contraseña actual
+            @RequestParam("passwordActual") String passwordActual,
+            @RequestParam("modo") boolean modo,
+            @RequestParam("tamano_fuente") int tamanoFuente,
+            @RequestParam("idioma") String idioma,
             RedirectAttributes redirectAttributes) {
 
-        // Validar que, si se ingresa una nueva contraseña, ambas coincidan
         if (contrasenia != null && !contrasenia.isEmpty()) {
             if (!contrasenia.equals(confirmarContrasenia)) {
                 redirectAttributes.addFlashAttribute("errorContrasenas", "Las contraseñas no coinciden");
@@ -57,7 +67,6 @@ public class SettingsController {
         Long idUsuario = managerUserSession.usuarioLogeado();
         Usuario usuario = modelMapper.map(usuarioService.findById(idUsuario), Usuario.class);
 
-        // Validar la contraseña actual ingresada (usando hash para la comparación)
         String hashedPasswordActual = UsuarioService.hashPassword(passwordActual);
         if (!usuario.getContraseña().equals(hashedPasswordActual)) {
             redirectAttributes.addFlashAttribute("errorPasswordActual", "La contraseña actual es incorrecta");
@@ -68,17 +77,16 @@ public class SettingsController {
         usuario.setApellidos(apellidos);
         usuario.setEmail(email);
 
-        // Si se ingresó una nueva contraseña, encriptarla antes de guardar
         if (contrasenia != null && !contrasenia.isEmpty()) {
             usuario.setContraseña(UsuarioService.hashPassword(contrasenia));
         }
 
         usuarioService.save(usuario);
 
-        // Redirigir a la vista con un mensaje de éxito
+        preferenciaService.updatePreferencias(idUsuario, modo, tamanoFuente, idioma);
+
         redirectAttributes.addFlashAttribute("show", true);
         return "redirect:/user/settings";
     }
-
 
 }
