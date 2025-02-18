@@ -96,6 +96,8 @@ Para la organización del proyecto se usó una de las herramientas ofrecidas por
 La primera fase de este trabajo fue establecer dentro de este las tareas (cada una creada con un issue) y asignarlas a los diferentes miembros del equipo.
 De esta forma se puede resumir de forma rápida y visual la carga de trabajo para cada miembro, la cantidad de trabajo general y su estado de completación.
 
+![tablero.PNG](tablero.PNG)
+
 En el siguiente enlace se pueden consultar todas las issues creadas y su asignación:
 https://github.com/CGAInstitution/proyectoud4-skill-tree/issues?q=is%3Aissue%20
 
