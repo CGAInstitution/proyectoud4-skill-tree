@@ -2,6 +2,7 @@ package madstodolist.controller;
 
 import madstodolist.authentication.ManagerUserSession;
 import madstodolist.dto.UsuarioData;
+import madstodolist.model.Preferencia;
 import madstodolist.model.Usuario;
 import madstodolist.service.PreferenciaService;
 import madstodolist.service.UsuarioService;
@@ -31,8 +32,15 @@ public class SettingsController {
 
     @GetMapping("/user/settings")
     public String mostrarSettings(Model model) {
+        Long idUsuario = managerUserSession.usuarioLogeado();
+
         UsuarioData userData = usuarioService.findById(managerUserSession.usuarioLogeado());
         model.addAttribute("usuario", userData);
+
+        Preferencia preferencia = preferenciaService.findById(idUsuario);
+        model.addAttribute("preferencia", preferencia);
+
+
         return "formSettings";
     }
 
@@ -43,30 +51,40 @@ public class SettingsController {
             @RequestParam("email") String email,
             @RequestParam(value = "contraseña", required = false) String contrasenia,
             @RequestParam(value = "confirmarContrasenia", required = false) String confirmarContrasenia,
+            @RequestParam("passwordActual") String passwordActual,
+            @RequestParam("modo") boolean modo,
+            @RequestParam("tamano_fuente") int tamanoFuente,
+            @RequestParam("idioma") String idioma,
             RedirectAttributes redirectAttributes) {
 
         if (contrasenia != null && !contrasenia.isEmpty()) {
             if (!contrasenia.equals(confirmarContrasenia)) {
-                redirectAttributes.addFlashAttribute("error", "Las contraseñas no coinciden");
+                redirectAttributes.addFlashAttribute("errorContrasenas", "Las contraseñas no coinciden");
                 return "redirect:/user/settings";
             }
         }
 
         Long idUsuario = managerUserSession.usuarioLogeado();
-        Usuario usuario =modelMapper.map( usuarioService.findById(idUsuario), Usuario.class);
+        Usuario usuario = modelMapper.map(usuarioService.findById(idUsuario), Usuario.class);
 
-        // Actualizar los datos básicos
+        String hashedPasswordActual = UsuarioService.hashPassword(passwordActual);
+        if (!usuario.getContraseña().equals(hashedPasswordActual)) {
+            redirectAttributes.addFlashAttribute("errorPasswordActual", "La contraseña actual es incorrecta");
+            return "redirect:/user/settings";
+        }
+
         usuario.setNombre(nombre);
         usuario.setApellidos(apellidos);
         usuario.setEmail(email);
 
         if (contrasenia != null && !contrasenia.isEmpty()) {
-            usuario.setContraseña(contrasenia);
+            usuario.setContraseña(UsuarioService.hashPassword(contrasenia));
         }
 
         usuarioService.save(usuario);
 
-        // Redirigir a la vista con un mensaje de éxito
+        preferenciaService.updatePreferencias(idUsuario, modo, tamanoFuente, idioma);
+
         redirectAttributes.addFlashAttribute("show", true);
         return "redirect:/user/settings";
     }
