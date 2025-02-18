@@ -3,8 +3,10 @@ package madstodolist.service;
 import madstodolist.dto.UsuarioData;
 import madstodolist.model.Escritorio;
 import madstodolist.model.Nota;
+import madstodolist.model.Preferencia;
 import madstodolist.model.Usuario;
 import madstodolist.repository.EscritorioRepository;
+import madstodolist.repository.PreferenciaRepository;
 import madstodolist.repository.UsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -21,6 +23,8 @@ import java.util.Optional;
 public class UsuarioService {
 
     Logger logger = LoggerFactory.getLogger(UsuarioService.class);
+    @Autowired
+    private PreferenciaRepository preferenciaRepository;
 
     public enum LoginStatus {LOGIN_OK, USER_NOT_FOUND, ERROR_PASSWORD}
 
@@ -100,6 +104,7 @@ public class UsuarioService {
     }
 
 
+
     private static String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -120,49 +125,11 @@ public class UsuarioService {
         }
     }
 
-    public boolean actualizarNombre(Long idUsuario, String nombre) {
-        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
-        if (usuario.isPresent()) {
-            Usuario usuarioActual = usuario.get();
-            usuarioActual.setNombre(nombre);
-            usuarioRepository.save(usuarioActual);
-            return true;
-        }
-        return false;
+
+    public void save(Usuario usuario) {
+        usuarioRepository.save(usuario);
     }
 
-    public boolean actualizarApellido(Long idUsuario, String apellido) {
-        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
-        if (usuario.isPresent()) {
-            Usuario usuarioActual = usuario.get();
-            usuarioActual.setApellidos(apellido);
-            usuarioRepository.save(usuarioActual);
-            return true;
-        }
-        return false;
-    }
 
-    public boolean actualizarEmail(Long idUsuario, String email) {
-        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
-        if (usuario.isPresent()) {
-            Usuario usuarioActual = usuario.get();
-            usuarioActual.setEmail(email);
-            usuarioRepository.save(usuarioActual);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean actualizarContrasenia(Long idUsuario, String contrasenia) {
-        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
-        if (usuario.isPresent()) {
-            Usuario usuarioActual = usuario.get();
-
-            usuarioActual.setContraseña(hashPassword(contrasenia));
-            usuarioRepository.save(usuarioActual);
-            return true;
-        }
-        return false;
-    }
 
 }

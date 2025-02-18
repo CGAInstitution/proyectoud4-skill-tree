@@ -62,6 +62,18 @@ create table Usuarios_Notas(
     primary key(idUsuario, idNota)
 );
 
+DELIMITER $$
+
+CREATE TRIGGER after_usuario_insert
+AFTER INSERT ON Usuarios
+FOR EACH ROW
+BEGIN
+    INSERT INTO Preferencias (modoOscuro, tamañoFuente, idioma, idUsuario)
+    VALUES (true, 12, 'es', NEW.id);
+END $$
+
+DELIMITER ;
+
 insert into Usuarios(email, nombre, apellidos, contraseña) values ("admin@gmail.com","Administrador","Admin","a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3");
 
 
@@ -81,4 +93,4 @@ insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 8"," Esta es mi octava nota","ffadad",1,1,1,320,200);
 insert into Notas(titulo,descripcion,color,id_Creador,id_Escritorio,idCategoria,posicionX,posicionY) values ("Nota 9"," Esta es mi novena nota","bdb2ff",1,2,1,700,200);
 
-select * from usuarios_notas;
+#select * from usuarios_notas;
