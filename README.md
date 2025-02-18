@@ -13,14 +13,14 @@ ___
 1. [Supuesto](#Supuesto)
 2. [Diagrama ER de la BD en Notación Crow's Foot Model de BD](#diagrama-er-de-la-bd-en-notación-crows-foot)
 3. [Manual técnico para desarrolladores](#manual-técnico-para-desarrolladores) <br>
-   2.1. [Requisitos](#requisitos)<br>
-   2.2. [Ejecución](#ejecución)<br>
-   2.3. [Estructura de la aplicación](#estructura-de-la-aplicación)<br>
-   2.4. [Código destacable](#código-destacable)
-2. [Manual de usuario](#manual-de-usuario)
-1. [Explicación de GitProject](#explicación-de-gitproject)
-1. [Propuestas de mejora](#propuestas-de-mejora)
-1. [Conclusiones y opinión del trabajo realizado](#conclusiones-y-opinión-del-trabajo-realizado)
+   3.1. [Requisitos](#requisitos)<br>
+   3.2. [Ejecución](#ejecución)<br>
+   3.3. [Estructura de la aplicación](#estructura-de-la-aplicación)<br>
+   3.4. [Código destacable](#código-destacable)
+4. [Manual de usuario](#manual-de-usuario)
+5. [Explicación de GitProject](#explicación-de-gitproject)
+6. [Propuestas de mejora](#propuestas-de-mejora)
+7. [Conclusiones y opinión del trabajo realizado](#conclusiones-y-opinión-del-trabajo-realizado)
 ___
 
 ## Supuesto
@@ -207,9 +207,11 @@ ___
 ___
 ## Conclusiones y opinión del trabajo realizado
 
-Con este trabajo hemos aprendido mucho sobre SpringBoot y las aplicaciones web, repasando conocimientos anteriores de frontend y juntándolo con lo aprendido en esta asignatura consultas y tratamiento de datos en el backend.
+Con este trabajo hemos aprendido mucho sobre SpringBoot, repasando conocimientos anteriores de frontend y juntándolo con lo aprendido en esta asignatura consultas y tratamiento de datos en el backend.
 Por ejemplo hemos realizado peticiones desde el frontend a la API de la aplicación, y hemos utilizado capas de service y repository (que cubren las consultas básicas a sql), y con dtos. Sentimos que los conocimientos se han asentado y hemos logrado un nuevo nivel de entendimiento.
 No tuvimos todo el tiempo que nos gustaría para dedicarle al proyecto, por lo que ciertos ajustes finales en cuanto a la interfaz y las funcionalidades han tenido que cortarse.
+
+Respecto a proyectos anteriores sentimos que tuvimos una mayor facilidad ya que la mayoría de nuestros integrantes tiene un ciclo de desarrollo web estando más familiarizados a este entorno de trabajo respecto a javafx.
 
 Contamos que de media le hemos dedicado unas 25 horas al proyecto. Esperamos una calificación de 8 o 8,5, ya que hemos cumplidocon los requisitos del proyecto y hemos realizado varios extras:
 - Comprobación de formularios
