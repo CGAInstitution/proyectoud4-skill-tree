@@ -112,6 +112,7 @@ button:hover {
     align-items: center;
     border-bottom: 2px solid #e0c57e;
     padding: 5px;
+    margin-bottom: 5px
 }
 
 .password-container input {
