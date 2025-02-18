@@ -5,8 +5,6 @@
     <title>Settings</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/settings.css">
-
-
 </head>
 
 <body>
@@ -34,7 +32,7 @@
 
         <label for="contraseña">Contraseña:</label>
         <div class="password-container">
-            <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña" required>
+            <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña" >
             <button type="button" id="togglePassword" class="password-toggle">Mostrar</button>
         </div>
 
@@ -42,14 +40,14 @@
         <label for="confirmar_contraseña">Repite la contraseña:</label>
         <div class="password-container">
             <input type="password" id="confirmar_contraseña" name="confirmarContrasenia"
-                   placeholder="Repite la contraseña" required>
+                   placeholder="Repite la contraseña" >
             <button type="button" id="toggleConfirmPassword" class="password-toggle">Mostrar</button>
         </div>
 
 
         <div th:if="${errorContrasenas}" style="color: red; margin-bottom: 15px;" th:text="${errorContrasenas}"></div>
 
-
+        <br>
         <label>Modo de Vista:</label>
         <div class="rb-container">
             <!-- Si el modo de preferencia es verdadero (true), se selecciona "Claro" -->
@@ -60,7 +58,7 @@
                    th:checked="${preferencia.modoOscuro == true}">
             <label for="claro">Claro</label>
         </div>
-
+        <br>
         <label for="tamano_fuente">Tamaño de Fuente:</label>
         <input type="number" id="tamano_fuente" name="tamano_fuente"
                min="8" max="36" th:value="${preferencia['tamañoFuente']}" required>

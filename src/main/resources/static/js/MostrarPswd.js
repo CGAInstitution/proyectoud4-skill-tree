@@ -26,3 +26,36 @@ document.addEventListener('DOMContentLoaded', function () {
     setupTogglePassword('confirmar_contraseña', 'toggleConfirmPassword');
     setupTogglePassword('passwordActual', 'toggleCurrentPassword');
 });
+function showToast() {
+    let toast = document.getElementById("toast");
+    toast.style.display = "block";
+
+    setTimeout(() => {
+        toast.style.display = "none";
+    }, 3000);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    let show = document.getElementById("toast").getAttribute("data-show");
+    if (show) {
+        showToast("Los cambios se han guardado exitosamente.");
+    }
+});
+
+document.querySelector("form").addEventListener("submit", function(event) {
+    let password = document.getElementById("contraseña").value;
+
+    let confirmPassword = document.getElementById("confirmar_contraseña").value;
+    let errorSpan = document.getElementById("passwordError");
+
+    if (password){
+        if (password !== confirmPassword) {
+            event.preventDefault(); // Prevent form submission
+            errorSpan.style.display = "inline"; // Show error message
+        } else {
+            errorSpan.style.display = "none"; // Hide error message
+        }
+    }
+
+});

@@ -31,6 +31,7 @@ form {
 
 form > input,
 select {
+    margin-top: 5px;
     margin-bottom: 2%;
     background-color: #fffbe6;
     border: 2px solid #e0c57e;
