@@ -82,6 +82,10 @@ El flujo de interacción entre capas sigue un enfoque estructurado:
 
 ### Código destacable
 
+Lo más destacable del código de este proyecto es que hemos aprendido a realizar comunicaciones entre el backend y frontend a través de peticiones API.
+En el backend los endpoint son los configurados en los controladores de SpringBoot mientras que en el frontend tenemos los fetch de JavaScript, por ejemplo:
+![destacable.png](destacable.png)
+
 [⬆️Volver al índice](#índice)
 ___
 ## Manual de usuario
