@@ -10,8 +10,9 @@ De esta forma la aplicación permite la organización de las notas mediante los 
 ___
 # Índice
 
-1. [Diagrama ER de la BD en Notación Crow's Foot Model de BD](#diagrama-er-de-la-bd-en-notación-crows-foot)
-1. [Manual técnico para desarrolladores](#manual-técnico-para-desarrolladores) <br>
+1. [Supuesto](#Supuesto)
+2. [Diagrama ER de la BD en Notación Crow's Foot Model de BD](#diagrama-er-de-la-bd-en-notación-crows-foot)
+3. [Manual técnico para desarrolladores](#manual-técnico-para-desarrolladores) <br>
    2.1. [Requisitos](#requisitos)<br>
    2.2. [Ejecución](#ejecución)<br>
    2.3. [Estructura de la aplicación](#estructura-de-la-aplicación)<br>
@@ -21,6 +22,19 @@ ___
 1. [Propuestas de mejora](#propuestas-de-mejora)
 1. [Conclusiones y opinión del trabajo realizado](#conclusiones-y-opinión-del-trabajo-realizado)
 ___
+
+## Supuesto
+
+Un chico joven necesita un espacio donde pueda guardar y organizar de manera sencilla toda la información que acumula en su vida. Quiere guardar apuntes de reuniones hasta listas de canciones que descubre o tiene pendiente oír, esta persona busca una herramienta que le permita centralizar todo en un solo lugar.
+
+Para solucionar esto, surge SpriNotes, una aplicación web diseñada para crear y gestionar múltiples escritorios temáticos. En ella,  se puede tener un escritorio para cada tema que quieras o si eres más desorganizado tenerlo todo el mismo colocando las notas en el lugar que quieras arrastrándolas. 
+
+Además, NotasFlex facilita el trabajo colaborativo. Cuando alguien quiere compartir con un amigo una nota específica simplemente le da acceso para que así pueda verla y complementarla. Para mejorar la organización, las notas pueden personalizarse con colores y etiquetas permitiendo que se priorice lo más importante. 
+
+[⬆️Volver al índice](#índice)
+___
+
+
 ## Diagrama ER de la BD en Notación Crow's Foot
 En la siguiente imagen podemos ver el diagrama Entidad Relación de nuestra base de datos.
 Los usuarios pueden tener uno o muchos escritorios, que al mismo tiempo pueden contener ninguna o muchas notas (creadas por un único usuario). Estas notas deben pertenecer a una categoría y pueden ser compartidas con multiples usuarios. 
