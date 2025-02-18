@@ -105,7 +105,7 @@ public class UsuarioService {
 
 
 
-    private static String hashPassword(String password) {
+    public static String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hashBytes = digest.digest(password.getBytes());
