@@ -16,9 +16,15 @@ public class PreferenciaService {
     public PreferenciaService(PreferenciaRepository preferenciaRepository) {
         this.preferenciaRepository = preferenciaRepository;
     }
+
+
+
+
+
     public void crearPreferencia(Preferencia preferencia) {
         preferenciaRepository.save(preferencia);
     }
+
     public boolean actualizarModo(Long idPreferencia, boolean modo) {
         Optional<Preferencia> preferencia = preferenciaRepository.findById(idPreferencia);
         if (preferencia.isPresent()) {
