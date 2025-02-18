@@ -107,3 +107,35 @@ button:hover {
         width: 50%;
     }
 }
+.password-container {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #e0c57e;
+    padding: 5px;
+}
+
+.password-container input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    padding: 10px;
+    outline: none;
+}
+
+.password-toggle {
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 8px;
+    color: #5a4a42;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 8px 12px;
+    margin-left: 10px;
+    transition: 0.3s;
+}
+
+.password-toggle:hover {
+    background-color: #e0b800;
+}

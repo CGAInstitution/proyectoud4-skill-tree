@@ -26,10 +26,21 @@
             <input type="email" id="email" name="email" th:value="${usuario.email}" required>
 
             <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contraseña" name="contraseña">
+            <div class="password-container">
+                <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña" required>
+                <button type="button" id="togglePassword" class="password-toggle">Mostrar</button>
+            </div>
+
 
             <label for="confirmar_contraseña">Repite la contraseña:</label>
-            <input type="password" id="confirmar_contraseña" name="confirmarContrasenia">
+            <div class="password-container">
+                <input type="password" id="confirmar_contraseña" name="confirmarContrasenia" placeholder="Repite la contraseña" required>
+                <button type="button" id="toggleConfirmPassword" class="password-toggle">Mostrar</button>
+            </div>
+
+
+
+
             <div th:if="${errorContrasenas}" style="color: red; margin-bottom: 15px;" th:text="${errorContrasenas}"></div>
 
 
@@ -57,13 +68,16 @@
             </select><br><br>
 
             <label for="passwordActual">Contraseña actual:</label>
-            <input type="password" id="passwordActual" name="passwordActual" required>
+            <div class="password-container">
+                <input type="password" id="passwordActual" name="passwordActual" placeholder="Contraseña actual" required>
+                <button type="button" id="toggleCurrentPassword" class="password-toggle">Mostrar</button>
+            </div>
             <div th:if="${errorPasswordActual}" style="color: red; margin-bottom: 15px;" th:text="${errorPasswordActual}"></div>
 
             <button type="submit" class="enviar">Actualizar</button>
         </form>
     </div>
 
-
+    <script src="/js/MostrarPswd.js"></script>
 </body>
 </html>
