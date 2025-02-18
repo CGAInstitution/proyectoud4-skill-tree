@@ -111,7 +111,21 @@ ___
 - **Opción de compartir escritorios**
 - **Diferentes modos de compartir:** Dar al usuario la opción de compartir notas con permisos de vista o de editor.
 - **Añadir notas que te han compartido a tus escritorios**
+- **Hacer la web responsive**
+- **Añadir la funcionalidad de las categorías a las notas**
 
 [⬆️Volver al índice](#índice)
 ___
 ## Conclusiones y opinión del trabajo realizado
+
+Con este trabajo hemos aprendido mucho sobre SpringBoot y las aplicaciones web, repasando conocimientos anteriores de frontend y juntándolo con lo aprendido en esta asignatura consultas y tratamiento de datos en el backend.
+Por ejemplo hemos realizado peticiones desde el frontend a la API de la aplicación, y hemos utilizado capas de service y repository (que cubren las consultas básicas a sql), y con dtos. Sentimos que los conocimientos se han asentado y hemos logrado un nuevo nivel de entendimiento.
+No tuvimos todo el tiempo que nos gustaría para dedicarle al proyecto, por lo que ciertos ajustes finales en cuanto a la interfaz y las funcionalidades han tenido que cortarse.
+
+Contamos que de media le hemos dedicado unas 25 horas al proyecto. Esperamos una calificación de 8 o 8,5, ya que hemos cumplidocon los requisitos del proyecto y hemos realizado varios extras:
+- Comprobación de formularios
+- Creación de un frontend con Vue (notas editables)
+
+
+
+
