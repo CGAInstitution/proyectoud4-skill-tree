@@ -52,6 +52,71 @@ body {
     background: #ffcc00;
 }
 
+#toggle-menu {
+    background-color: #f4f4f4;
+    border-right: #bbbbbb 2px solid;
+    overflow: hidden;
+    width: 0;
+    transition: width 600ms cubic-bezier(.62,.04,.3,1.56);
+    transition-delay: 100ms;
+}
+
+#toggle-menu.show {
+    width: 35%;
+}
+
+#close-toggle-menu-button {
+    background-color: transparent;
+    border: none;
+}
+
+.views-container {
+    height: 100%;
+    position: absolute;
+    top: 5%;
+}
+
+.views-menu {
+    border: #bbbbbb 1px solid;
+    border-radius: 8px;
+    height: 44%;
+    padding: 3%;
+}
+
+.card {
+    height: 42%;
+    margin-bottom: 3%;
+    width: 30%;
+    max-height: 42%;
+}
+
+.escritorio-card {
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    cursor: pointer;
+}
+
+.escritorio-card:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0 18px 36px -18px inset;
+}
+
+.nota-card {
+    border: none;
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.nota-card:hover {
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.overflow-separator {
+    height: 5%;
+    width: 100%;
+}
+
 .note:hover {
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
 }
@@ -77,4 +142,62 @@ body {
 .note-link:hover {
     color: #333;
     opacity: 0.9;
+}
+
+.settings {
+    height: 5%;
+}
+
+.icon-img {
+    filter: invert(0%) sepia(100%) saturate(5874%) hue-rotate(4deg) brightness(107%) contrast(107%);
+}
+
+.icon-img:hover {
+    border: #bbbbbb 1px solid;
+}
+
+.close-svg, .logout-svg {
+    color: black;
+}
+
+.close-svg:hover, .logout-svg:hover {
+    color: #bbbbbb;
+}
+
+.settings-svg, .crear-escritorio-svg {
+    fill: black;
+}
+
+.settings-svg:hover, .crear-escritorio-svg:hover {
+    fill: #bbbbbb;
+}
+
+#crear-escritorio-button {
+    background-color: transparent;
+    border: none;
+}
+
+/* Estilo del botón flotante */
+.btn-flotante {
+    position: fixed;
+    bottom: 20px; /* Ajusta la distancia del borde inferior */
+    right: 20px; /* Ajusta la distancia del borde derecho */
+    background-color: #fff8dc;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.btn-flotante:hover {
+    background-color: #ffcc00;
+    color:white;
 }

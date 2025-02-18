@@ -1,30 +1,36 @@
-  <!DOCTYPE html>
-  <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8">
-    <title>Notas Estilo Post-it</title>
-    <link rel="stylesheet" href="/css/Escritorio.css"> <!-- Enlace al archivo CSS -->
-  </head>
-  <body>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head-full (titulo='Notas Estilo Post-it')"></head>
+<link rel="stylesheet" href="/css/Escritorio.css"> <!-- Enlace al archivo CSS -->
+<body>
+
+<nav class="navbar position-absolute top-0 start-0 z-3 navbar-div">
+  <div class="container-fluid">
+    <button id="show-toggle-menu-button" class="navbar-toggler" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+
   <div class="note-container">
     <div th:each="nota : ${notas}"
          th:attr="data-id=${nota.id}"
          th:style="'position: absolute; left:' + ${nota.posicionX} + 'px; top:' + ${nota.posicionY} + 'px;'">
 
-      <div class="note" th:style="'background-color: #' + ${nota.color}">
-        <a class="note-link"
-           th:href="@{/usuarios/{idUsuario}/escritorios/{idEscritorio}/notas/{idNota}(idUsuario=1, idEscritorio=1, idNota=${nota.id})}">
-          <p th:text="${nota.titulo}" class="note-title">Título de la nota</p>
-        </a>
-        <a class="note-link"
-           th:href="@{/usuarios/{idUsuario}/escritorios/{idEscritorio}/notas/{idNota}(idUsuario=1, idEscritorio=1, idNota=${nota.id})}">
-          <p th:text="${nota.descripcion}" class="note-description">Descripción de la nota</p>
-        </a>
+        <div class="note" th:style="'background-color: #' + ${nota.color}">
+          <a class="note-link"
+             th:href="@{/notas/{idNota}(idNota=${nota.id})}">
+            <p th:text="${nota.titulo}" class="note-title">Título de la nota</p>
+          </a>
+          <a class="note-link"
+             th:href="@{/notas/{idNota}( idNota=${nota.id})}">
+            <p th:text="${nota.descripcion}" class="note-description">Descripción de la nota</p>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
 
-<div id="context-menu" class="context-menu">
+<div id="context-menu-note" class="context-menu" style="display: none;">
   <ul>
     <li id="edit-note">✏️ Editar</li>
     <li id="delete-note">🗑️ Borrar</li>
@@ -32,7 +38,102 @@
 </div>
 
 
+<div id="context-menu-create" class="context-menu" style="display: none;">
+  <ul>
+    <li id="create-note">➕ Crear</li>
+  </ul>
+</div>
+<div id="context-menu-escritorio" class="context-menu" style="display: none;">
+  <ul>
+    <li id="delete-escritorio">🗑️ Borrar</li>
+  </ul>
+</div>
 
-  <script src="/js/Escritorio.js"></script> <!-- Enlace al archivo JS -->
-  </body>
-  </html>
+<form id="crearNotaForm" th:action="@{/notas/nueva}" method="post" style="position: fixed; bottom: 20px; right: 20px;">
+  <button type="submit" class="btn-flotante">
+    +
+  </button>
+</form>
+
+
+
+<div id="toggle-menu" class="h-100 position-absolute top-0 start-0 z-3">
+  <button id="close-toggle-menu-button" class="position-absolute top-0 end-0 m-2">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x close-svg">
+      <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+    </svg>
+  </button>
+
+  <div class="views-container w-100">
+
+    <div class="views-menu w-95 mx-3 mb-3 overflow-y-hidden">
+
+      <div class="d-flex align-content-center g-3">
+        <h3>Escritorios</h3>
+        <button id="crear-escritorio-button" class="mb-2" onclick="openCreateEscritorioWindow(this)">
+          <svg fill="#000000" id="Capa_1" class="crear-escritorio-svg" xmlns="http://www.w3.org/2000/svg"
+               width="24" height="24" viewBox="0 0 45.402 45.402"
+               xml:space="preserve">
+            <g>
+	          <path d="M41.267,18.557H26.832V4.134C26.832,1.851,24.99,0,22.707,0c-2.283,0-4.124,1.851-4.124,4.135v14.432H4.141
+		        c-2.283,0-4.139,1.851-4.138,4.135c-0.001,1.141,0.46,2.187,1.207,2.934c0.748,0.749,1.78,1.222,2.92,1.222h14.453V41.27
+		        c0,1.142,0.453,2.176,1.201,2.922c0.748,0.748,1.777,1.211,2.919,1.211c2.282,0,4.129-1.851,4.129-4.133V26.857h14.435
+		        c2.283,0,4.134-1.867,4.133-4.15C45.399,20.425,43.548,18.557,41.267,18.557z"/>
+            </g>
+          </svg>
+        </button>
+      </div>
+
+
+      <div class="overflow-y-scroll h-100 w-100 d-flex flex-wrap justify-content-around mb-2">
+
+        <div class="card escritorio-card" th:each="escritorio : ${escritorios}"
+             th:attr="data-id=${escritorio.id}" onclick="changeEscritorio(this)">
+          <p th:text="${escritorio.nombre}" class="text-center m-auto fs-3"/>
+        </div>
+
+        <div class="overflow-separator"></div>
+
+      </div>
+
+    </div>
+
+    <div class="views-menu w-95 mx-3 mb-3 overflow-y-hidden">
+
+      <h3>Notas</h3>
+
+      <div class="overflow-y-scroll h-100 w-100 d-flex flex-wrap justify-content-around mb-2">
+
+        <div class="card nota-card" th:each="nota : ${notasCompartidas}" onclick="viewNota(this)"
+             th:attr="data-id=${nota.id}" th:style="'background-color: #' + ${nota.color}">
+          <p th:text="${nota.titulo}" class="text-center m-auto fs-3"/>
+        </div>
+
+        <div class="overflow-separator"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="settings d-flex justify-content-between position-absolute bottom-0 w-100 pt-1 ps-3 pe-3">
+    <a th:href="@{/user/settings}">
+      <svg class="settings-svg" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 48 48">
+        <path d="M0 0h48v48h-48z" fill="none"/>
+        <path d="M38.86 25.95c.08-.64.14-1.29.14-1.95s-.06-1.31-.14-1.95l4.23-3.31c.38-.3.49-.84.24-1.28l-4-6.93c-.25-.43-.77-.61-1.22-.43l-4.98 2.01c-1.03-.79-2.16-1.46-3.38-1.97l-.75-5.3c-.09-.47-.5-.84-1-.84h-8c-.5 0-.91.37-.99.84l-.75 5.3c-1.22.51-2.35 1.17-3.38 1.97l-4.98-2.01c-.45-.17-.97 0-1.22.43l-4 6.93c-.25.43-.14.97.24 1.28l4.22 3.31c-.08.64-.14 1.29-.14 1.95s.06 1.31.14 1.95l-4.22 3.31c-.38.3-.49.84-.24 1.28l4 6.93c.25.43.77.61 1.22.43l4.98-2.01c1.03.79 2.16 1.46 3.38 1.97l.75 5.3c.08.47.49.84.99.84h8c.5 0 .91-.37.99-.84l.75-5.3c1.22-.51 2.35-1.17 3.38-1.97l4.98 2.01c.45.17.97 0 1.22-.43l4-6.93c.25-.43.14-.97-.24-1.28l-4.22-3.31zm-14.86 5.05c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+      </svg>
+    </a>
+    <a th:href="@{/logout}">
+      <svg class="logout-svg" fill="none" height="40" viewBox="0 0 24 24" width="40" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17 16L21 12M21 12L17 8M21 12L7 12M13 16V17C13 18.6569 11.6569 20 10 20H6C4.34315 20 3 18.6569 3 17V7C3 5.34315 4.34315 4 6 4H10C11.6569 4 13 5.34315 13 7V8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </svg>
+    </a>
+  </div>
+
+</div>
+
+<script src="/js/Escritorio.js"></script> <!-- Enlace al archivo JS -->
+<div th:replace="fragments::javascript-full"/>
+</body>
+</html>

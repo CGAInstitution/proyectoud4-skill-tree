@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/settings.css">
+</head>
+
+<body>
+<div class="backgrown">
+    <a th:href="@{/escritorio}">
+        <button class="volver"><img th:src="@{/images/arrow-left.svg}" src="../static/images/arrow-left.svg"
+                                    alt="Eliminar"></button>
+    </a>
+    <div id="toast" th:attr="data-show=${show}"
+         style="display: none; position: fixed; bottom: 20px; right: 20px; background: #28a745; color: white; padding: 15px; border-radius: 5px;">
+        Los cambios se han guardado exitosamente.
+    </div>
+    <h1>Ajustes</h1>
+    <form th:action="@{/user/settings/savesettings}" method="post" th:object="${settingsForm}">
+        
+
+        <label for="nombre">Nombre:</label>
+        <input ref="nombre" type="text" id="nombre" name="nombre" th:value="${usuario.nombre}" required>
+
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" th:value="${usuario.apellidos}" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" th:value="${usuario.email}" required>
+
+        <label for="contraseña">Contraseña:</label>
+        <div class="password-container">
+            <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña" >
+            <button type="button" id="togglePassword" class="password-toggle">Mostrar</button>
+        </div>
+
+
+        <label for="confirmar_contraseña">Repite la contraseña:</label>
+        <div class="password-container">
+            <input type="password" id="confirmar_contraseña" name="confirmarContrasenia"
+                   placeholder="Repite la contraseña" >
+            <button type="button" id="toggleConfirmPassword" class="password-toggle">Mostrar</button>
+        </div>
+
+
+        <div th:if="${errorContrasenas}" style="color: red; margin-bottom: 15px;" th:text="${errorContrasenas}"></div>
+
+        <br>
+        <label>Modo de Vista:</label>
+        <div class="rb-container">
+            <!-- Si el modo de preferencia es verdadero (true), se selecciona "Claro" -->
+            <input type="radio" id="oscuro" name="modo" value="false"
+                   th:checked="${preferencia.modoOscuro == false}">
+            <label for="oscuro">Oscuro</label>
+            <input type="radio" id="claro" name="modo" value="true"
+                   th:checked="${preferencia.modoOscuro == true}">
+            <label for="claro">Claro</label>
+        </div>
+        <br>
+        <label for="tamano_fuente">Tamaño de Fuente:</label>
+        <input type="number" id="tamano_fuente" name="tamano_fuente"
+               min="8" max="36" th:value="${preferencia['tamañoFuente']}" required>
+
+        <label for="idioma">Idioma:</label>
+        <select id="idioma" name="idioma" required>
+            <option value="es" th:selected="${preferencia.idioma == 'es'}">Español</option>
+            <option value="en" th:selected="${preferencia.idioma == 'en'}">Inglés</option>
+            <option value="fr" th:selected="${preferencia.idioma == 'fr'}">Francés</option>
+            <option value="de" th:selected="${preferencia.idioma == 'de'}">Alemán</option>
+        </select><br>
+
+        <label for="passwordActual">Contraseña actual:</label>
+        <div class="password-container">
+            <input type="password" id="passwordActual" name="passwordActual" placeholder="Contraseña actual" required>
+            <button type="button" id="toggleCurrentPassword" class="password-toggle">Mostrar</button>
+        </div>
+        <div th:if="${errorPasswordActual}" style="color: red; margin-bottom: 15px;"
+             th:text="${errorPasswordActual}"></div>
+        <br>
+        <button type="submit" class="enviar">Actualizar</button>
+    </form>
+</div>
+
+<script src="/js/MostrarPswd.js"></script>
+</body>
+</html>

@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             // Asegurar que la nota esté en primer plano
-            noteContainer.style.zIndex = "1000";
+            noteContainer.style.zIndex = "2";
             noteContainer.style.cursor = "grabbing";
         });
     });
@@ -75,38 +75,88 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 document.addEventListener("DOMContentLoaded", function () {
-    const contextMenu = document.getElementById("context-menu");
+    const contextMenuNote = document.getElementById("context-menu-note"); // Menú para editar y borrar
+    const contextMenuCreate = document.getElementById("context-menu-create"); // Menú para crear nota
     let selectedNote = null;
-
+    let activeNoteContainer = null;
+    let createNoteX = null;
+    let createNoteY = null;
 
     document.querySelectorAll(".note-container > div").forEach(note => {
-      
         note.addEventListener("contextmenu", function (event) {
+            // Evitar que el menú contextual se muestre si el clic es dentro del menú de navegación
+            if (event.target.closest('#toggle-menu') || event.target.closest('.navbar')) {
+                return; // Si estamos sobre el menú o la barra de navegación, no mostrar el menú contextual
+            }
             event.preventDefault();
             activeNoteContainer = note;
             selectedNote = note.closest('.note-container');
             const noteId = activeNoteContainer.getAttribute("data-id");
 
-            
+            contextMenuNote.style.top = `${event.pageY}px`;
+            contextMenuNote.style.left = `${event.pageX}px`;
+            contextMenuNote.style.display = "block";
 
-            console.log("Nota seleccionada con ID: ", noteId);
+            contextMenuNote.setAttribute('data-id', noteId);
 
-
-            contextMenu.style.top = `${event.pageY}px`;
-            contextMenu.style.left = `${event.pageX}px`;
-            contextMenu.style.display = "block";
-
-            // Establecer el data-id en el menú contextual para usarlo después
-            contextMenu.setAttribute('data-id', noteId);
+            contextMenuCreate.style.display = "none";
         });
     });
 
-    // Cerrar el menú cuando se haga clic en cualquier lugar
-    document.addEventListener("click", function () {
-        contextMenu.style.display = "none";
+    document.querySelector("body").addEventListener("contextmenu", function (event) {
+        // Evitar que el menú contextual se muestre si el clic es dentro del menú de navegación
+        if (event.target.closest('#toggle-menu') || event.target.closest('.navbar') || event.target.closest('.note')) {
+            return; // Si estamos dentro del menú o una nota, no mostrar el menú contextual
+        }
+
+        event.preventDefault();
+        createNoteX = event.pageX;
+        createNoteY = event.pageY;
+
+        contextMenuCreate.style.top = `${event.pageY}px`;
+        contextMenuCreate.style.left = `${event.pageX}px`;
+        contextMenuCreate.style.display = "block";
+
+        contextMenuNote.style.display = "none";
     });
+
+    document.addEventListener("click", function () {
+        contextMenuNote.style.display = "none";
+        contextMenuCreate.style.display = "none";
+    });
+
+    document.getElementById("create-note").addEventListener("click", function () {
+        console.log(createNoteX, createNoteY);
+        let posX = createNoteX;
+        let posY = createNoteY;
+        console.log(posX, posY);
+        if (!posX || !posY) {
+            posX = 500;
+            posY = 500;
+        }
+        const url = `/notas/nueva?posicionX=${posX}&posicionY=${posY}`;
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ posicionX: posX, posicionY: posY })
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = response.url;
+                } else {
+                    console.error("Error al crear la nota");
+                }
+            })
+            .catch(error => {
+                console.error("Error al hacer la solicitud:", error);
+            });
+    });
+
     document.getElementById("delete-note").addEventListener("click", function () {
-        const noteId = contextMenu.getAttribute("data-id");
+        const noteId = contextMenuNote.getAttribute("data-id");
 
         if (noteId) {
             fetch(`/notas/${noteId}/eliminar`, { method: "DELETE" })
@@ -116,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         console.log(`Nota con ID ${noteId} eliminada`);
                         const noteElement = document.querySelector(`.note-container > div[data-id='${noteId}']`);
                         if (noteElement) {
-                            noteElement.remove(); // Elimina la nota del DOM
+                            noteElement.remove();
                         }
                     } else {
                         console.error("Error al eliminar la nota");
@@ -126,4 +176,109 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    document.getElementById("edit-note").addEventListener("click", function () {
+        const noteId = contextMenuNote.getAttribute("data-id");
+
+        if (noteId) {
+            window.location.href = `/notas/${noteId}`;
+        }
+    });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const contextMenuEscritorio = document.getElementById("context-menu-escritorio");
+    let selectedEscritorio = null;
+
+    document.querySelectorAll(".escritorio-card").forEach(escritorio => {
+        escritorio.addEventListener("contextmenu", function (event) {
+            event.preventDefault();
+
+            selectedEscritorio = escritorio;
+            const escritorioId = escritorio.getAttribute("data-id");
+
+            contextMenuEscritorio.style.top = `${event.pageY}px`;
+            contextMenuEscritorio.style.left = `${event.pageX}px`;
+            contextMenuEscritorio.style.display = "block";
+
+            contextMenuEscritorio.setAttribute("data-id", escritorioId);
+        });
+    });
+
+    document.addEventListener("click", function () {
+        contextMenuEscritorio.style.display = "none";
+    });
+    document.getElementById("delete-escritorio").addEventListener("click", function () {
+        const escritorioId = contextMenuEscritorio.getAttribute("data-id");
+        if (escritorioId) {
+            fetch(`/escritorio/${escritorioId}/eliminar`, { method: "DELETE" })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log(`Escritorio con ID ${escritorioId} eliminado`);
+                        const escritorioElement = document.querySelector(`.escritorio-card[data-id='${escritorioId}']`);
+                        if (escritorioElement) {
+                            escritorioElement.remove();
+                        }
+                    } else {
+                        // Mostrar el mensaje de error (si lo hay)
+                        alert(data.error || "Error al eliminar el escritorio");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    let isToggleMenuShowing = false;
+    const showToggleButton = document.getElementById("show-toggle-menu-button");
+    const closeToggleButton = document.getElementById("close-toggle-menu-button")
+    const toggleMenu = document.getElementById("toggle-menu");
+
+    showToggleButton.addEventListener("click", () => {
+        toggleMenu.classList.toggle("show");
+    });
+
+    closeToggleButton.addEventListener("click", () => {
+        toggleMenu.classList.toggle("show");
+    });
+});
+
+function changeEscritorio(element) {
+    fetch("escritorio/change", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idEscritorio: element.dataset.id
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            console.log("Error al cambiar de escritorio");
+        }
+    })
+    .catch(error => {
+        console.log("Error al conectarse con el servidor", error);
+    })
+}
+
+function viewNota(element) {
+    let id = element.dataset.id;
+    window.location.href = 'notas/' + id;
+}
+
+function openCreateEscritorioWindow(element) {
+    const mainWindows = window;
+    const height = 500;
+    const width = 500;
+    const left = (screen.width - width) / 2;
+    const top = (screen.height - height) / 4;
+    const newWindow = window.open("escritorio/create","Nuevo escritorio",'resizable=yes, width=' + width
+        + ', height=' + height + ', top='
+        + top + ', left=' + left);
+}
