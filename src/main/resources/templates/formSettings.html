@@ -109,7 +109,7 @@
 
             <label for="confirmar_contraseña">Repite la contraseña:</label>
             <input type="password" id="confirmar_contraseña" name="confirmarContrasenia">
-            <span id="passwordError" style="color: red; display: none; margin-bottom: 15px">Las contraseñas no coinciden</span>
+            <div th:if="${errorContrasenas}" style="color: red; margin-bottom: 15px;" th:text="${errorContrasenas}"></div>
 
 
             <label>Modo de Vista:</label>
@@ -130,6 +130,10 @@
                 <option value="fr">Francés</option>
                 <option value="de">Alemán</option>
             </select><br><br>
+            
+            <label for="passwordActual">Contraseña actual:</label>
+            <input type="password" id="passwordActual" name="passwordActual" required>
+            <div th:if="${errorPasswordActual}" style="color: red; margin-bottom: 15px;" th:text="${errorPasswordActual}"></div>
 
             <button type="submit" class="enviar">Actualizar</button>
         </form>

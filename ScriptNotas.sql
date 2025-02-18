@@ -69,7 +69,7 @@ AFTER INSERT ON Usuarios
 FOR EACH ROW
 BEGIN
     INSERT INTO Preferencias (modoOscuro, tamañoFuente, idioma, idUsuario)
-    VALUES (true, 12, 'es', NEW.id);
+    VALUES (false, 12, 'es', NEW.id);
 END $$
 
 DELIMITER ;
