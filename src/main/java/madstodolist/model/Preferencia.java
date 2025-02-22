@@ -21,7 +21,7 @@ public class Preferencia {
     private Boolean modoOscuro = false;
 
     @NotNull
-    @Column(name = "tamanoFuente", nullable = false)
+    @Column(name = "tamañoFuente", nullable = false)
     private Byte tamañoFuente;
 
     @Size(max = 2)
