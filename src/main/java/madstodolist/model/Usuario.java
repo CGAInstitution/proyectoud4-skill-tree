@@ -34,7 +34,7 @@ public class Usuario {
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "`contrasena`", nullable = false)
+    @Column(name = "`contraseña`", nullable = false)
     private String contraseña;
 
     @OneToMany(mappedBy = "idUsuario")
